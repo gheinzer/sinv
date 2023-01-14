@@ -1,0 +1,21 @@
+@import "src/globals.scss";
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+    .status-code {
+        font-size: 20rem;
+        font-weight: 800;
+    }
+    .notfound {
+        font-weight: 800;
+        color: $accent-color;
+        font-size: 2rem;
+    }
+    .info {
+        font-style: italic;
+    }
+    align-items: center;
+    justify-content: center;
+}

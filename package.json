@@ -1,0 +1,23 @@
+{
+    "name": "sinv",
+    "version": "0.0.0",
+    "description": "A simple inventory system.",
+    "main": "backend/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gheinzer/sinv.git"
+    },
+    "author": "gheinzer",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/gheinzer/sinv/issues"
+    },
+    "homepage": "https://github.com/gheinzer/sinv#readme",
+    "dependencies": {
+        "@sinv/backend": "file:backend",
+        "@sinv/frontend": "file:frontend"
+    }
+}

@@ -1,0 +1,11 @@
+@import "src/globals.scss";
+span {
+    padding: $link-padding;
+    color: $accent-color;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: $link-font-weight;
+    &:hover {
+        opacity: $link-mouseover-opacity;
+    }
+}

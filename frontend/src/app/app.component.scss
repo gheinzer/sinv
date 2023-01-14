@@ -1,0 +1,27 @@
+:host {
+    display: grid;
+    grid-template-rows: max-content auto;
+    grid-template-columns: auto;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.scrollable {
+    grid-template-rows: 2/2;
+    display: grid;
+    grid-template-rows: auto max-content;
+    grid-template-columns: auto;
+    height: 100%;
+    overflow: auto;
+    .content {
+        grid-template-rows: 1/2;
+    }
+    app-footer {
+        grid-template-rows: 2/2;
+    }
+}
+
+app-header {
+    grid-template-rows: 1/2;
+}

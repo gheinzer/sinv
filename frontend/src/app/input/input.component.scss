@@ -1,0 +1,31 @@
+@import "src/globals.scss";
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: max-content;
+    @include input;
+    transition: 0.2s;
+    border-radius: $input-border-radius;
+    padding: $input-padding;
+    gap: $input-gap;
+    .icon {
+        height: $input-icon-size;
+        fill: $root-color;
+    }
+    input {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        &,
+        &::placeholder {
+            color: $root-color;
+            @include default-font;
+        }
+        &::placeholder {
+            opacity: $input-placeholder-opacity;
+        }
+    }
+}

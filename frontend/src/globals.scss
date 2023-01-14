@@ -1,0 +1,41 @@
+@use "sass:color";
+// ! All the global variables are defined in this file
+// * Miscellaneous variables
+$root-bg: rgb(30, 30, 30);
+$root-color: rgb(220, 220, 220);
+$root-font-size: 15px;
+$accent-color: #ff9900;
+// * Standards
+$standard-border-radius: 5px;
+// * Logo variables
+$logo-color: $accent-color;
+$logo-height: 30px;
+$logo-spacing: 15px;
+$logo-font-weight: 800;
+$logo-font-size: 20px;
+// * Link variables
+$link-font-weight: 800;
+$link-mouseover-opacity: 0.3;
+$link-padding: 5px;
+// * Footer variables
+$footer-padding: 20px;
+$footer-github-logo-size: 30px;
+// * Input variables
+$input-placeholder-opacity: 0.4;
+$input-icon-size: 25px;
+$input-padding: 15px;
+$input-gap: $input-padding;
+$input-border-radius: $standard-border-radius; // * Mixins
+@mixin default-font($italic: 0, $weight: 400) {
+    font-family: "Source Code Pro", monospace;
+    font-weight: $weight;
+    font-size: $root-font-size;
+    @if ($italic==1) {
+        font-style: italic;
+    }
+}
+
+@mixin input($base-color: white) {
+    background: color.change($base-color, $alpha: 0.03);
+    border: color.change($base-color, $alpha: 0.1) solid 1px;
+}

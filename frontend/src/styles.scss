@@ -1,0 +1,16 @@
+@import "src/globals.scss";
+:root {
+    @include default-font();
+    background: $root-bg;
+    color: $root-color;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    &::selection {
+        background-color: $accent-color;
+        color: black;
+    }
+}

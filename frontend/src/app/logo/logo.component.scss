@@ -1,0 +1,19 @@
+@import "src/globals.scss";
+.logo-text {
+    color: $logo-color;
+    font-size: $logo-font-size;
+    font-weight: $logo-font-weight;
+}
+
+img {
+    height: $logo-height;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    gap: $logo-spacing;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+}
