@@ -13,11 +13,26 @@ import { LoginComponent } from './pageComponents/login/login.component';
 import { InputComponent } from './input/input.component';
 import { IconComponent } from './icon/icon.component';
 import { BannerComponent } from './banner/banner.component';
+import { TranslationComponent } from './translation/translation.component';
+import { TranslationModule } from './translation/translation.module';
 
 @NgModule({
-  declarations: [AppComponent, LogoComponent, HeaderComponent, LinkComponent, HomeComponent, FooterComponent, NotFoundComponent, LoginComponent, InputComponent, IconComponent, BannerComponent],
+  declarations: [
+    AppComponent,
+    LogoComponent,
+    HeaderComponent,
+    LinkComponent,
+    HomeComponent,
+    FooterComponent,
+    NotFoundComponent,
+    LoginComponent,
+    InputComponent,
+    IconComponent,
+    BannerComponent,
+    TranslationComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [TranslationModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
