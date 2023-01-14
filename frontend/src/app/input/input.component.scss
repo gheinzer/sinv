@@ -5,11 +5,12 @@
     align-items: center;
     justify-content: center;
     max-width: max-content;
-    @include input;
+    @include box;
     transition: 0.2s;
     border-radius: $input-border-radius;
     padding: $input-padding;
     gap: $input-gap;
+    margin: 1em 0;
     .icon {
         height: $input-icon-size;
         fill: $root-color;

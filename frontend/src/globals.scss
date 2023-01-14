@@ -25,7 +25,11 @@ $input-placeholder-opacity: 0.4;
 $input-icon-size: 25px;
 $input-padding: 15px;
 $input-gap: $input-padding;
-$input-border-radius: $standard-border-radius; // * Mixins
+$input-border-radius: $standard-border-radius;
+// * Banner variables
+$banner-border-radius: $standard-border-radius;
+$banner-padding: 10px;
+// * Mixins
 @mixin default-font($italic: 0, $weight: 400) {
     font-family: "Source Code Pro", monospace;
     font-weight: $weight;
@@ -35,7 +39,7 @@ $input-border-radius: $standard-border-radius; // * Mixins
     }
 }
 
-@mixin input($base-color: white) {
-    background: color.change($base-color, $alpha: 0.03);
-    border: color.change($base-color, $alpha: 0.1) solid 1px;
+@mixin box($base-color: color.adjust($root-bg, $lightness: 2)) {
+    background: $base-color;
+    border: color.adjust($base-color, $lightness: 5) solid 1px;
 }

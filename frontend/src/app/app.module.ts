@@ -12,9 +12,10 @@ import { NotFoundComponent } from './pageComponents/not-found/not-found.componen
 import { LoginComponent } from './pageComponents/login/login.component';
 import { InputComponent } from './input/input.component';
 import { IconComponent } from './icon/icon.component';
+import { BannerComponent } from './banner/banner.component';
 
 @NgModule({
-  declarations: [AppComponent, LogoComponent, HeaderComponent, LinkComponent, HomeComponent, FooterComponent, NotFoundComponent, LoginComponent, InputComponent, IconComponent],
+  declarations: [AppComponent, LogoComponent, HeaderComponent, LinkComponent, HomeComponent, FooterComponent, NotFoundComponent, LoginComponent, InputComponent, IconComponent, BannerComponent],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
