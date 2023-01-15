@@ -21,8 +21,12 @@
     },
     "homepage": "https://github.com/gheinzer/sinv#readme",
     "dependencies": {
+        "@prisma/client": "^4.8.1",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
         "@types/lodash": "^4.14.191",
         "@types/node": "^18.11.18",
-        "lodash": "^4.17.21"
+        "prisma": "^4.8.1"
     }
 }
