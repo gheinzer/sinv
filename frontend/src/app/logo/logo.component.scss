@@ -17,3 +17,7 @@ img {
     justify-content: center;
     width: max-content;
 }
+
+* {
+    user-select: none;
+}
