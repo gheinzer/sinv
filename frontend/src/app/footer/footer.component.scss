@@ -27,3 +27,7 @@ footer {
     width: 75vw;
     padding: $footer-padding;
 }
+
+:host {
+    @include desktop-only;
+}

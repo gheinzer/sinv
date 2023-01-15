@@ -4,8 +4,20 @@ interface translation {
 }
 
 export var translations: { [key: string]: translation } = {
-  baum: {
-    en: 'tree',
-    de: 'baum',
+  username: {
+    en: 'Username',
+    de: 'Benutzername',
+  },
+  password: {
+    en: 'Password',
+    de: 'Passwort',
+  },
+  login: {
+    en: 'Sign in',
+    de: 'Anmelden',
+  },
+  register: {
+    en: 'Sign up',
+    de: 'Registrieren',
   },
 };

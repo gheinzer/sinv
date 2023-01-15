@@ -15,6 +15,8 @@ import { IconComponent } from './icon/icon.component';
 import { BannerComponent } from './banner/banner.component';
 import { TranslationComponent } from './translation/translation.component';
 import { TranslationModule } from './translation/translation.module';
+import { ButtonComponent } from './button/button.component';
+import { RegisterComponent } from './pageComponents/register/register.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { TranslationModule } from './translation/translation.module';
     IconComponent,
     BannerComponent,
     TranslationComponent,
+    ButtonComponent,
+    RegisterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [TranslationModule],

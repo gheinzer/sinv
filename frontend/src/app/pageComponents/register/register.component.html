@@ -1,15 +1,15 @@
 <div class="form-container">
     <div class="form">
         <h1>
-            <translation id="login"></translation>
+            <translation id="register"></translation>
         </h1>
         <app-input [placeholder]="translationModule.getTranslation('username')" icon="username"></app-input>
         <app-input [placeholder]="translationModule.getTranslation('password')" icon="password" type="password"></app-input>
         <app-button icon="login">
             <translation id="login"></translation>
         </app-button>
-        <app-button icon="register" fill="background" routerLink="/register">
-            <translation id="register"></translation>
+        <app-button icon="login" fill="background" routerLink="/login">
+            <translation id="login"></translation>
         </app-button>
     </div>
 </div>

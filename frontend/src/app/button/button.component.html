@@ -1,0 +1,8 @@
+<div [ngClass]="{
+    disabled: disabled == true,
+    background: fill == 'background',
+    accent: fill == 'accent'
+  }" class="button">
+    <app-icon [id]="icon" *ngIf="icon !== ''"></app-icon>
+    <span class="label"><ng-content></ng-content></span>
+</div>
