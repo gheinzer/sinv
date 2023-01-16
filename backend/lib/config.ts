@@ -25,7 +25,7 @@ export namespace SINVConfig {
         },
     };
 
-    const configPath = './config.json';
+    const configPath = '../../data/config.json';
     /**
      * This is the configuration obejct read from the configuration file (unset entries are defaulted). The entries can be directly accessed.
      */
