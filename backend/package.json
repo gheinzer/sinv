@@ -7,8 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
         "watch": "tsc --watch",
-        "start": "node dist/index.js",
-        "dev": "npx supervisor dist/index.js"
+        "start": "node ../dist/backend/index.js",
+        "dev": "npx supervisor ../dist/backend/index.js"
     },
     "repository": {
         "type": "git",
@@ -22,7 +22,8 @@
     "homepage": "https://github.com/gheinzer/sinv#readme",
     "dependencies": {
         "@prisma/client": "^4.8.1",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "mime": "^3.0.0"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.191",

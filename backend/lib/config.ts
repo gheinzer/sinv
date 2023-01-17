@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import _ from 'lodash';
 
 /**
@@ -8,20 +8,16 @@ import _ from 'lodash';
  *  */
 export namespace SINVConfig {
     export interface SINVConfigurationObject {
-        testEntry?: string;
-        testNumber?: number;
-        testObject?: {
-            entry1?: string;
-            entry2?: string;
+        httpd: {
+            port: number;
+            content_path: string;
         };
     }
 
     const defaultConfiguration: SINVConfigurationObject = {
-        testEntry: 'helloWorld',
-        testNumber: 10,
-        testObject: {
-            entry1: 'hello',
-            entry2: 'world',
+        httpd: {
+            port: 8080,
+            content_path: 'dist/frontend',
         },
     };
 
@@ -29,7 +25,7 @@ export namespace SINVConfig {
     /**
      * This is the configuration obejct read from the configuration file (unset entries are defaulted). The entries can be directly accessed.
      */
-    export var config: SINVConfigurationObject = {};
+    export var config: SINVConfigurationObject = defaultConfiguration;
 
     /**
      * Updates `SINV.config` based on the configuration file and defaults unset configuration entries to the defaults. This is executed automatically when this module is imported.
@@ -38,9 +34,11 @@ export namespace SINVConfig {
      * var foo = SINVConfig.config.foo;
      */
     export function readConfig() {
-        var userConfig: SINVConfigurationObject = JSON.parse(
-            readFileSync(configPath).toString()
-        );
+        if (!existsSync(configPath)) var userConfig: Object = {};
+        else
+            var userConfig: Object = JSON.parse(
+                readFileSync(configPath).toString()
+            );
         config = _.defaultsDeep(userConfig, defaultConfiguration);
     }
 }
