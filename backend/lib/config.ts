@@ -12,12 +12,18 @@ export namespace SINVConfig {
             port: number;
             content_path: string;
         };
+        users: {
+            password_hash_rounds: number;
+        };
     }
 
     const defaultConfiguration: SINVConfigurationObject = {
         httpd: {
             port: 8080,
             content_path: 'dist/frontend',
+        },
+        users: {
+            password_hash_rounds: 10,
         },
     };
 

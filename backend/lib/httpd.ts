@@ -5,14 +5,16 @@ import path from 'path';
 import { SINVConfig } from './config';
 
 export namespace SINVHTTPD {
+    export const server: http.Server = http.createServer(function (req, res) {
+        if (req.method == 'GET') handleGET(req, res);
+        else res.end();
+    });
+
     /**
      * Initializes the HTTP server and listens on the port specified in the configuration file.
      */
     export function initializeServer() {
-        http.createServer(function (req, res) {
-            if (req.method == 'GET') handleGET(req, res);
-            else res.end();
-        }).listen(SINVConfig.config.httpd.port);
+        server.listen(SINVConfig.config.httpd.port);
     }
 
     function handleGET(req: http.IncomingMessage, res: http.ServerResponse) {

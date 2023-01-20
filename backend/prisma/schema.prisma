@@ -60,11 +60,12 @@ model Attachment {
 }
 
 model User {
-    id             Int            @id @default(autoincrement())
-    email          String
-    username       String         @unique
-    createdObjects Object[]
-    sessions       UserSessions[]
+    id               Int            @id @default(autoincrement())
+    username         String         @unique
+    passwordHash     String
+    createdObjects   Object[]
+    sessions         UserSessions[]
+    permissionString String         @default("{}")
 }
 
 model UserSessions {
