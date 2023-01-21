@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "Delete dist folder"
 rm -rf dist
-echo "Build TypeScript on backend"
+echo "Build backend"
 cd backend
-npx tsc
+npm run build
 echo "Build Angular on frontend"
 cd ../frontend
 npx ng build
