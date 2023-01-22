@@ -6,7 +6,7 @@
         {
             "label": "Build and run",
             "type": "shell",
-            "command": "cd backend && npm install --include=dev && npm run build && cd ../frontend && ng build && cd .. && node dist/backend/index",
+            "command": "cd backend && npm install --include=dev && npm run build && cd ../frontend && ng build && cd .. && sudo node dist/backend/index",
             "problemMatcher": [],
             "icon": {
                 "id": "run-all"
@@ -15,7 +15,7 @@
         {
             "label": "Build and watch",
             "type": "shell",
-            "command": "cd backend && npm install --include=dev && npm run build && (tsc --watch &) && cd ../frontend && ng build && (ng build --watch &) && (ng serve --watch &) && cd .. && supervisor dist/backend/index",
+            "command": "cd backend && npm install --include=dev && npm run build && (tsc --watch &) && cd ../frontend && ng build && (ng build --watch &) && (ng serve --watch &) && cd .. && sudo supervisor dist/backend/index",
             "problemMatcher": [],
             "icon": {
                 "id": "eye-watch"
