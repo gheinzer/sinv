@@ -17,6 +17,9 @@ import { TranslationComponent } from './translation/translation.component';
 import { TranslationModule } from './translation/translation.module';
 import { ButtonComponent } from './button/button.component';
 import { RegisterComponent } from './pageComponents/register/register.component';
+import { WsModule } from './api/ws/ws.module';
+import { AuthModule } from './api/auth/auth.module';
+import { ApiModule } from './api/api/api.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,7 @@ import { RegisterComponent } from './pageComponents/register/register.component'
     RegisterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [TranslationModule],
+  providers: [TranslationModule, WsModule, AuthModule, ApiModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

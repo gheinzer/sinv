@@ -2,11 +2,7 @@ import * as ws from 'ws';
 import { SINVHTTPD } from '../httpd';
 import { SINVAPI } from '../api/api';
 import { APIResponse, AuthenticationData } from '../api/api.types';
-import {
-    WebsocketConversation,
-    IncomingWebsocketData,
-    OutgoingWebsocketData,
-} from './ws.types';
+import { WebsocketConversation, WebsocketMessage } from './ws.types';
 
 export namespace SINVWebSocket {
     const WSServer = new ws.WebSocket.Server({
@@ -43,9 +39,7 @@ export namespace SINVWebSocket {
 
         private async messageHandler(rawData: ws.RawData, isBinary: boolean) {
             try {
-                var JSONData: IncomingWebsocketData = JSON.parse(
-                    rawData.toString()
-                );
+                var JSONData: WebsocketMessage = JSON.parse(rawData.toString());
             } catch {
                 return;
             }
@@ -80,7 +74,7 @@ export namespace SINVWebSocket {
                         this.auth
                     );
                 }
-                let replyContent: OutgoingWebsocketData = {
+                let replyContent: WebsocketMessage = {
                     requestID: JSONData.requestID,
                     data: apiResponse,
                     type: 'response',

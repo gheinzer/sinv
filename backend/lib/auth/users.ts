@@ -6,6 +6,7 @@ import {
 import { SINVPermissions } from './permissions';
 import * as bcrypt from 'bcrypt';
 import { SINVConfig } from '../config';
+import { permissionObject, permission } from './permissions.types';
 
 export namespace SINVUserSystem {
     const prisma = new PrismaClient();
@@ -44,7 +45,7 @@ export namespace SINVUserSystem {
 
     export class User {
         private userRow!: DBUser; // This variable is assigned in the init method called by the constructor.
-        private permissionObject!: SINVPermissions.permissionObject;
+        private permissionObject!: permissionObject;
         private isInitialized: boolean = false;
         private initCallbacks: (() => void)[] = [];
 
@@ -118,9 +119,7 @@ export namespace SINVUserSystem {
          *
          * @async
          */
-        public async hasPermission(
-            permission: SINVPermissions.permission
-        ): Promise<boolean> {
+        public async hasPermission(permission: permission): Promise<boolean> {
             await this.awaitInitialization();
             let permissionObject = SINVPermissions.permissionStringToObject(
                 this.userRow.permissionString
