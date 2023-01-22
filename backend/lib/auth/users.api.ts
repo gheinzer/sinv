@@ -1,4 +1,4 @@
-import { SINVAPI } from '../api';
+import { SINVAPI } from '../api/api';
 import { SINVUserSystem } from './users';
 
 SINVAPI.addAction('auth/login', {

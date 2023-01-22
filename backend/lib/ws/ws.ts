@@ -1,6 +1,12 @@
 import * as ws from 'ws';
-import { SINVHTTPD } from './httpd';
-import { SINVAPI } from './api';
+import { SINVHTTPD } from '../httpd';
+import { SINVAPI } from '../api/api';
+import { APIResponse, AuthenticationData } from '../api/api.types';
+import {
+    WebsocketConversation,
+    IncomingWebsocketData,
+    OutgoingWebsocketData,
+} from './ws.types';
 
 export namespace SINVWebSocket {
     const WSServer = new ws.WebSocket.Server({
@@ -10,31 +16,15 @@ export namespace SINVWebSocket {
         server: SINVHTTPD.serverHTTPS,
     });
 
-    interface WebsocketConversation {
-        messageHandler?: (responseData: Object) => void;
-    }
-
-    interface IncomingWebsocketData {
-        requestID: number;
-        type: 'request' | 'response';
-        action?: string;
-        data: { [key: string]: any };
-    }
-
-    interface OutgoingWebsocketData {
-        requestID: number;
-        type: 'request' | 'response';
-        action?: string;
-        data: { [key: string]: any };
-    }
-
     class WebsocketConnection {
-        private activeRequests: { [key: number]: WebsocketConversation } = {};
+        private activeRequests: {
+            [key: number]: WebsocketConversation;
+        } = {};
         private highestConversationID: number = -1;
 
         constructor(
             private socket: ws.WebSocket,
-            private auth: SINVAPI.AuthenticationData = {
+            private auth: AuthenticationData = {
                 isAuthenticated: false,
             }
         ) {
@@ -71,7 +61,7 @@ export namespace SINVWebSocket {
                 JSONData.data &&
                 JSONData.action
             ) {
-                var apiResponse: SINVAPI.APIResponse;
+                var apiResponse: APIResponse;
                 if (JSONData.action.startsWith('apiHandler/')) {
                     // These are special actions which are handled by the api handler.
                     switch (JSONData.action) {

@@ -1,28 +1,8 @@
-import { SINVPermissions } from './auth/permissions';
-import { SINVUserSystem } from './auth/users';
+import { SINVPermissions } from '../auth/permissions';
+import { SINVUserSystem } from '../auth/users';
+import { APIAction, AuthenticationData, APIResponse } from './api.types';
 
 export namespace SINVAPI {
-    export interface APIAction {
-        needsAuthentication: boolean;
-        needsPermissions: SINVPermissions.permission[];
-        actionHandler: (
-            data: { [key: string]: any },
-            authenticationData: AuthenticationData
-        ) => APIResponse | Promise<APIResponse>;
-        requiresDataFields: string[];
-    }
-
-    export interface APIResponse {
-        success: boolean;
-        responseData?: Object;
-        error?: string;
-    }
-
-    export interface AuthenticationData {
-        isAuthenticated: boolean;
-        sessionID?: string;
-    }
-
     const actions: { [key: string]: APIAction } = {};
 
     /**

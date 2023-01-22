@@ -1,9 +1,6 @@
 import _ from 'lodash';
+import { permissionObject, permission } from './permissions.types';
 export namespace SINVPermissions {
-    export type permission = 'login' | 'superuser';
-    export type permissionObject = {
-        [key in permission]: boolean;
-    };
     const defaultPermissions: permissionObject = {
         login: true,
         superuser: false,
