@@ -3,8 +3,11 @@ import { SINVHTTPD } from './httpd';
 import { SINVAPI } from './api';
 
 export namespace SINVWebSocket {
-    const websocketServer = new ws.WebSocket.Server({
-        server: SINVHTTPD.server,
+    const WSServer = new ws.WebSocket.Server({
+        server: SINVHTTPD.serverHTTP,
+    });
+    const WSSServer = new ws.WebSocket.Server({
+        server: SINVHTTPD.serverHTTPS,
     });
 
     interface WebsocketConversation {
@@ -12,22 +15,21 @@ export namespace SINVWebSocket {
     }
 
     interface IncomingWebsocketData {
-        conversationID: number;
+        requestID: number;
         type: 'request' | 'response';
         action?: string;
         data: { [key: string]: any };
     }
 
-    interface WebsocketReponse {
-        conversationID: number;
+    interface OutgoingWebsocketData {
+        requestID: number;
         type: 'request' | 'response';
         action?: string;
         data: { [key: string]: any };
     }
 
     class WebsocketConnection {
-        private activeConversations: { [key: number]: WebsocketConversation } =
-            {};
+        private activeRequests: { [key: number]: WebsocketConversation } = {};
         private highestConversationID: number = -1;
 
         constructor(
@@ -42,7 +44,9 @@ export namespace SINVWebSocket {
         public sendMessageAwaitResponse(): Promise<Object> {
             return new Promise<Object>((resolve, reject) => {
                 let messageData: WebsocketConversation = {
-                    messageHandler(responseData) {},
+                    messageHandler(responseData) {
+                        resolve(responseData);
+                    },
                 };
             });
         }
@@ -55,11 +59,11 @@ export namespace SINVWebSocket {
             } catch {
                 return;
             }
-            if (JSONData.conversationID > this.highestConversationID) {
-                this.highestConversationID = JSONData.conversationID;
+            if (JSONData.requestID > this.highestConversationID) {
+                this.highestConversationID = JSONData.requestID;
             }
-            if (!this.activeConversations[JSONData.conversationID]) {
-                this.activeConversations[JSONData.conversationID] = {};
+            if (!this.activeRequests[JSONData.requestID]) {
+                this.activeRequests[JSONData.requestID] = {};
             }
 
             if (
@@ -86,22 +90,27 @@ export namespace SINVWebSocket {
                         this.auth
                     );
                 }
-                let replyContent: WebsocketReponse = {
-                    conversationID: JSONData.conversationID,
+                let replyContent: OutgoingWebsocketData = {
+                    requestID: JSONData.requestID,
                     data: apiResponse,
                     type: 'response',
                 };
                 this.socket.send(JSON.stringify(replyContent));
-                delete this.activeConversations[JSONData.conversationID]; // Marks the conversation as closed
             } else if (JSONData.type == 'response') {
+                let conversationData = this.activeRequests[JSONData.requestID];
+                if (!conversationData) return; // Invalid conversation IDs are ignored.
+                if (!conversationData.messageHandler) return;
+                await conversationData.messageHandler(JSONData.data);
             }
+            delete this.activeRequests[JSONData.requestID]; // Marks the conversation as closed
         }
     }
 
     let connections: WebsocketConnection[] = [];
 
     export function initializeServer() {
-        websocketServer.on('connection', connectionHandler);
+        WSServer.on('connection', connectionHandler);
+        WSSServer.on('connection', connectionHandler);
     }
 
     function connectionHandler(socket: ws.WebSocket) {

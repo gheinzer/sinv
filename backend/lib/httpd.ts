@@ -1,20 +1,36 @@
 import { existsSync, lstatSync, readFileSync } from 'fs';
 import * as http from 'http';
+import * as https from 'https';
 import mime from 'mime';
 import path from 'path';
 import { SINVConfig } from './config';
 
 export namespace SINVHTTPD {
-    export const server: http.Server = http.createServer(function (req, res) {
+    const HTTPSOptions: https.ServerOptions = {
+        key: readFileSync(SINVConfig.config.httpd.https.key_location),
+        cert: readFileSync(SINVConfig.config.httpd.https.cert_location),
+    };
+
+    export const serverHTTP: http.Server = http.createServer(requestHandler);
+    export const serverHTTPS: https.Server = https.createServer(
+        HTTPSOptions,
+        requestHandler
+    );
+
+    function requestHandler(
+        req: http.IncomingMessage,
+        res: http.ServerResponse
+    ) {
         if (req.method == 'GET') handleGET(req, res);
         else res.end();
-    });
+    }
 
     /**
      * Initializes the HTTP server and listens on the port specified in the configuration file.
      */
     export function initializeServer() {
-        server.listen(SINVConfig.config.httpd.port);
+        serverHTTP.listen(SINVConfig.config.httpd.http.port);
+        serverHTTPS.listen(SINVConfig.config.httpd.https.port);
     }
 
     function handleGET(req: http.IncomingMessage, res: http.ServerResponse) {

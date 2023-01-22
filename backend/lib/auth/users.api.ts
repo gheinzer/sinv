@@ -15,3 +15,18 @@ SINVAPI.addAction('auth/login', {
         }
     },
 });
+
+SINVAPI.addAction('helloWorld', {
+    needsAuthentication: false,
+    needsPermissions: [],
+    requiresDataFields: [],
+    actionHandler: async (data) => {
+        console.log(`API data: ${JSON.stringify(data)}`);
+        return {
+            success: true,
+            data: {
+                hello: 'world',
+            },
+        };
+    },
+});

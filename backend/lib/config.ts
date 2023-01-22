@@ -9,8 +9,16 @@ import _ from 'lodash';
 export namespace SINVConfig {
     export interface SINVConfigurationObject {
         httpd: {
-            port: number;
+            http: {
+                port: number;
+            };
             content_path: string;
+            https: {
+                key_location: string;
+                cert_location: string;
+                port: number;
+                enableHTTPS: boolean;
+            };
         };
         users: {
             password_hash_rounds: number;
@@ -19,8 +27,16 @@ export namespace SINVConfig {
 
     const defaultConfiguration: SINVConfigurationObject = {
         httpd: {
-            port: 8080,
+            http: {
+                port: 8080,
+            },
             content_path: 'dist/frontend',
+            https: {
+                key_location: 'data/key.pem',
+                cert_location: 'data/certificate.pem',
+                port: 443,
+                enableHTTPS: false,
+            },
         },
         users: {
             password_hash_rounds: 10,
