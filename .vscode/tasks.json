@@ -7,13 +7,28 @@
             "label": "Build and run",
             "type": "shell",
             "command": "cd backend && npm install --include=dev && npm run build && cd ../frontend && ng build && cd .. && node dist/backend/index",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "icon": {
+                "id": "run-all"
+            }
+        },
+        {
+            "label": "Build and watch",
+            "type": "shell",
+            "command": "cd backend && npm install --include=dev && npm run build && (tsc --watch &) && cd ../frontend && ng build && (ng build --watch &) && (ng serve --watch &) && cd .. && supervisor dist/backend/index",
+            "problemMatcher": [],
+            "icon": {
+                "id": "eye-watch"
+            }
         },
         {
             "label": "Migrate prisma databse",
             "type": "shell",
             "command": "cd backend && sudo prisma migrate dev --name=init && primsa generate",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "icon": {
+                "id": "database"
+            }
         }
     ]
 }
