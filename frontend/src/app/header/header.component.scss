@@ -1,8 +1,26 @@
+@import "src/globals.scss";
 .main-header {
-    display: flex;
+    display: grid;
     width: 100vw;
     height: max-content;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
+    grid-template-columns: max-content auto max-content;
+    padding: $header-padding;
+    nav,
+    div {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+}
+
+nav.left {
+    grid-column: 1/2;
+}
+
+.logo-container {
+    grid-column: 2/3;
+}
+
+nav.left {
+    grid-column: 3/3;
 }
