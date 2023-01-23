@@ -19,6 +19,7 @@
     app-button {
         @media #{$mediaquery-desktop} {
             width: 20vw;
+            min-width: 500px;
         }
         @media #{$mediaquery-mobile} {
             min-width: 90vw;
