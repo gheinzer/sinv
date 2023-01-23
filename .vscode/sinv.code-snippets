@@ -20,5 +20,17 @@
         "description": "Inserts the code for importing the globals from globals.scss",
         "prefix": "globals",
         "scope": "scss"
+    },
+    "Mediaquery for mobile": {
+        "body": ["@media #{$mediaquery-mobile} {", "", "}"],
+        "description": "Inserts the mobile mediaquery.",
+        "prefix": "mq-mobile",
+        "scope": "scss"
+    },
+    "Mediaquery for desktop": {
+        "body": ["@media #{$mediaquery-desktop} {", "", "}"],
+        "description": "Inserts the desktop mediaquery.",
+        "prefix": "mq-desktop",
+        "scope": "scss"
     }
 }
