@@ -1,5 +1,7 @@
+import { APIResponse } from '../api/api.types';
+
 export interface WebsocketRequestData {
-    messageHandler?: (responseData: Object) => void;
+    messageHandler?: (responseData: APIResponse) => void;
 }
 
 export interface WebsocketMessage {

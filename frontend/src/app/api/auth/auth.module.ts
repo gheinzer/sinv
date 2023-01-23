@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { AuthenticationData } from '@sinv/backend/lib/api/api.types';
+import { APIModule } from '../api/api.module';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule],
 })
-export class AuthModule { }
+export class AuthModule {
+  constructor(private apiModule: APIModule) {}
+
+  private authenticationData: AuthenticationData = {
+    isAuthenticated: false,
+  };
+
+  private async updateAuthenticationData() {
+    await this.apiModule.call('apiHandler/updateAuthenticationData', {
+      auth: this.authenticationData,
+    });
+  }
+}

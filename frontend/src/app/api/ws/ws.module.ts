@@ -66,6 +66,7 @@ export class WsModule {
       let conversationData = this.activeRequests[JSONData.requestID];
       if (!conversationData) return; // Invalid conversation IDs are ignored.
       if (!conversationData.messageHandler) return;
+      //@ts-ignore
       await conversationData.messageHandler(JSONData.data);
     }
     delete this.activeRequests[JSONData.requestID]; // Marks the conversation as closed
@@ -77,7 +78,7 @@ export class WsModule {
     action: string,
     data: { [key: string]: any }
   ) {
-    return new Promise<Object>((resolve, reject) => {
+    return new Promise<APIResponse>((resolve, reject) => {
       let conversationData: WSTypes.WebsocketRequestData = {
         messageHandler(responseData) {
           resolve(responseData);

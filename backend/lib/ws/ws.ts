@@ -100,6 +100,7 @@ export namespace SINVWebSocket {
                 let conversationData = this.activeRequests[JSONData.requestID];
                 if (!conversationData) return; // Invalid conversation IDs are ignored.
                 if (!conversationData.messageHandler) return;
+                //@ts-ignore
                 await conversationData.messageHandler(JSONData.data);
             }
             delete this.activeRequests[JSONData.requestID]; // Marks the conversation as closed
