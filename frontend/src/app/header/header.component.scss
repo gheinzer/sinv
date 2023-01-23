@@ -24,3 +24,7 @@ nav.left {
 nav.left {
     grid-column: 3/3;
 }
+
+nav {
+    @include desktop-only;
+}
