@@ -2,7 +2,7 @@ import * as ws from 'ws';
 import { SINVHTTPD } from '../httpd';
 import { SINVAPI } from '../api/api';
 import { APIResponse, AuthenticationData } from '../api/api.types';
-import { WebsocketConversation, WebsocketMessage } from './ws.types';
+import { WebsocketRequestData, WebsocketMessage } from './ws.types';
 
 export namespace SINVWebSocket {
     const WSServer = new ws.WebSocket.Server({
@@ -13,10 +13,8 @@ export namespace SINVWebSocket {
     });
 
     class WebsocketConnection {
-        private activeRequests: {
-            [key: number]: WebsocketConversation;
-        } = {};
-        private highestConversationID: number = -1;
+        private activeRequests: WebsocketRequestData[] = [];
+        private highestRequestID: number = -1;
 
         constructor(
             private socket: ws.WebSocket,
@@ -27,29 +25,47 @@ export namespace SINVWebSocket {
             this.socket.on('message', this.messageHandler);
         }
 
-        public sendMessageAwaitResponse(): Promise<Object> {
+        public sendMessageAwaitResponse(
+            action: string,
+            data: {
+                [key: string]: any;
+            }
+        ): Promise<Object> {
             return new Promise<Object>((resolve, reject) => {
-                let messageData: WebsocketConversation = {
+                let conversationData: WebsocketRequestData = {
                     messageHandler(responseData) {
                         resolve(responseData);
                     },
                 };
+
+                this.highestRequestID++;
+                let requestID = this.highestRequestID;
+                let messageData: WebsocketMessage = {
+                    requestID,
+                    data,
+                    type: 'request',
+                    action,
+                };
+                this.socket.send(JSON.stringify(messageData));
+                this.activeRequests[requestID] = conversationData;
             });
         }
 
-        private async messageHandler(rawData: ws.RawData, isBinary: boolean) {
+        private messageHandler = async (
+            rawData: ws.RawData,
+            isBinary: boolean
+        ) => {
             try {
                 var JSONData: WebsocketMessage = JSON.parse(rawData.toString());
             } catch {
                 return;
             }
-            if (JSONData.requestID > this.highestConversationID) {
-                this.highestConversationID = JSONData.requestID;
+            if (JSONData.requestID > this.highestRequestID) {
+                this.highestRequestID = JSONData.requestID;
             }
             if (!this.activeRequests[JSONData.requestID]) {
                 this.activeRequests[JSONData.requestID] = {};
             }
-
             if (
                 JSONData.type == 'request' &&
                 JSONData.data &&
@@ -87,7 +103,7 @@ export namespace SINVWebSocket {
                 await conversationData.messageHandler(JSONData.data);
             }
             delete this.activeRequests[JSONData.requestID]; // Marks the conversation as closed
-        }
+        };
     }
 
     let connections: WebsocketConnection[] = [];

@@ -1,4 +1,4 @@
-export interface WebsocketConversation {
+export interface WebsocketRequestData {
     messageHandler?: (responseData: Object) => void;
 }
 
