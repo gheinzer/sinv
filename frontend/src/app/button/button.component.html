@@ -2,7 +2,7 @@
     disabled: disabled == true,
     background: fill == 'background',
     accent: fill == 'accent'
-  }" class="button">
+  }" class="button" (click)="clickHandler($event)">
     <app-icon [id]="icon" *ngIf="icon !== ''"></app-icon>
     <span class="label"><ng-content></ng-content></span>
 </div>
