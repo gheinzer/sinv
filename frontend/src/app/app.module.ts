@@ -20,6 +20,7 @@ import { RegisterComponent } from './pageComponents/register/register.component'
 import { WsModule } from './api/ws/ws.module';
 import { AuthModule } from './api/auth/auth.module';
 import { APIModule } from './api/api/api.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { APIModule } from './api/api/api.module';
     ButtonComponent,
     RegisterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TranslationModule, WsModule, AuthModule, APIModule],
   bootstrap: [AppComponent],
 })
