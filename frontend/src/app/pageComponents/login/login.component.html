@@ -3,9 +3,9 @@
         <h1>
             <translation id="login"></translation>
         </h1>
-        <app-input [placeholder]="translationModule.getTranslation('username')" icon="username"></app-input>
-        <app-input [placeholder]="translationModule.getTranslation('password')" icon="password" type="password"></app-input>
-        <app-button icon="login">
+        <app-input [placeholder]="translationModule.getTranslation('username')" icon="username" [(value)]="username" (valueChange)="checkValues()"></app-input>
+        <app-input [placeholder]="translationModule.getTranslation('password')" icon="password" type="password" [(value)]="password" (valueChange)="checkValues()"></app-input>
+        <app-button icon="login" [disabled]="submitDisabled">
             <translation id="login"></translation>
         </app-button>
         <app-button icon="register" fill="background" routerLink="/register">

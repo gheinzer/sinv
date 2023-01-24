@@ -8,4 +8,16 @@ import { TranslationModule } from '../../translation/translation.module';
 })
 export class LoginComponent {
   constructor(public translationModule: TranslationModule) {}
+
+  public username: string = '';
+  public password: string = '';
+  public submitDisabled: boolean = true;
+
+  public checkValues() {
+    let requirementsSatisfied: boolean = true;
+    if (this.password == '') requirementsSatisfied = false;
+    else if (this.username == '') requirementsSatisfied = false;
+    this.submitDisabled = !requirementsSatisfied;
+    console.log(this.submitDisabled, requirementsSatisfied);
+  }
 }
