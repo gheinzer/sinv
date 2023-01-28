@@ -24,4 +24,8 @@ export var translations: { [key: string]: translation } = {
     en: 'The user you are looking for was not found.',
     de: 'Dieser Benutzer existiert nicht.',
   },
+  passwordWrong: {
+    en: 'The password you entered is invalid.',
+    de: 'Das eingegebene Passwort ist ungültig.',
+  },
 };

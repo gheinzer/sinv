@@ -8,7 +8,10 @@
         <icon-text icon="error" *ngIf="!userExists">
             <translation id="userNotFound"></translation>
         </icon-text>
-        <app-button icon="login" [disabled]="submitDisabled || checkingRequirements" [loader]="checkingRequirements">
+        <icon-text icon="error" *ngIf="passwordWrong">
+            <translation id="passwordWrong"></translation>
+        </icon-text>
+        <app-button icon="login" [disabled]="submitDisabled || loginButtonLoader" [loader]="loginButtonLoader" (click)="login()">
             <translation id="login"></translation>
         </app-button>
     </div>

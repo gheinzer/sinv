@@ -8,6 +8,8 @@ import { APIModule } from '../api/api.module';
   imports: [CommonModule],
 })
 export class AuthModule {
+  private readonly sessionIDCookieName: string = 'sinv-sessid';
+
   constructor(private apiModule: APIModule) {}
 
   private authenticationData: AuthenticationData = {
@@ -18,6 +20,17 @@ export class AuthModule {
     await this.apiModule.call('apiHandler/updateAuthenticationData', {
       auth: this.authenticationData,
     });
+  }
+
+  public async login(username: string, password: string) {
+    let sessionData = await this.apiModule.call('auth/login', {
+      username,
+      password,
+    });
+    window.localStorage.setItem(
+      this.sessionIDCookieName,
+      sessionData.data.sessionID
+    );
   }
 
   public async userExists(username: string) {
