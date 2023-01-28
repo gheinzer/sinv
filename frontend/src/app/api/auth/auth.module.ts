@@ -113,11 +113,11 @@ export class AuthModule {
   }
 
   public async logout() {
-    console.log('hello');
     await this.awaitAuthentication();
     if (!this.authenticationData.isAuthenticated) return;
     window.localStorage.removeItem(this.sessionIDCookieName);
     await this.apiModule.call('auth/logout', {});
+    window.location.reload();
     this.updateAuthenticationState();
   }
 }
