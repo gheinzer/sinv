@@ -27,7 +27,11 @@ export namespace SINVUserSystem {
      */
     export async function initializeAdminUser() {
         try {
-            await createUser('admin', 'admin');
+            await createUser(
+                'admin',
+                'admin',
+                SINVPermissions.permissionStringToObject('{"superuser": true}')
+            );
         } catch {}
     }
 
@@ -57,7 +61,10 @@ export namespace SINVUserSystem {
      */
     export async function createUser(
         username: string,
-        password: string
+        password: string,
+        permissions: permissionObject = SINVPermissions.permissionStringToObject(
+            '{}'
+        )
     ): Promise<User> {
         if (await prisma.user.findUnique({ where: { username: username } })) {
             throw Error('user_already_exists');
@@ -66,7 +73,15 @@ export namespace SINVUserSystem {
             password,
             SINVConfig.config.users.password_hash_rounds
         );
-        await prisma.user.create({ data: { username, passwordHash } });
+        let permissionString =
+            SINVPermissions.permissionObjectToString(permissions);
+        await prisma.user.create({
+            data: {
+                username,
+                passwordHash,
+                permissionString: permissionString,
+            },
+        });
         return new User({ username });
     }
 

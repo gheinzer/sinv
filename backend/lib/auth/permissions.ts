@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { permissionObject, permission } from './permissions.types';
 export namespace SINVPermissions {
-    const defaultPermissions: permissionObject = {
+    export const defaultPermissions: permissionObject = {
         login: true,
         superuser: false,
     };
@@ -41,7 +41,7 @@ export namespace SINVPermissions {
         let key: permission;
         //@ts-ignore
         for (key of _.keys(object)) {
-            if (object[key] != defaultPermissions[key]) {
+            if (object[key] == defaultPermissions[key]) {
                 delete object[key];
             }
         }
