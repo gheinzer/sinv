@@ -32,5 +32,18 @@
         "description": "Inserts the desktop mediaquery.",
         "prefix": "mq-desktop",
         "scope": "scss"
+    },
+    "API action definition": {
+        "body": [
+            "SINVAPI.addAction('${1:action}', {",
+            "needsAuthentication: ${2:false},",
+            "needsPermissions: [$3],",
+            "requiresDataFields: [${4:'username'}],",
+            "actionHandler: async (data) => {$0},",
+            "});"
+        ],
+        "prefix": "apidef",
+        "description": "Inserts an API definition template",
+        "scope": ""
     }
 }
