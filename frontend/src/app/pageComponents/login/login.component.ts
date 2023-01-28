@@ -16,12 +16,12 @@ export class LoginComponent implements OnInit {
   public username: string = '';
   public password: string = '';
   public submitDisabled: boolean = true;
-  public loginButtonLoader: boolean = false;
+  public loginLoading: boolean = false;
   public userExists: boolean = true;
   public passwordWrong: boolean = false;
 
   public async checkValues() {
-    this.loginButtonLoader = true;
+    this.loginLoading = true;
     let requirementsSatisfied: boolean = true;
     this.userExists = await this.authenticationModule.userExists(this.username);
     if (this.password == '') requirementsSatisfied = false;
@@ -30,12 +30,12 @@ export class LoginComponent implements OnInit {
       requirementsSatisfied = false;
     }
     this.submitDisabled = !requirementsSatisfied;
-    this.loginButtonLoader = false;
+    this.loginLoading = false;
   }
 
   public async login() {
     if (this.submitDisabled) return;
-    this.loginButtonLoader = true;
+    this.loginLoading = true;
     try {
       await this.authenticationModule.login(this.username, this.password);
       this.passwordWrong = false;
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.password = '';
       }
     }
-    this.loginButtonLoader = false;
+    this.loginLoading = false;
   }
 
   ngOnInit() {
