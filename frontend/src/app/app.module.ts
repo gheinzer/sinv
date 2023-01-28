@@ -21,6 +21,7 @@ import { WsModule } from './api/ws/ws.module';
 import { AuthModule } from './api/auth/auth.module';
 import { APIModule } from './api/api/api.module';
 import { FormsModule } from '@angular/forms';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { FormsModule } from '@angular/forms';
     TranslationComponent,
     ButtonComponent,
     RegisterComponent,
+    LoaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TranslationModule, WsModule, AuthModule, APIModule],

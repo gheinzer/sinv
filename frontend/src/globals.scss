@@ -38,6 +38,10 @@ $banner-padding: $standard-padding;
 // * Button variables
 $button-padding: $standard-padding 30px;
 $button-gap: 1ch;
+// * Loader variables
+$loader-border-thickness: 2px;
+$loader-normal-border: solid transparent;
+$loader-segment-border: solid $accent-color;
 // * Mixins
 @mixin default-font($italic: 0, $weight: 400) {
     font-family: "Source Code Pro", monospace;
