@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './loader/loader.component';
 import { IconTextComponent } from './icon-text/icon-text.component';
 import { LoaderModule } from './loader/loader.module';
+import { UserBadgeComponent } from './user-badge/user-badge.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LoaderModule } from './loader/loader.module';
     ButtonComponent,
     LoaderComponent,
     IconTextComponent,
+    UserBadgeComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TranslationModule, WsModule, AuthModule, APIModule, LoaderModule],

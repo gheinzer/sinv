@@ -42,6 +42,11 @@ $button-gap: 1ch;
 $loader-border-thickness: 2px;
 $loader-normal-border: solid transparent;
 $loader-segment-border: solid $accent-color;
+// * User badge variables
+$badge-menu-padding: $standard-padding;
+$badge-menu-border-radius: $standard-border-radius;
+$badge-menu-top: 75px;
+$badge-menu-right: $standard-padding;
 // * Mixins
 @mixin default-font($italic: 0, $weight: 400) {
     font-family: "Source Code Pro", monospace;

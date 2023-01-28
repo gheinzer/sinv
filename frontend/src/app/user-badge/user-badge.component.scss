@@ -1,0 +1,32 @@
+@import "src/globals.scss";
+.badge-menu {
+    position: absolute;
+    @include box;
+    border-radius: $badge-menu-border-radius;
+    padding: $badge-menu-padding;
+    top: $badge-menu-top;
+    right: $badge-menu-right;
+    display: flex;
+    gap: $standard-padding;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    icon-text {
+        width: max-content;
+    }
+    transition: 0.1s;
+}
+
+.badge,
+.badge-menu icon-text {
+    &:hover {
+        opacity: 0.5;
+    }
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+:host:focus-within .badge-menu {
+    opacity: 1;
+    pointer-events: all;
+}

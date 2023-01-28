@@ -28,4 +28,12 @@ export var translations: { [key: string]: translation } = {
     en: 'The password you entered is invalid.',
     de: 'Das eingegebene Passwort ist ungültig.',
   },
+  logout: {
+    en: 'Sign out',
+    de: 'Abmelden',
+  },
+  settings: {
+    en: 'Settings',
+    de: 'Einstellungen',
+  },
 };

@@ -4,8 +4,9 @@
         <app-logo></app-logo>
     </div>
     <nav class="right">
-        <app-link routerLink="/login">
+        <app-link routerLink="/login" *ngIf="!authModule.isAuthenticated">
             <translation id="login"></translation>
         </app-link>
+        <app-user-badge *ngIf="authModule.isAuthenticated"></app-user-badge>
     </nav>
 </header>

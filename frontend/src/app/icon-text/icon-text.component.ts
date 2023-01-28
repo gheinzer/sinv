@@ -17,6 +17,8 @@ import { Component, Input } from '@angular/core';
         gap: 1ch;
         app-icon {
           fill: $root-color;
+          height: 1.25em;
+          display: block;
         }
       }
     `,

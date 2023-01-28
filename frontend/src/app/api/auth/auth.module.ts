@@ -13,6 +13,7 @@ export class AuthModule {
   private readonly sessionIDCookieName: string = 'sinv-sessid';
   private authValidationHandlers: (() => void)[] = [];
   private authenticationStateChecked: boolean = false;
+  public isAuthenticated: boolean = false;
 
   constructor(
     private apiModule: APIModule,
@@ -56,6 +57,7 @@ export class AuthModule {
     for (let handler of this.authValidationHandlers) {
       handler();
     }
+    this.isAuthenticated = this.authenticationData.isAuthenticated;
     this.loaderModule.satisfyRequirement();
   }
 
@@ -102,5 +104,20 @@ export class AuthModule {
     if (!this.authenticationData.isAuthenticated) {
       this.router.navigateByUrl(url);
     }
+  }
+
+  public async getUsername() {
+    await this.awaitAuthentication();
+    if (!this.authenticationData.isAuthenticated) return '';
+    return (await this.apiModule.call('auth/getUsername', {})).data.username;
+  }
+
+  public async logout() {
+    console.log('hello');
+    await this.awaitAuthentication();
+    if (!this.authenticationData.isAuthenticated) return;
+    window.localStorage.removeItem(this.sessionIDCookieName);
+    await this.apiModule.call('auth/logout', {});
+    this.updateAuthenticationState();
   }
 }

@@ -42,3 +42,28 @@ SINVAPI.addAction('auth/validateSession', {
         };
     },
 });
+SINVAPI.addAction('auth/getUsername', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: [],
+    actionHandler: async (data, auth) => {
+        let user = new SINVUserSystem.User(auth);
+        await user.awaitInitialization();
+        return {
+            success: true,
+            data: {
+                username: user.username,
+            },
+        };
+    },
+});
+SINVAPI.addAction('auth/logout', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: [],
+    actionHandler: async (data, auth) => {
+        //@ts-ignore
+        await SINVUserSystem.destroySession(auth.sessionID);
+        return { success: true };
+    },
+});

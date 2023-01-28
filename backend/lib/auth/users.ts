@@ -90,6 +90,7 @@ export namespace SINVUserSystem {
         private permissionObject!: permissionObject;
         private isInitialized: boolean = false;
         private initCallbacks: (() => void)[] = [];
+        public username!: string;
 
         /**
          * Creates an user object and initializes it.
@@ -101,7 +102,7 @@ export namespace SINVUserSystem {
             this.init();
         }
 
-        private awaitInitialization() {
+        public awaitInitialization() {
             if (this.isInitialized) return;
             return new Promise<void>((resolve, reject) => {
                 this.initCallbacks.push(resolve);
@@ -152,6 +153,7 @@ export namespace SINVUserSystem {
                     callback();
                 }
             } else throw Error('user_not_found');
+            this.username = this.userRow.username;
         }
 
         /**
@@ -233,5 +235,9 @@ export namespace SINVUserSystem {
         let age = Date.now() - date.getTime();
         age = age / (1000 * 60 * 60); // Converts the session age to hours.
         return age < SINVConfig.config.users.sessionMaxAge;
+    }
+
+    export async function destroySession(sessionID: string) {
+        await prisma.userSession.delete({ where: { id: sessionID } });
     }
 }
