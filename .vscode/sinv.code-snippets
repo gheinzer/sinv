@@ -39,11 +39,11 @@
             "needsAuthentication: ${2:false},",
             "needsPermissions: [$3],",
             "requiresDataFields: [${4:'username'}],",
-            "actionHandler: async (data) => {$0},",
+            "actionHandler: async (data, auth) => {$0},",
             "});"
         ],
         "prefix": "apidef",
         "description": "Inserts an API definition template",
-        "scope": ""
+        "scope": "typescript"
     }
 }

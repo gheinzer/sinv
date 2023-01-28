@@ -23,7 +23,7 @@ export namespace SINVAPI {
         let result: APIResponse;
 
         if (
-            authenticationData.isAuthenticated &&
+            authenticationData.isAuthenticated && // The isAuthenticated property can also be set on the frontend and the state must be checked.
             actionInfo.needsAuthentication
         ) {
             try {

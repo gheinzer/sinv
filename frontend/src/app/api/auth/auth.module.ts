@@ -22,6 +22,26 @@ export class AuthModule {
     });
   }
 
+  public async updateAuthenticationState() {
+    let sessionID = window.localStorage.getItem(this.sessionIDCookieName);
+    if (sessionID) {
+      let sessionValid = (
+        await this.apiModule.call('auth/validateSession', {
+          sessionID,
+        })
+      ).data.isValid;
+      if (sessionValid) {
+        this.authenticationData = { isAuthenticated: true, sessionID };
+        this.updateAuthenticationData();
+        console.log(this.authenticationData);
+        return;
+      }
+    }
+    this.authenticationData = {
+      isAuthenticated: false,
+    };
+  }
+
   public async login(username: string, password: string) {
     let sessionData = await this.apiModule.call('auth/login', {
       username,
@@ -31,6 +51,11 @@ export class AuthModule {
       this.sessionIDCookieName,
       sessionData.data.sessionID
     );
+    this.authenticationData = {
+      sessionID: sessionData.data.sessionID,
+      isAuthenticated: true,
+    };
+    this.updateAuthenticationState();
   }
 
   public async userExists(username: string) {

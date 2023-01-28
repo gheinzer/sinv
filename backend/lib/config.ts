@@ -22,6 +22,7 @@ export namespace SINVConfig {
         };
         users: {
             password_hash_rounds: number;
+            sessionMaxAge: number;
         };
     }
 
@@ -40,6 +41,7 @@ export namespace SINVConfig {
         },
         users: {
             password_hash_rounds: 10,
+            sessionMaxAge: 24 * 7, // Is in hours, so the default is 7 days.
         },
     };
 

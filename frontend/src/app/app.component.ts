@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WsModule } from './api/ws/ws.module';
+import { AuthModule } from './api/auth/auth.module';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,11 @@ import { WsModule } from './api/ws/ws.module';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private ws: WsModule) {}
+  constructor(private authModule: AuthModule) {}
+
+  async ngOnInit() {
+    await this.authModule.updateAuthenticationState();
+  }
 
   title = 'frontend';
 }

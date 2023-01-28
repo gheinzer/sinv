@@ -29,3 +29,16 @@ SINVAPI.addAction('auth/userExists', {
         };
     },
 });
+SINVAPI.addAction('auth/validateSession', {
+    needsAuthentication: false,
+    needsPermissions: [],
+    requiresDataFields: ['sessionID'],
+    actionHandler: async (data) => {
+        return {
+            success: true,
+            data: {
+                isValid: await SINVUserSystem.validateSession(data.sessionID),
+            },
+        };
+    },
+});

@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
     provider = "sqlite"
-    url      = "file:../../data/sinv.db"
+    url      = "file:../../../data/sinv.db"
 }
 
 model Object {
@@ -60,15 +60,15 @@ model Attachment {
 }
 
 model User {
-    id               Int            @id @default(autoincrement())
-    username         String         @unique
+    id               Int           @id @default(autoincrement())
+    username         String        @unique
     passwordHash     String
     createdObjects   Object[]
-    sessions         UserSessions[]
-    permissionString String         @default("{}")
+    sessions         UserSession[]
+    permissionString String        @default("{}")
 }
 
-model UserSessions {
+model UserSession {
     id     String   @id
     opened DateTime @default(now())
     User   User?    @relation(fields: [userId], references: [id])

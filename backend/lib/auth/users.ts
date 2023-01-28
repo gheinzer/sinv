@@ -1,7 +1,7 @@
 import {
     PrismaClient,
     User as DBUser,
-    UserSessions as DBUserSession,
+    UserSession as DBUserSession,
 } from '@prisma/client';
 import { SINVPermissions } from './permissions';
 import * as bcrypt from 'bcrypt';
@@ -123,7 +123,7 @@ export namespace SINVUserSystem {
             if (this.identification.sessionID) {
                 row =
                     (
-                        await prisma.userSessions.findUnique({
+                        await prisma.userSession.findUnique({
                             where: { id: this.identification.sessionID },
                             include: { User: true },
                         })
@@ -182,7 +182,7 @@ export namespace SINVUserSystem {
         public async createSession(): Promise<string> {
             await this.awaitInitialization();
             let sessionID = crypto.randomUUID();
-            await prisma.userSessions.create({
+            await prisma.userSession.create({
                 data: {
                     userId: this.userRow.id,
                     id: sessionID,
@@ -203,5 +203,35 @@ export namespace SINVUserSystem {
             await this.awaitInitialization();
             return bcrypt.compareSync(password, this.userRow.passwordHash);
         }
+    }
+
+    /**
+     * Validates a session with a given session ID based on existance and age.
+     * Returns `true` if the session is valid and `false` if the session is invalid.
+     *
+     * @export
+     * @async
+     * @param {string} sessionID The session ID to validate.
+     * @returns {Promise<boolean>}
+     */
+    export async function validateSession(sessionID: string): Promise<boolean> {
+        let session = await prisma.userSession.findUnique({
+            where: { id: sessionID },
+        });
+        if (session == null || !session.opened) return false;
+        return checkSessionAge(session.opened);
+    }
+
+    /**
+     * Checks if a session is older than the max age set in the config. Returns `true` if the session is not too old, returns `false` if it is too old.
+     *
+     * @async
+     * @param {Date} date The creation time and date of the session.
+     * @returns {Promise<boolean>}
+     */
+    async function checkSessionAge(date: Date): Promise<boolean> {
+        let age = Date.now() - date.getTime();
+        age = age / (1000 * 60 * 60); // Converts the session age to hours.
+        return age < SINVConfig.config.users.sessionMaxAge;
     }
 }

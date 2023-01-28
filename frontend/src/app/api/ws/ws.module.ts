@@ -17,7 +17,7 @@ export class WsModule {
   private socket: WebSocket;
   private activeRequests: WSTypes.WebsocketRequestData[] = [];
   private highestRequestID: number = -1;
-
+  private openingHandlers: (() => void)[] = [];
   constructor() {
     let websocketURL = `${this.protocol}://${window.location.host}`;
     this.socket = new WebSocket(websocketURL);
@@ -74,10 +74,11 @@ export class WsModule {
 
   private closeHandler(event: CloseEvent) {}
 
-  public sendMessageAwaitResponse(
+  public async sendMessageAwaitResponse(
     action: string,
     data: { [key: string]: any }
   ) {
+    await this.awaitSocketConnection();
     return new Promise<APIResponse>((resolve, reject) => {
       let conversationData: WSTypes.WebsocketRequestData = {
         messageHandler(responseData) {
@@ -98,10 +99,19 @@ export class WsModule {
     });
   }
 
+  private awaitSocketConnection() {
+    return new Promise<void>((resolve, reject) => {
+      this.openingHandlers.push(resolve);
+    });
+  }
+
   private async initializeSocket(ev: Event) {
     //@ts-ignore
     this.socket = ev.target;
     this.socket.onmessage = this.messageHandler;
     this.socket.onclose = this.closeHandler;
+    for (let handler of this.openingHandlers) {
+      handler();
+    }
   }
 }
