@@ -11,7 +11,7 @@ export interface APIAction {
 
 export interface APIResponse {
     success: boolean;
-    responseData?: Object;
+    data?: Object;
     error?: string;
 }
 

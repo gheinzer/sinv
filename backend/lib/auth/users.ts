@@ -26,7 +26,7 @@ export namespace SINVUserSystem {
      * @returns {Promise<boolean>}
      */
     export async function userExists(username: string): Promise<boolean> {
-        let users = prisma.user.findFirst({ where: { username } });
+        let users = await prisma.user.findFirst({ where: { username } });
         return users !== null; // findFirst returns null if the record is not found
     }
 
