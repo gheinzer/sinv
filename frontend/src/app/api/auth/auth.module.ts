@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationData } from '@sinv/backend/lib/api/api.types';
 import { APIModule } from '../api/api.module';
 import { Router } from '@angular/router';
+import { LoaderModule } from '../../loader/loader.module';
 
 @NgModule({
   declarations: [],
@@ -13,7 +14,11 @@ export class AuthModule {
   private authValidationHandlers: (() => void)[] = [];
   private authenticationStateChecked: boolean = false;
 
-  constructor(private apiModule: APIModule, private router: Router) {}
+  constructor(
+    private apiModule: APIModule,
+    private router: Router,
+    private loaderModule: LoaderModule
+  ) {}
 
   private authenticationData: AuthenticationData = {
     isAuthenticated: false,
@@ -26,6 +31,7 @@ export class AuthModule {
   }
 
   public async updateAuthenticationState() {
+    this.loaderModule.addRequirement();
     let sessionID = window.localStorage.getItem(this.sessionIDCookieName);
     if (sessionID) {
       let sessionValid = (
@@ -50,6 +56,7 @@ export class AuthModule {
     for (let handler of this.authValidationHandlers) {
       handler();
     }
+    this.loaderModule.satisfyRequirement();
   }
 
   public async login(username: string, password: string) {

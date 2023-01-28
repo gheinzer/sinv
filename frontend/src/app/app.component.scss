@@ -1,3 +1,4 @@
+@import "src/globals.scss";
 :host {
     display: grid;
     grid-template-rows: max-content auto;
@@ -24,4 +25,19 @@
 
 app-header {
     grid-template-rows: 1/2;
+}
+
+.loader-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 95;
+    background-color: $root-bg;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    app-loader {
+        width: 50px;
+        height: 50px;
+    }
 }

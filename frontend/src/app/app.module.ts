@@ -22,6 +22,7 @@ import { APIModule } from './api/api/api.module';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './loader/loader.component';
 import { IconTextComponent } from './icon-text/icon-text.component';
+import { LoaderModule } from './loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { IconTextComponent } from './icon-text/icon-text.component';
     IconTextComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [TranslationModule, WsModule, AuthModule, APIModule],
+  providers: [TranslationModule, WsModule, AuthModule, APIModule, LoaderModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

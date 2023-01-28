@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import * as WSTypes from '../../../../../backend/lib/ws/ws.types';
 
 import { APIResponse } from '@sinv/backend/lib/api/api.types';
+import { LoaderModule } from '../../loader/loader.module';
 
 interface FrontendRequestHandler {
   handler: (data: { [key: string]: any }) => APIResponse;
@@ -18,11 +19,13 @@ export class WsModule {
   private activeRequests: WSTypes.WebsocketRequestData[] = [];
   private highestRequestID: number = -1;
   private openingHandlers: (() => void)[] = [];
-  constructor() {
+  constructor(private loaderModule: LoaderModule) {
     let websocketURL = `${this.protocol}://${window.location.host}`;
     this.socket = new WebSocket(websocketURL);
+    loaderModule.addRequirement();
     this.socket.onopen = (ev) => {
       this.initializeSocket(ev);
+      loaderModule.satisfyRequirement();
     };
   }
 
