@@ -7,10 +7,19 @@ div.button {
     outline: none;
     cursor: pointer;
     transition: 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: $button-gap;
+    display: grid;
+    grid-template-columns: 0 auto;
+    grid-template-rows: max-content;
+    .content {
+        grid-column: 2/2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $button-gap;
+    }
+    app-loader {
+        grid-column: 1/2;
+    }
     &.background {
         @include box;
         color: $root-color;
@@ -20,6 +29,9 @@ div.button {
         @include box($accent-color, $accent-color);
         color: $root-bg;
         fill: $root-bg;
+        app-loader {
+            border-top-color: $root-bg !important;
+        }
     }
     .label {
         width: max-content;

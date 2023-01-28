@@ -16,6 +16,7 @@ export class ButtonComponent implements OnChanges {
   @Input() icon: string = '';
   @Input() fill: 'background' | 'accent' = 'accent';
   @Input() disabled: boolean = false;
+  @Input() loader: boolean = false;
   @Output() click = new EventEmitter<void>();
 
   @HostBinding('style.pointerEvents') pointerEvents: string = 'initial';
