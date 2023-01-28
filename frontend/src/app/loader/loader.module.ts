@@ -10,6 +10,7 @@ export class LoaderModule {
   private satisifedRequirements: number = 0;
   private onloadHandlers: (() => void)[] = [];
   private onchangeHandlers: ((loaded: boolean) => void)[] = [];
+  public loaded: boolean = true;
 
   public addRequirement() {
     this.requirements++;
@@ -22,7 +23,9 @@ export class LoaderModule {
   }
 
   private runHandlers() {
-    if (this.requirements == this.satisifedRequirements) {
+    this.loaded = this.requirements == this.satisifedRequirements;
+
+    if (this.loaded) {
       for (let handler of this.onloadHandlers) {
         handler();
       }
