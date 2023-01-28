@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslationModule } from '../../translation/translation.module';
 import { AuthModule } from '../../api/auth/auth.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { AuthModule } from '../../api/auth/auth.module';
 export class LoginComponent implements OnInit {
   constructor(
     public translationModule: TranslationModule,
-    public authenticationModule: AuthModule
+    public authenticationModule: AuthModule,
+    private router: Router
   ) {}
 
   public username: string = '';
@@ -21,7 +23,6 @@ export class LoginComponent implements OnInit {
   public passwordWrong: boolean = false;
 
   public async checkValues() {
-    this.loginLoading = true;
     let requirementsSatisfied: boolean = true;
     this.userExists = await this.authenticationModule.userExists(this.username);
     if (this.password == '') requirementsSatisfied = false;
@@ -30,7 +31,6 @@ export class LoginComponent implements OnInit {
       requirementsSatisfied = false;
     }
     this.submitDisabled = !requirementsSatisfied;
-    this.loginLoading = false;
   }
 
   public async login() {
@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
         this.password = '';
       }
     }
+    this.router.navigateByUrl('/');
     this.loginLoading = false;
   }
 

@@ -1,8 +1,8 @@
 <div class="badge" tabindex="-1">
     <icon-text icon="username" class="username">{{ username }}</icon-text>
 </div>
-<div class="badge-menu" tabindex="-1" routerLink="/settings">
-    <icon-text icon="settings">
+<div class="badge-menu" tabindex="-1">
+    <icon-text icon="settings" routerLink="/settings">
         <translation id="settings"></translation>
     </icon-text>
     <icon-text icon="logout" (click)="authModule.logout()">
