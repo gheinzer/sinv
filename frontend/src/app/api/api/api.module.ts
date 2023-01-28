@@ -14,8 +14,8 @@ export class APIModule {
     action: string,
     data: { [key: string]: any }
   ): Promise<APIResponse> {
-    let reponse = await this.WSModule.sendMessageAwaitResponse(action, data);
-    if (!reponse.success) throw Error(reponse.error);
-    return reponse;
+    let response = await this.WSModule.sendMessageAwaitResponse(action, data);
+    if (!response.success) throw Error(response.error);
+    return response;
   }
 }

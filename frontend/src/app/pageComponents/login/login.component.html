@@ -5,11 +5,11 @@
         </h1>
         <app-input [placeholder]="translationModule.getTranslation('username')" icon="username" [(value)]="username" (valueChange)="checkValues()"></app-input>
         <app-input [placeholder]="translationModule.getTranslation('password')" icon="password" type="password" [(value)]="password" (valueChange)="checkValues()"></app-input>
-        <app-button icon="login" [disabled]="submitDisabled">
+        <icon-text icon="error" *ngIf="!userExists">
+            <translation id="userNotFound"></translation>
+        </icon-text>
+        <app-button icon="login" [disabled]="submitDisabled || checkingRequirements" [loader]="checkingRequirements">
             <translation id="login"></translation>
-        </app-button>
-        <app-button icon="register" fill="background" routerLink="/register">
-            <translation id="register"></translation>
         </app-button>
     </div>
 </div>

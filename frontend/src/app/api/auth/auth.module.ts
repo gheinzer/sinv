@@ -19,4 +19,12 @@ export class AuthModule {
       auth: this.authenticationData,
     });
   }
+
+  public async userExists(username: string) {
+    return (
+      await this.apiModule.call('auth/userExists', {
+        username,
+      })
+    ).data?.userExists;
+  }
 }

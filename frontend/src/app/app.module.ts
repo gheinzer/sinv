@@ -22,6 +22,7 @@ import { AuthModule } from './api/auth/auth.module';
 import { APIModule } from './api/api/api.module';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './loader/loader.component';
+import { IconTextComponent } from './icon-text/icon-text.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { LoaderComponent } from './loader/loader.component';
     ButtonComponent,
     RegisterComponent,
     LoaderComponent,
+    IconTextComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TranslationModule, WsModule, AuthModule, APIModule],

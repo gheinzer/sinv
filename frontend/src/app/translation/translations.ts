@@ -20,4 +20,8 @@ export var translations: { [key: string]: translation } = {
     en: 'Sign up',
     de: 'Registrieren',
   },
+  userNotFound: {
+    en: 'The user you are looking for was not found.',
+    de: 'Dieser Benutzer existiert nicht.',
+  },
 };
