@@ -18,6 +18,19 @@ export namespace SINVUserSystem {
     }
 
     /**
+     * Determines if a user with a given username exists.
+     *
+     * @export
+     * @async
+     * @param {string} username The username of the user to check.
+     * @returns {Promise<boolean>}
+     */
+    export async function userExists(username: string): Promise<boolean> {
+        let users = prisma.user.findFirst({ where: { username } });
+        return users !== null; // findFirst returns null if the record is not found
+    }
+
+    /**
      * Creates a new user with the given username and password.
      *
      * @export

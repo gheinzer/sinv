@@ -15,3 +15,17 @@ SINVAPI.addAction('auth/login', {
         }
     },
 });
+
+SINVAPI.addAction('auth/userExists', {
+    needsAuthentication: false,
+    needsPermissions: [],
+    requiresDataFields: ['username'],
+    actionHandler: async (data) => {
+        return {
+            success: true,
+            data: {
+                userExists: await SINVUserSystem.userExists(data.username),
+            },
+        };
+    },
+});
