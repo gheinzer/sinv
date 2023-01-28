@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { AuthModule } from '../../api/auth/auth.module';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-
+  constructor(private authModule: AuthModule) {
+    authModule.redirectIfNotLoggedIn('/login');
+  }
 }

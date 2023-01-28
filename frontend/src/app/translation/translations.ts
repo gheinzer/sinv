@@ -36,4 +36,12 @@ export var translations: { [key: string]: translation } = {
     en: 'Settings',
     de: 'Einstellungen',
   },
+  latestObjects: {
+    en: 'Latest objects',
+    de: 'Letzte Objekte',
+  },
+  addObject: {
+    en: 'Add object',
+    de: 'Objekt hinzufügen',
+  },
 };
