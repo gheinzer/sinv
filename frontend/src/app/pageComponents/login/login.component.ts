@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslationModule } from '../../translation/translation.module';
 import { AuthModule } from '../../api/auth/auth.module';
 
@@ -7,7 +7,7 @@ import { AuthModule } from '../../api/auth/auth.module';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(
     public translationModule: TranslationModule,
     public authenticationModule: AuthModule
@@ -46,5 +46,9 @@ export class LoginComponent {
       }
     }
     this.loginButtonLoader = false;
+  }
+
+  ngOnInit() {
+    this.authenticationModule.redirectIfLoggedIn('/');
   }
 }

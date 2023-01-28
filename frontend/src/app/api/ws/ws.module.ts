@@ -100,6 +100,7 @@ export class WsModule {
   }
 
   private awaitSocketConnection() {
+    if (this.socket.readyState == this.socket.OPEN) return;
     return new Promise<void>((resolve, reject) => {
       this.openingHandlers.push(resolve);
     });

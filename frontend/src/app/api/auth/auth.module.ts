@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthenticationData } from '@sinv/backend/lib/api/api.types';
 import { APIModule } from '../api/api.module';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [],
@@ -9,8 +10,10 @@ import { APIModule } from '../api/api.module';
 })
 export class AuthModule {
   private readonly sessionIDCookieName: string = 'sinv-sessid';
+  private authValidationHandlers: (() => void)[] = [];
+  private authenticationStateChecked: boolean = false;
 
-  constructor(private apiModule: APIModule) {}
+  constructor(private apiModule: APIModule, private router: Router) {}
 
   private authenticationData: AuthenticationData = {
     isAuthenticated: false,
@@ -32,14 +35,21 @@ export class AuthModule {
       ).data.isValid;
       if (sessionValid) {
         this.authenticationData = { isAuthenticated: true, sessionID };
-        this.updateAuthenticationData();
-        console.log(this.authenticationData);
-        return;
+      } else {
+        this.authenticationData = {
+          isAuthenticated: false,
+        };
       }
+    } else {
+      this.authenticationData = {
+        isAuthenticated: false,
+      };
     }
-    this.authenticationData = {
-      isAuthenticated: false,
-    };
+    this.updateAuthenticationData();
+    this.authenticationStateChecked = true;
+    for (let handler of this.authValidationHandlers) {
+      handler();
+    }
   }
 
   public async login(username: string, password: string) {
@@ -64,5 +74,26 @@ export class AuthModule {
         username,
       })
     ).data?.userExists;
+  }
+
+  private awaitAuthentication() {
+    if (this.authenticationStateChecked) return;
+    return new Promise<void>((resolve, reject) => {
+      this.authValidationHandlers.push(resolve);
+    });
+  }
+
+  public async redirectIfLoggedIn(url: string) {
+    await this.awaitAuthentication();
+    if (this.authenticationData.isAuthenticated) {
+      this.router.navigateByUrl(url);
+    }
+  }
+
+  public async redirectIfNotLoggedIn(url: string) {
+    await this.awaitAuthentication();
+    if (!this.authenticationData.isAuthenticated) {
+      this.router.navigateByUrl(url);
+    }
   }
 }
