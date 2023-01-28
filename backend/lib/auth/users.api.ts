@@ -8,7 +8,7 @@ SINVAPI.addAction('auth/login', {
     actionHandler: async (data) => {
         let user = new SINVUserSystem.User({ username: data.username });
         if (await user.checkPassword(data.password)) {
-            let sessionID = user.createSession();
+            let sessionID = await user.createSession();
             return { success: true, data: { sessionID } };
         } else {
             return { success: false, error: 'wrong_password' };

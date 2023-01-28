@@ -7,6 +7,7 @@ import { SINVPermissions } from './permissions';
 import * as bcrypt from 'bcrypt';
 import { SINVConfig } from '../config';
 import { permissionObject, permission } from './permissions.types';
+import * as crypto from 'crypto';
 
 export namespace SINVUserSystem {
     const prisma = new PrismaClient();
@@ -15,6 +16,19 @@ export namespace SINVUserSystem {
         sessionID?: string;
         username?: string;
         userID?: number;
+    }
+
+    /**
+     * Creates the admin user if it does not already exist. The default password used is `admin`.
+     *
+     * @export
+     * @async
+     * @returns {*}
+     */
+    export async function initializeAdminUser() {
+        try {
+            await createUser('admin', 'admin');
+        } catch {}
     }
 
     /**
@@ -153,7 +167,7 @@ export namespace SINVUserSystem {
         public async createSession(): Promise<string> {
             await this.awaitInitialization();
             let sessionID = crypto.randomUUID();
-            prisma.userSessions.create({
+            await prisma.userSessions.create({
                 data: {
                     userId: this.userRow.id,
                     id: sessionID,
