@@ -1,4 +1,4 @@
 <div class="container">
     <app-icon class="icon" [id]="icon" *ngIf="icon !== ''"></app-icon>
-    <input [type]="type" [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" />
+    <input [type]="type" [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" #input />
 </div>
