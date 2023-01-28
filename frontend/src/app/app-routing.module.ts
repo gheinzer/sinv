@@ -5,7 +5,6 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './pageComponents/home/home.component';
 import { NotFoundComponent } from './pageComponents/not-found/not-found.component';
 import { LoginComponent } from './pageComponents/login/login.component';
-import { RegisterComponent } from './pageComponents/register/register.component';
 
 const routes: Routes = [
   {
@@ -16,10 +15,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  {
-    path: 'register',
-    component: RegisterComponent,
-  },
+
   { path: '**', component: NotFoundComponent },
 ];
 

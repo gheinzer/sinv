@@ -16,7 +16,6 @@ import { BannerComponent } from './banner/banner.component';
 import { TranslationComponent } from './translation/translation.component';
 import { TranslationModule } from './translation/translation.module';
 import { ButtonComponent } from './button/button.component';
-import { RegisterComponent } from './pageComponents/register/register.component';
 import { WsModule } from './api/ws/ws.module';
 import { AuthModule } from './api/auth/auth.module';
 import { APIModule } from './api/api/api.module';
@@ -39,7 +38,6 @@ import { IconTextComponent } from './icon-text/icon-text.component';
     BannerComponent,
     TranslationComponent,
     ButtonComponent,
-    RegisterComponent,
     LoaderComponent,
     IconTextComponent,
   ],
