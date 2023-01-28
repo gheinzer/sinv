@@ -11,7 +11,7 @@
         <icon-text icon="error" *ngIf="passwordWrong">
             <translation id="passwordWrong"></translation>
         </icon-text>
-        <app-button icon="login" [disabled]="submitDisabled || loginButtonLoader" [loader]="loginButtonLoader" (click)="login()">
+        <app-button icon="login" [disabled]="submitDisabled || loginLoading" (click)="login()">
             <translation id="login"></translation>
         </app-button>
     </div>
