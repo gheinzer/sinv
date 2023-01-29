@@ -18,10 +18,11 @@ export class InputComponent {
 
   @Input() icon: string = '';
   @Input() placeholder: string = '';
-  @Input() type: 'text' | 'email' | 'password' = 'text';
+  @Input() type: 'text' | 'email' | 'password' | 'dropdown' = 'text';
   @Input() autofocus: '' | null = null;
 
   @Input() value: any = '';
+  @Input() choices: { [key: string | number]: string } = {};
   @Output() valueChange = new EventEmitter<string>();
 
   @ViewChild('input') input!: ElementRef;
@@ -30,5 +31,10 @@ export class InputComponent {
     if (this.autofocus == '') {
       this.input.nativeElement.focus();
     }
+    if (this.type == 'dropdown' && this.value == '') {
+      this.value = Object.entries(this.choices)[0][0];
+    }
   }
+
+  public getEntries = Object.entries;
 }

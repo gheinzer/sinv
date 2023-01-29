@@ -1,4 +1,14 @@
-<div class="container">
+<div class="container" [ngClass]="{ dropdown: type == 'dropdown' }">
     <app-icon class="icon" [id]="icon" *ngIf="icon !== ''"></app-icon>
-    <input [type]="type" [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" #input />
+    <div class="text-container" [ngSwitch]="type">
+        <div class="value-container" *ngSwitchCase="'dropdown'" tabindex="-1">
+            {{ choices[value] }}
+        </div>
+        <input *ngSwitchDefault="" [type]="type" [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" #input />
+        <app-icon class="expand-arrow" id="expand" *ngIf="type == 'dropdown'" tabindex="-1"></app-icon>
+        <div class="dropdown-menu">
+            <span *ngFor="let choice of getEntries(choices)" (click)="value = choice[0]" tabindex="-1">{{ choice[1] }}</span
+      >
+    </div>
+  </div>
 </div>

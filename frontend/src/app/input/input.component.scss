@@ -7,13 +7,23 @@
     @include box;
     transition: 0.2s;
     border-radius: $input-border-radius;
-    padding: 0 $input-padding;
     gap: $input-gap;
-    .icon {
+    padding-left: $input-padding;
+    .icon,
+    .text-container .expand-arrow {
         height: $input-icon-size;
         fill: $root-color;
     }
-    input {
+    .text-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: $input-padding;
+    }
+    input,
+    .value-container {
         padding: $input-padding 0;
         background-color: transparent;
         border: none;
@@ -30,5 +40,31 @@
     }
     &:invalid:not(:focus) {
         border: red solid;
+    }
+    .dropdown-menu {
+        position: absolute;
+        @include box;
+        padding: $input-padding;
+        display: none;
+        flex-direction: column;
+        gap: $input-padding;
+        border-radius: $input-border-radius;
+        min-width: 100%;
+        top: $input-dropdown-menu-top;
+        right: 0;
+        left: 0;
+        span {
+            cursor: pointer;
+            transition: 0.2s;
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+    &:focus-within .dropdown-menu {
+        display: flex;
+    }
+    &.dropdown {
+        cursor: pointer;
     }
 }
