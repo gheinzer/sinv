@@ -4,6 +4,7 @@ export namespace SINVPermissions {
     export const defaultPermissions: permissionObject = {
         login: true,
         superuser: false,
+        repositoryAdmin: false,
     };
 
     /**

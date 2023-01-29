@@ -9,6 +9,7 @@ import { SINVConfig } from '../config';
 import { permissionObject, permission } from './permissions.types';
 import * as crypto from 'crypto';
 import { InitializableClass } from '../types';
+import { SINVRepositories } from '../objects/repositories';
 
 export namespace SINVUserSystem {
     const prisma = new PrismaClient();
@@ -193,6 +194,48 @@ export namespace SINVUserSystem {
         public async checkPassword(password: string): Promise<boolean> {
             await this.awaitInitialization();
             return bcrypt.compareSync(password, this.userRow.passwordHash);
+        }
+
+        /**
+         * Generates an array of the repositories the user has permission to access.
+         *
+         * @public
+         * @async
+         * @returns {Promise<
+                    SINVRepositories.Repository[]
+                >}
+         */
+        public async getUserRepositories(): Promise<
+            SINVRepositories.Repository[]
+        > {
+            this.awaitInitialization();
+            let repositories: SINVRepositories.Repository[] = [];
+            if (await this.hasPermission('repositoryAdmin')) {
+                let repositoryList = await prisma.repository.findMany({
+                    where: {},
+                });
+                for (let repo of repositoryList) {
+                    let repositoryObject = new SINVRepositories.Repository(
+                        repo.id
+                    );
+                    await repositoryObject.awaitInitialization();
+                    repositories.push(repositoryObject);
+                }
+            } else {
+                let user = await prisma.user.findUniqueOrThrow({
+                    where: { id: this.userRow.id },
+                    include: { repositoryPermissions: true },
+                });
+                for (let permission of user.repositoryPermissions) {
+                    if (!permission.repositoryId) continue;
+                    let repositoryObject = new SINVRepositories.Repository(
+                        permission.repositoryId
+                    );
+                    await repositoryObject.awaitInitialization();
+                    repositories.push(repositoryObject);
+                }
+            }
+            return repositories;
         }
     }
 
