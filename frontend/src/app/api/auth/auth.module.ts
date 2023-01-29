@@ -43,9 +43,7 @@ export class AuthModule {
       if (sessionValid) {
         this.authenticationData = { isAuthenticated: true, sessionID };
       } else {
-        this.authenticationData = {
-          isAuthenticated: false,
-        };
+        this.logout();
       }
     } else {
       this.authenticationData = {
