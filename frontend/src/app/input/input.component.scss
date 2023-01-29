@@ -4,6 +4,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    height: 100%;
     @include box;
     transition: 0.2s;
     border-radius: $input-border-radius;
