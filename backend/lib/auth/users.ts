@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { SINVConfig } from '../config';
 import { permissionObject, permission } from './permissions.types';
 import * as crypto from 'crypto';
+import { InitializableClass } from '../types';
 
 export namespace SINVUserSystem {
     const prisma = new PrismaClient();
@@ -85,11 +86,9 @@ export namespace SINVUserSystem {
         return new User({ username });
     }
 
-    export class User {
-        private userRow!: DBUser; // This variable is assigned in the init method called by the constructor.
+    export class User extends InitializableClass {
+        public userRow!: DBUser; // This variable is assigned in the init method called by the constructor.
         private permissionObject!: permissionObject;
-        private isInitialized: boolean = false;
-        private initCallbacks: (() => void)[] = [];
         public username!: string;
 
         /**
@@ -99,16 +98,9 @@ export namespace SINVUserSystem {
          * new SINVUserSystem.User({username: 'foo'})
          */
         constructor(private identification: identificationObject) {
+            super();
             this.init();
         }
-
-        public awaitInitialization() {
-            if (this.isInitialized) return;
-            return new Promise<void>((resolve, reject) => {
-                this.initCallbacks.push(resolve);
-            });
-        }
-
         /**
          * Initializes the user with the database row.
          *
@@ -148,10 +140,7 @@ export namespace SINVUserSystem {
                     SINVPermissions.permissionStringToObject(
                         this.userRow.permissionString
                     );
-                this.isInitialized = true;
-                for (let callback of this.initCallbacks) {
-                    callback();
-                }
+                this.markAsInitialized();
             } else throw Error('user_not_found');
             this.username = this.userRow.username;
         }

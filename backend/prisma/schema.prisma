@@ -10,15 +10,39 @@ datasource db {
     url      = "file:../../../data/sinv.db"
 }
 
+model Repository {
+    id              Int                    @id @default(autoincrement())
+    permissions     RepositoryPermission[]
+    name            String                 @unique
+    description     String
+    Objects         Object[]
+    RelationTypes   RelationType[]
+    ObjectTypes     ObjectType[]
+    AttachmentTypes AttachmentType[]
+}
+
+model RepositoryPermission {
+    id           Int         @id @default(autoincrement())
+    Repository   Repository? @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
+    User         User?       @relation(fields: [userId], references: [id])
+    userId       Int?
+}
+
 model Object {
-    id               String           @id
+    id               Int              @id @default(autoincrement())
+    userDefinedID    String
     createdBy        User             @relation(fields: [creatorID], references: [id])
     creatorID        Int
-    attachements     Attachment[]
+    attachments      Attachment[]
     ObjectType       ObjectType       @relation(fields: [objectTypeId], references: [id])
     objectTypeId     Int
     Object1Relations ObjectRelation[] @relation("Object1")
     Object2Relations ObjectRelation[] @relation("Object2")
+    lastAccessed     DateTime         @default(now())
+    Repository       Repository?      @relation(fields: [repositoryId], references: [id])
+    repositoryId     Int?
+    description      String
 }
 
 model ObjectRelation {
@@ -26,46 +50,53 @@ model ObjectRelation {
     RelationType   RelationType @relation(fields: [relationTypeId], references: [id])
     relationTypeId Int
     Object1        Object       @relation(fields: [object1ID], references: [id], name: "Object1")
-    object1ID      String
+    object1ID      Int
     Object2        Object       @relation(fields: [object2ID], references: [id], name: "Object2")
-    object2ID      String
+    object2ID      Int
 }
 
 model RelationType {
-    id        Int              @id @default(autoincrement())
-    name      String           @unique
-    relations ObjectRelation[]
+    id           Int              @id @default(autoincrement())
+    name         String           @unique
+    relations    ObjectRelation[]
+    Repository   Repository?      @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
 }
 
 model ObjectType {
-    id      Int      @id @default(autoincrement())
-    name    String   @unique
-    objects Object[]
+    id           Int         @id @default(autoincrement())
+    name         String      @unique
+    objects      Object[]
+    Repository   Repository? @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
 }
 
-model AttachementType {
+model AttachmentType {
     id           Int          @id @default(autoincrement())
     name         String       @unique
-    attachements Attachment[]
+    attachments  Attachment[]
+    Repository   Repository?  @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
 }
 
 model Attachment {
-    id                Int             @id @default(autoincrement())
-    mimeType          String
-    comment           String
-    AttachementType   AttachementType @relation(fields: [attachementTypeId], references: [id])
-    attachementTypeId Int
-    Object            Object          @relation(fields: [objectId], references: [id])
-    objectId          String
+    id               Int            @id @default(autoincrement())
+    mimeType         String
+    comment          String
+    AttachmentType   AttachmentType @relation(fields: [attachmentTypeId], references: [id])
+    attachmentTypeId Int
+    Object           Object         @relation(fields: [objectId], references: [id])
+    objectId         Int
 }
 
 model User {
-    id               Int           @id @default(autoincrement())
-    username         String        @unique
-    passwordHash     String
-    createdObjects   Object[]
-    sessions         UserSession[]
-    permissionString String        @default("{}")
+    id                    Int                    @id @default(autoincrement())
+    username              String                 @unique
+    passwordHash          String
+    createdObjects        Object[]
+    sessions              UserSession[]
+    permissionString      String                 @default("{}")
+    repositoryPermissions RepositoryPermission[]
 }
 
 model UserSession {

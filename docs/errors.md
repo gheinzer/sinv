@@ -2,11 +2,12 @@
 
 ## Thrown errors
 
-| Error name                        | Error description                                                                                                 | Thrown by                     |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `user_identification_not_defined` | There was a `SINVUserSystem.identificationObject` given without defining any of the identification possibilities. | `SINVUserSystem.User.init()`  |
-| `user_not_found`                  | The user identified by the `identificationObject` does not exist.                                                 | `SINVUserSystem.User.init()`  |
-| `user_already_exists`             | The user you are trying to create already exists.                                                                 | `SINVUserSystem.createUser()` |
+| Error name                        | Error description                                                                                                 | Thrown by                       |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `user_identification_not_defined` | There was a `SINVUserSystem.identificationObject` given without defining any of the identification possibilities. | `SINVUserSystem.User.init()`    |
+| `user_not_found`                  | The user identified by the `identificationObject` does not exist.                                                 | `SINVUserSystem.User.init()`    |
+| `user_already_exists`             | The user you are trying to create already exists.                                                                 | `SINVUserSystem.createUser()`   |
+| `object_id_non-existant`          | The object you are tying to get does not exist.                                                                   | `SINVObjects.SINVObject.init()` |
 
 ## API errors
 
