@@ -1,0 +1,38 @@
+@import "src/globals.scss";
+.creation-form {
+    @include desktop-only;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: $standard-padding;
+    gap: $standard-padding;
+    flex-direction: column;
+    .label-input-container {
+        display: grid;
+        gap: $standard-padding;
+        grid-template-columns: minmax(0, 20vw) auto;
+        grid-template-rows: max-content;
+        width: 100%;
+        label {
+            grid-column: 1/2;
+            grid-row: 1/1;
+            .info-text {
+                font-style: italic;
+                opacity: 0.5;
+                display: block;
+                font-size: 13px;
+            }
+        }
+        app-input {
+            grid-row: 1/1;
+            grid-column: 2/2;
+            height: max-content;
+        }
+    }
+}
+
+.mobile-notice {
+    @include mobile-only;
+    padding: $standard-padding;
+    text-align: center;
+}
