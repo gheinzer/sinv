@@ -18,7 +18,8 @@ export class InputComponent {
 
   @Input() icon: string = '';
   @Input() placeholder: string = '';
-  @Input() type: 'text' | 'email' | 'password' | 'dropdown' = 'text';
+  @Input() type: 'text' | 'email' | 'password' | 'dropdown' | 'textarea' =
+    'text';
   @Input() autofocus: '' | null = null;
 
   @Input() value: any = '';
