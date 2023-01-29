@@ -25,6 +25,7 @@ import { IconTextComponent } from './icon-text/icon-text.component';
 import { LoaderModule } from './loader/loader.module';
 import { UserBadgeComponent } from './user-badge/user-badge.component';
 import { ObjectCreatorComponet } from './objects/creator/creator.component';
+import { RepositoriesModule } from './api/repositories/repositories.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,14 @@ import { ObjectCreatorComponet } from './objects/creator/creator.component';
     ObjectCreatorComponet,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [TranslationModule, WsModule, AuthModule, APIModule, LoaderModule],
+  providers: [
+    TranslationModule,
+    WsModule,
+    AuthModule,
+    APIModule,
+    LoaderModule,
+    RepositoriesModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

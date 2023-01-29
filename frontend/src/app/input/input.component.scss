@@ -10,6 +10,7 @@
     border-radius: $input-border-radius;
     gap: $input-gap;
     padding-left: $input-padding;
+    width: max-content;
     .icon,
     .text-container .expand-arrow {
         height: $input-icon-size;
@@ -57,7 +58,7 @@
         min-width: 100%;
         top: $input-dropdown-menu-top;
         right: 0;
-        left: 0;
+        width: max-content;
         span {
             cursor: pointer;
             transition: 0.2s;

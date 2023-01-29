@@ -83,7 +83,7 @@ export class AuthModule {
     ).data?.userExists;
   }
 
-  private awaitAuthentication() {
+  public awaitAuthentication() {
     if (this.authenticationStateChecked) return;
     return new Promise<void>((resolve, reject) => {
       this.authValidationHandlers.push(resolve);

@@ -68,4 +68,12 @@ export var translations: { [key: string]: translation } = {
     en: 'Information written in the description can be found with the search feature, but information in the attachments not.',
     de: 'Informationen in der Beschreibung können mittels der Suchfunktion gefunden werden, während Informationen in den Anhängen nicht auf diese Weise durchsucht werden können.',
   },
+  identifier: {
+    en: 'Identifier',
+    de: 'Identifikationsnummer',
+  },
+  identifierHint: {
+    en: 'Use a unique and short identifier that you ideally associate with the object in some way (eg. with a label). The identifier can also consist of letters.',
+    de: 'Benutzen Sie eine kurze und einmalige Identifikationsnummer, welche Sie mit dem Objekt, beispielsweise mit einem Label, assoziieren. Die Identifikationsnummer kann auch aus Buchstaben bestehen.',
+  },
 };

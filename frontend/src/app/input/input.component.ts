@@ -28,11 +28,16 @@ export class InputComponent {
 
   @ViewChild('input') input!: ElementRef;
 
+  ngOnInit() {}
+
   ngAfterViewInit() {
     if (this.autofocus == '') {
       this.input.nativeElement.focus();
     }
-    if (this.type == 'dropdown' && this.value == '') {
+  }
+
+  ngOnChanges() {
+    if (this.type == 'dropdown' && !this.value) {
       this.value = Object.entries(this.choices)[0][0];
     }
   }
