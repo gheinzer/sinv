@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.password = '';
       }
     }
-    this.router.navigateByUrl('/');
+    window.location.pathname = '/'; // This also reloads the window
     this.loginLoading = false;
   }
 

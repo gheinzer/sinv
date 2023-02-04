@@ -21,9 +21,10 @@ export class InputComponent {
   @Input() type: 'text' | 'email' | 'password' | 'dropdown' | 'textarea' =
     'text';
   @Input() autofocus: '' | null = null;
+  @Input() choices: { [key: string | number]: string } = {};
+  @Input() shortcut: string[] = [];
 
   @Input() value: any = '';
-  @Input() choices: { [key: string | number]: string } = {};
   @Output() valueChange = new EventEmitter<string>();
 
   @ViewChild('input') input!: ElementRef;
@@ -37,7 +38,11 @@ export class InputComponent {
   }
 
   ngOnChanges() {
-    if (this.type == 'dropdown' && !this.value) {
+    if (
+      this.type == 'dropdown' &&
+      !this.value &&
+      Object.entries(this.choices).length > 0
+    ) {
       this.value = Object.entries(this.choices)[0][0];
     }
   }

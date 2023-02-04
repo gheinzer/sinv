@@ -4,4 +4,9 @@ import { Component } from '@angular/core';
   templateUrl: './creator.component.html',
   styleUrls: ['./creator.component.scss'],
 })
-export class ObjectCreatorComponet {}
+export class ObjectCreatorComponet {
+  public attachmentDragHandler(ev: DragEvent) {
+    ev.preventDefault();
+    console.log(ev);
+  }
+}

@@ -76,4 +76,12 @@ export var translations: { [key: string]: translation } = {
     en: 'Use a unique and short identifier that you ideally associate with the object in some way (eg. with a label). The identifier can also consist of letters.',
     de: 'Benutzen Sie eine kurze und einmalige Identifikationsnummer, welche Sie mit dem Objekt, beispielsweise mit einem Label, assoziieren. Die Identifikationsnummer kann auch aus Buchstaben bestehen.',
   },
+  searchNormalPlaceholder: {
+    en: 'Search',
+    de: 'Suche',
+  },
+  searchIDPlaceholder: {
+    en: 'Identifier',
+    de: 'ID',
+  },
 };

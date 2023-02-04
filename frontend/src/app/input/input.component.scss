@@ -10,7 +10,7 @@
     border-radius: $input-border-radius;
     gap: $input-gap;
     padding-left: $input-padding;
-    width: max-content;
+    width: 100%;
     .icon,
     .text-container .expand-arrow {
         height: $input-icon-size;
@@ -51,7 +51,9 @@
         position: absolute;
         @include box;
         padding: $input-padding;
-        display: none;
+        display: flex;
+        opacity: 0;
+        pointer-events: none;
         flex-direction: column;
         gap: $input-padding;
         border-radius: $input-border-radius;
@@ -59,6 +61,7 @@
         top: $input-dropdown-menu-top;
         right: 0;
         width: max-content;
+        transition: 0.2s;
         span {
             cursor: pointer;
             transition: 0.2s;
@@ -68,7 +71,8 @@
         }
     }
     &.dropdown:focus-within .dropdown-menu {
-        display: flex;
+        opacity: 1;
+        pointer-events: all;
     }
     &.dropdown {
         cursor: pointer;

@@ -4,14 +4,16 @@
         <app-logo></app-logo>
     </div>
     <nav class="left" *ngIf="authModule.isAuthenticated">
-        <app-input icon="search" type="text"></app-input>
-        <app-input icon="id-search" type="text"></app-input>
+        <app-input icon="search" type="text" [placeholder]="
+        translationModule.getTranslation('searchNormalPlaceholder')
+      " [shortcut]="['alt', '/']" [keyboardShortcut]="[{ keys: ['alt', '/'], handler: focusSearch }]" #search></app-input>
+        <app-input icon="id-search" type="text" [placeholder]="translationModule.getTranslation('searchIDPlaceholder')" [shortcut]="['`']" #idsearch></app-input>
     </nav>
     <nav class="right">
         <app-link routerLink="/login" *ngIf="!authModule.isAuthenticated">
             <translation id="login"></translation>
         </app-link>
         <app-user-badge *ngIf="authModule.isAuthenticated"></app-user-badge>
-        <app-input icon="repository" type="dropdown" *ngIf="authModule.isAuthenticated" [choices]="repositories"></app-input>
+        <app-input icon="repository" type="dropdown" *ngIf="authModule.isAuthenticated" [choices]="repositories" [(value)]="selectedRepository" (valueChange)="updateRepository()"></app-input>
     </nav>
 </header>

@@ -26,6 +26,8 @@ import { LoaderModule } from './loader/loader.module';
 import { UserBadgeComponent } from './user-badge/user-badge.component';
 import { ObjectCreatorComponet } from './objects/creator/creator.component';
 import { RepositoriesModule } from './api/repositories/repositories.module';
+import { KeyboardShortcutComponent } from './keyboard-shortcut/keyboard-shortcut.component';
+import { KeyboardShortcutDirective } from './keyboard-shortcut.directive';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { RepositoriesModule } from './api/repositories/repositories.module';
     IconTextComponent,
     UserBadgeComponent,
     ObjectCreatorComponet,
+    KeyboardShortcutComponent,
+    KeyboardShortcutDirective,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
