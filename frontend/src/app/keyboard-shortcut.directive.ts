@@ -13,7 +13,6 @@ export class KeyboardShortcutDirective {
   }
 
   private keydownListener(ev: KeyboardEvent) {
-    console.log(ev);
     for (let shortcut of this.keyboardShortcut) {
       let keysSatisifed: number = 0;
       for (let key of shortcut.keys) {

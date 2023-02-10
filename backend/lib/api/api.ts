@@ -22,6 +22,8 @@ export namespace SINVAPI {
         let actionInfo = actions[action];
         let result: APIResponse;
 
+        if (!actionInfo) return { success: false, error: 'invalid_action' };
+
         if (
             authenticationData.isAuthenticated && // The isAuthenticated property can also be set on the frontend and the state must be checked.
             actionInfo.needsAuthentication

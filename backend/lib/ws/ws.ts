@@ -1,5 +1,5 @@
 import * as ws from 'ws';
-import { SINVHTTPD } from '../httpd';
+import { SINVHTTPD } from '../http/httpd';
 import { SINVAPI } from '../api/api';
 import { APIResponse, AuthenticationData } from '../api/api.types';
 import { WebsocketRequestData, WebsocketMessage } from './ws.types';

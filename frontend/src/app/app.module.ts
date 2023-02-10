@@ -28,6 +28,10 @@ import { ObjectCreatorComponet } from './objects/creator/creator.component';
 import { RepositoriesModule } from './api/repositories/repositories.module';
 import { KeyboardShortcutComponent } from './keyboard-shortcut/keyboard-shortcut.component';
 import { KeyboardShortcutDirective } from './keyboard-shortcut.directive';
+import { AttachmentModule } from './api/attachments/attachments.module';
+import { AttachmentEditorComponent } from './attachments/attachment-editor/attachment-editor.component';
+import { AttachmentDropZoneComponent } from './attachments/attachment-drop-zone/attachment-drop-zone.component';
+import { FileIconModule } from './attachments/file-icon/file-icon.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,8 @@ import { KeyboardShortcutDirective } from './keyboard-shortcut.directive';
     ObjectCreatorComponet,
     KeyboardShortcutComponent,
     KeyboardShortcutDirective,
+    AttachmentEditorComponent,
+    AttachmentDropZoneComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
@@ -59,6 +65,8 @@ import { KeyboardShortcutDirective } from './keyboard-shortcut.directive';
     APIModule,
     LoaderModule,
     RepositoriesModule,
+    AttachmentModule,
+    FileIconModule,
   ],
   bootstrap: [AppComponent],
 })

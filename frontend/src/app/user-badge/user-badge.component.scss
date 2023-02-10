@@ -30,3 +30,7 @@
     opacity: 1;
     pointer-events: all;
 }
+
+:host {
+    position: relative;
+}

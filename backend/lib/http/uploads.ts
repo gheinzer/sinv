@@ -1,0 +1,79 @@
+import { PrismaClient } from '@prisma/client';
+import { existsSync, mkdirSync } from 'fs';
+import { SINVConfig } from '../config';
+import { UploadRequest } from './uploads.types';
+import * as http from 'http';
+import formidable from 'formidable';
+import { randomUUID } from 'crypto';
+
+export namespace SINVUploads {
+    let uploadRequests: { [key: string]: UploadRequest } = {};
+
+    const prisma = new PrismaClient();
+
+    /**
+     * Initializes an upload with a upload ID. This needs to be called before uploading a file, otherwise, the file is rejected.
+     *
+     * @export
+     * @param {string} expectedMimeType
+     * @param {string} sessionID
+     * @returns {string} The upload ID needed to confirm that the upload is allowed.
+     */
+    export function initializeUpload(
+        sessionID: string,
+        attachmentID: number,
+        mimeType: string
+    ) {
+        let uploadID: string = randomUUID();
+        while (uploadRequests[uploadID]) {
+            uploadID = randomUUID();
+        }
+        uploadRequests[uploadID] = {
+            sessionID,
+            attachmentID,
+            mimeType,
+        };
+        return uploadID;
+    }
+
+    export function handleUpload(
+        req: http.IncomingMessage,
+        res: http.ServerResponse
+    ) {
+        let form = new formidable.IncomingForm();
+        form.parse(req, (err, fields, files) => {
+            if (
+                !fields.sessionID ||
+                !fields.uploadID ||
+                !files.file ||
+                !files.mimeType
+            ) {
+                res.statusCode = 400;
+                res.end('not all fields given');
+                return;
+            }
+            let uploadData = uploadRequests[fields.uploadID.toString()];
+            if (!uploadRequests[fields.uploadID.toString()]) {
+                res.statusCode = 400;
+                res.end('invalid upload id');
+                return;
+            } else if (uploadData.sessionID !== fields.sessionID.toString()) {
+                res.statusCode = 400;
+                res.end('bad session id');
+                return;
+            }
+            // If everything is ok, save the file.
+            if (!Array.isArray(files.file))
+                var file: formidable.File = files.file;
+            else {
+                res.end('files.file is array.');
+                return;
+            }
+            let fileExtension = file.originalFilename?.match(/\..+/);
+        });
+    }
+}
+
+if (existsSync(SINVConfig.config.uploadDirectory)) {
+    mkdirSync(SINVConfig.config.uploadDirectory, { recursive: true });
+}

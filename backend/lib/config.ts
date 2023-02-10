@@ -20,6 +20,7 @@ export namespace SINVConfig {
                 enableHTTPS: boolean;
             };
         };
+        uploadDirectory: string;
         users: {
             password_hash_rounds: number;
             sessionMaxAge: number;
@@ -39,6 +40,7 @@ export namespace SINVConfig {
                 enableHTTPS: false,
             },
         },
+        uploadDirectory: 'data/uploads',
         users: {
             password_hash_rounds: 10,
             sessionMaxAge: 24 * 7, // Is in hours, so the default is 7 days.

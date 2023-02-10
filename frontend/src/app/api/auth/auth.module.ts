@@ -21,7 +21,7 @@ export class AuthModule {
     private loaderModule: LoaderModule
   ) {}
 
-  private authenticationData: AuthenticationData = {
+  public authenticationData: AuthenticationData = {
     isAuthenticated: false,
   };
 

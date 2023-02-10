@@ -46,8 +46,8 @@ $loader-segment-border: solid $accent-color;
 // * User badge variables
 $badge-menu-padding: $standard-padding;
 $badge-menu-border-radius: $standard-border-radius;
-$badge-menu-top: 75px;
-$badge-menu-right: $standard-padding;
+$badge-menu-top: 30px;
+$badge-menu-right: 0;
 // * Mixins
 @mixin default-font($italic: 0, $weight: 400) {
     font-family: "Source Code Pro", monospace;

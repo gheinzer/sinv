@@ -3,3 +3,4 @@
 import './lib/auth/users.api';
 import './lib/objects/objects.api';
 import './lib/objects/repositories.api';
+import './lib/http/uploads.api';

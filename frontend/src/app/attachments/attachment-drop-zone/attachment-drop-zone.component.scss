@@ -1,0 +1,51 @@
+@use "sass:color";
+@import "src/globals.scss";
+.drop-zone {
+    @include box;
+    min-height: 250px;
+    width: 100%;
+    border-radius: $standard-border-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: filter 0.2s;
+    &.empty {
+        cursor: pointer;
+    }
+    gap: $standard-padding;
+    padding: $standard-padding;
+    app-attachment-editor {
+        width: 100%;
+    }
+    &.dragover {
+        filter: brightness(150%);
+        .placeholder,
+        app-attachment-editor {
+            pointer-events: none;
+        }
+    }
+    .placeholder {
+        opacity: 0.1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        app-icon {
+            fill: white;
+            width: 100px;
+            height: 100px;
+            display: block;
+        }
+        span {
+            font-size: 1.5rem;
+        }
+    }
+    input[type="file"] {
+        display: none;
+    }
+}
+
+:host {
+    width: 100%;
+}

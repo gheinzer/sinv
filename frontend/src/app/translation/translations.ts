@@ -84,4 +84,16 @@ export var translations: { [key: string]: translation } = {
     en: 'Identifier',
     de: 'ID',
   },
+  upload: {
+    en: 'Upload',
+    de: 'Hochladen',
+  },
+  uploadZoneHint: {
+    en: 'Drag and drop a file for uploading it as an attachment.',
+    de: 'Ziehen Sie ein Element über diesen Bereich, um es als Anhang hochzuladen.',
+  },
+  attachments: {
+    en: 'Attachments',
+    de: 'Anhänge',
+  },
 };

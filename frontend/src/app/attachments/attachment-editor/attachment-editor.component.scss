@@ -1,0 +1,48 @@
+@import "src/globals.scss";
+@import "/src/assets/file-icons/file-icon-vivid.min.css";
+.attachment-container {
+    @include box;
+    border-radius: $standard-border-radius;
+    padding: $standard-padding;
+    display: grid;
+    grid-template-columns: auto auto 1fr 1fr auto;
+    grid-template-rows: max-content;
+    justify-content: center;
+    align-items: center;
+    gap: $standard-padding;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    * {
+        width: 100%;
+    }
+    .info {
+        display: flex;
+        flex-direction: column;
+        .small {
+            opacity: 0.5;
+            font-size: 12px;
+            display: flex;
+            gap: 5px;
+            * {
+                width: max-content;
+            }
+        }
+    }
+    .file-icon {
+        height: 40px;
+        width: 40px;
+    }
+    .progress-bar-container {
+        height: 5px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        .progress-bar {
+            transition: 0.2s;
+            height: 100%;
+            background-color: $accent-color;
+        }
+    }
+}

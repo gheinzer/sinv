@@ -36,3 +36,12 @@
     padding: $standard-padding;
     text-align: center;
 }
+
+.attachments {
+    display: flex;
+    gap: $standard-padding;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
