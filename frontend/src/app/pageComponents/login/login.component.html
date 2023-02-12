@@ -4,7 +4,7 @@
             <translation id="login"></translation>
         </h1>
         <app-input [placeholder]="translationModule.getTranslation('username')" icon="username" [(value)]="username" (valueChange)="checkValues()" autofocus></app-input>
-        <app-input [placeholder]="translationModule.getTranslation('password')" icon="password" type="password" [(value)]="password" (valueChange)="checkValues()"></app-input>
+        <app-input [placeholder]="translationModule.getTranslation('password')" icon="password" type="password" [(value)]="password" (valueChange)="checkValues()" (enter)="login()"></app-input>
         <icon-text icon="error" *ngIf="!userExists">
             <translation id="userNotFound"></translation>
         </icon-text>
