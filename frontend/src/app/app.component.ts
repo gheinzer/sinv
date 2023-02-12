@@ -24,6 +24,4 @@ export class AppComponent {
   async ngOnInit() {
     await this.authModule.updateAuthenticationState();
   }
-
-  title = 'frontend';
 }
