@@ -1,4 +1,4 @@
-<div class="container" [ngClass]="{ dropdown: type == 'dropdown' }">
+<div class="container" [ngClass]="{ dropdown: type == 'dropdown' }" (keydown)="keydown($event)">
     <app-icon class="icon" [id]="icon" *ngIf="icon !== ''"></app-icon>
     <div class="text-container" [ngSwitch]="type">
         <div class="value-container" *ngSwitchCase="'dropdown'" tabindex="-1">

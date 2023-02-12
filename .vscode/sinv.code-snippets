@@ -45,5 +45,11 @@
         "prefix": "apidef",
         "description": "Inserts an API definition template",
         "scope": "typescript"
+    },
+    "Translation": {
+        "body": ["${1}: {", "en: '${2}',", "de: '${3}'", "}"],
+        "prefix": "translation",
+        "description": "Inserts a template for a translation",
+        "scope": "typescript"
     }
 }

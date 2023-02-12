@@ -32,6 +32,8 @@ import { AttachmentModule } from './api/attachments/attachments.module';
 import { AttachmentEditorComponent } from './attachments/attachment-editor/attachment-editor.component';
 import { AttachmentDropZoneComponent } from './attachments/attachment-drop-zone/attachment-drop-zone.component';
 import { FileIconModule } from './attachments/file-icon/file-icon.module';
+import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
+import { WindowOverlayComponent } from './window-overlay/window-overlay.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { FileIconModule } from './attachments/file-icon/file-icon.module';
     KeyboardShortcutDirective,
     AttachmentEditorComponent,
     AttachmentDropZoneComponent,
+    RepoSettingsComponent,
+    WindowOverlayComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

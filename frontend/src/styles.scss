@@ -14,3 +14,28 @@
         color: black;
     }
 }
+
+.info-text {
+    font-style: italic;
+    opacity: 0.5;
+    display: block;
+    font-size: 13px;
+    max-width: 25vw;
+    text-align: inherit;
+}
+
+h1.has-icon,
+h2.has-icon,
+h3.has-icon,
+h4.has-icon,
+h5.has-icon,
+h6.has-icon {
+    display: flex;
+    gap: 1ch;
+    align-items: center;
+    app-icon {
+        height: 1em;
+        fill: $root-color;
+        display: block;
+    }
+}

@@ -1,15 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { existsSync, mkdirSync } from 'fs';
 import { SINVConfig } from '../config';
-import { UploadRequest } from './uploads.types';
+import { UploadRequest, UploadedFile } from './uploads.types';
 import * as http from 'http';
 import formidable from 'formidable';
 import { randomUUID } from 'crypto';
 
 export namespace SINVUploads {
     let uploadRequests: { [key: string]: UploadRequest } = {};
+    let uploadedFiles: { [key: string]: UploadedFile } = {};
 
-    const prisma = new PrismaClient();
+    const prisma = SINVConfig.getPrismaClient();
 
     /**
      * Initializes an upload with a upload ID. This needs to be called before uploading a file, otherwise, the file is rejected.
@@ -19,18 +20,13 @@ export namespace SINVUploads {
      * @param {string} sessionID
      * @returns {string} The upload ID needed to confirm that the upload is allowed.
      */
-    export function initializeUpload(
-        sessionID: string,
-        attachmentID: number,
-        mimeType: string
-    ) {
+    export function initializeUpload(sessionID: string, mimeType: string) {
         let uploadID: string = randomUUID();
         while (uploadRequests[uploadID]) {
             uploadID = randomUUID();
         }
         uploadRequests[uploadID] = {
             sessionID,
-            attachmentID,
             mimeType,
         };
         return uploadID;
@@ -43,10 +39,10 @@ export namespace SINVUploads {
         let form = new formidable.IncomingForm();
         form.parse(req, (err, fields, files) => {
             if (
-                !fields.sessionID ||
-                !fields.uploadID ||
-                !files.file ||
-                !files.mimeType
+                typeof fields.sessionID !== 'string' ||
+                typeof fields.uploadID !== 'string' ||
+                typeof files.file !== 'object' ||
+                typeof fields.mimeType !== 'string'
             ) {
                 res.statusCode = 400;
                 res.end('not all fields given');
@@ -66,10 +62,16 @@ export namespace SINVUploads {
             if (!Array.isArray(files.file))
                 var file: formidable.File = files.file;
             else {
-                res.end('files.file is array.');
+                res.end('tried to upload multiple files.');
                 return;
             }
-            let fileExtension = file.originalFilename?.match(/\..+/);
+            uploadedFiles[fields.uploadID] = {
+                fileObject: files.file,
+                mimeType: fields.mimeType,
+            }; // The files are saved later when the user saves the attachment
+            delete uploadRequests[fields.uploadID];
+            res.statusCode = 200;
+            res.end('upload completed.');
         });
     }
 }

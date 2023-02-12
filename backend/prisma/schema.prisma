@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
     provider = "sqlite"
-    url      = "file:../../../data/sinv.db"
+    url      = "file:../../data/sinv.db"
 }
 
 model Repository {
@@ -65,7 +65,7 @@ model RelationType {
 
 model ObjectType {
     id           Int         @id @default(autoincrement())
-    name         String      @unique
+    name         String
     objects      Object[]
     Repository   Repository? @relation(fields: [repositoryId], references: [id])
     repositoryId Int?
@@ -73,7 +73,7 @@ model ObjectType {
 
 model AttachmentType {
     id           Int          @id @default(autoincrement())
-    name         String       @unique
+    name         String
     attachments  Attachment[]
     Repository   Repository?  @relation(fields: [repositoryId], references: [id])
     repositoryId Int?

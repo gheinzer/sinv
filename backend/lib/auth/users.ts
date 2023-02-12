@@ -12,7 +12,7 @@ import { InitializableClass } from '../types';
 import { SINVRepositories } from '../objects/repositories';
 
 export namespace SINVUserSystem {
-    const prisma = new PrismaClient();
+    const prisma = SINVConfig.getPrismaClient();
 
     export interface identificationObject {
         sessionID?: string;

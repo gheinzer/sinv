@@ -96,4 +96,48 @@ export var translations: { [key: string]: translation } = {
     en: 'Attachments',
     de: 'Anhänge',
   },
+  addAttachment: {
+    en: 'Add attachment',
+    de: 'Anhang hinzufügen',
+  },
+  repoSettings: {
+    en: 'Repository settings',
+    de: 'Ablageneinstellungen',
+  },
+  repoChangingHint: {
+    en: 'You can change your repository with the dropdown list the upper-left corner.',
+    de: 'Sie können die Ablage mit der Dropdown-Liste oben rechts ändern.',
+  },
+  categories: {
+    en: 'Categories',
+    de: 'Kategorien',
+  },
+  attachmentCategories: {
+    en: 'Attachment categories',
+    de: 'Anhangkategorien',
+  },
+  delete: {
+    en: 'Delete',
+    de: 'Löschen',
+  },
+  categoriesInfoText: {
+    en: 'Categories are applied on objects and can be used to filter for specific types of objects. You can only apply one category on an object at a time.',
+    de: 'Kategorien können auf Objekte angewendet werden und zum Filtern der Objekte verwendet werden. Sie können einem Objekt jeweils nur eine Kategorie zuweisen.',
+  },
+  noCategoriesDefined: {
+    en: 'No categories defined.',
+    de: 'Keine Kategorien definiert.',
+  },
+  addCategory: {
+    en: 'Add category',
+    de: 'Kategorie hinzufügen',
+  },
+  categoryName: {
+    en: 'Category name',
+    de: 'Kategoriename',
+  },
+  category: {
+    en: 'Category',
+    de: 'Kategorie',
+  },
 };

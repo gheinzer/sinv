@@ -7,7 +7,15 @@
       ><span class="info-text"
         ><translation id="identifierHint"></translation></span
     ></label>
-        <app-input type="text" icon="123"></app-input>
+        <app-input type="text" icon="123" autofocus></app-input>
+    </div>
+    <div class="label-input-container">
+        <label><translation id="category"></translation>
+      <span class="info-text"
+        ><translation id="categoriesInfoText"></translation
+      ></span>
+    </label>
+        <app-input type="dropdown" [choices]="categoryChoices" icon="category" [(value)]="objectCategory"></app-input>
     </div>
     <div class="label-input-container">
         <label><translation id="name"></translation

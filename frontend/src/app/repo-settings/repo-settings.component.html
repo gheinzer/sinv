@@ -1,0 +1,39 @@
+<div class="content">
+    <h1>
+        <translation id="repoSettings"></translation>
+    </h1>
+    <i class="info-text"><translation id="repoChangingHint"></translation></i>
+    <h2 class="has-icon">
+        <app-icon id="category"></app-icon>
+        <translation id="categories"></translation>
+    </h2>
+    <div class="info-text">
+        <translation id="categoriesInfoText"></translation>
+    </div>
+    <div class="category-list">
+        <div class="category-item" *ngFor="let category of categories">
+            <app-icon id="category"></app-icon>
+            <app-input [(value)]="category.name"></app-input>
+
+            <app-icon id="save" (click)="saveCategory(category.id)"></app-icon>
+            <app-icon id="delete" (click)="deleteCategory(category.id)"></app-icon>
+        </div>
+        <h3 *ngIf="categories.length == 0">
+            <translation id="noCategoriesDefined"></translation>
+        </h3>
+        <app-button icon="add" (click)="addCategory = true">
+            <translation id="addCategory"></translation>
+        </app-button>
+    </div>
+    <h2>
+        <translation id="attachmentCategories"></translation>
+    </h2>
+</div>
+<app-window-overlay *ngIf="addCategory" [windowTitle]="translationModule.getTranslation('addCategory')" windowIcon="add" [closable]="true" (close)="addCategory = false">
+    <div class="flex-container">
+        <app-input [placeholder]="translationModule.getTranslation('categoryName')" [(value)]="newCategoryName" (enter)="createCategory()" autofocus></app-input>
+        <app-button icon="save" (click)="createCategory()" [loader]="windowOverlayLoader" [disabled]="windowOverlayLoader">
+            <translation id="addCategory"></translation>
+        </app-button>
+    </div>
+</app-window-overlay>

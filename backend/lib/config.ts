@@ -1,3 +1,4 @@
+import { Prisma, PrismaClient } from '@prisma/client';
 import { readFileSync, existsSync } from 'fs';
 import _ from 'lodash';
 
@@ -25,6 +26,7 @@ export namespace SINVConfig {
             password_hash_rounds: number;
             sessionMaxAge: number;
         };
+        prismaClientOptions: Prisma.PrismaClientOptions;
     }
 
     const defaultConfiguration: SINVConfigurationObject = {
@@ -44,6 +46,13 @@ export namespace SINVConfig {
         users: {
             password_hash_rounds: 10,
             sessionMaxAge: 24 * 7, // Is in hours, so the default is 7 days.
+        },
+        prismaClientOptions: {
+            datasources: {
+                db: {
+                    url: 'file:../../../data/sinv.db',
+                },
+            },
         },
     };
 
@@ -66,6 +75,10 @@ export namespace SINVConfig {
                 readFileSync(configPath).toString()
             );
         config = _.defaultsDeep(userConfig, defaultConfiguration);
+    }
+
+    export function getPrismaClient() {
+        return new PrismaClient(config.prismaClientOptions);
     }
 }
 

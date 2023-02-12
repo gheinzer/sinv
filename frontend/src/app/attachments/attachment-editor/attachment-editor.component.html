@@ -5,7 +5,7 @@
         <div class="small">
             <span>{{ readableFileSize }}</span>
             <span>∙</span>
-            <span>{{ uploadPercentage }} %</span>
+            <span>{{ round(uploadPercentage) }} %</span>
         </div>
     </section>
     <app-input type="text" [placeholder]="translationModule.getTranslation('name')" class="name"></app-input>

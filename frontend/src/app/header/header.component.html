@@ -14,6 +14,6 @@
             <translation id="login"></translation>
         </app-link>
         <app-user-badge *ngIf="authModule.isAuthenticated"></app-user-badge>
-        <app-input icon="repository" type="dropdown" *ngIf="authModule.isAuthenticated" [choices]="repositories" [(value)]="selectedRepository" (valueChange)="updateRepository()"></app-input>
+        <app-input icon="repository" type="dropdown" *ngIf="authModule.isAuthenticated" [choices]="repoModule.repositories" (valueChange)="repoModule.changeRepository($event)" [value]="repoModule.selectedRepository"></app-input>
     </nav>
 </header>

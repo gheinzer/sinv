@@ -6,6 +6,7 @@ import { HomeComponent } from './pageComponents/home/home.component';
 import { NotFoundComponent } from './pageComponents/not-found/not-found.component';
 import { LoginComponent } from './pageComponents/login/login.component';
 import { ObjectCreatorComponet } from './objects/creator/creator.component';
+import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'object/new',
     component: ObjectCreatorComponet,
+  },
+  {
+    path: 'repo-settings',
+    component: RepoSettingsComponent,
   },
   { path: '**', component: NotFoundComponent },
 ];

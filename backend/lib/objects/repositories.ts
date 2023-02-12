@@ -5,8 +5,9 @@ import {
     Repository as DBRepository,
 } from '@prisma/client';
 import { SINVUserSystem } from '../auth/users';
+import { SINVConfig } from '../config';
 export namespace SINVRepositories {
-    const prisma = new PrismaClient();
+    const prisma = SINVConfig.getPrismaClient();
 
     export async function createRepository(
         name: string,
@@ -27,6 +28,11 @@ export namespace SINVRepositories {
         await prisma.repositoryPermission.create({
             data: { userId: owner.id, repositoryId: repositoryRow.id },
         });
+    }
+
+    export async function getRepository(id: number): Promise<Repository> {
+        await prisma.repository.findUniqueOrThrow({ where: { id } });
+        return new Repository(id);
     }
 
     export class Repository extends InitializableClass {
@@ -56,6 +62,7 @@ export namespace SINVRepositories {
          */
         public async userHasPermission(user: SINVUserSystem.User) {
             await this.awaitInitialization();
+            if (await user.hasPermission('repositoryAdmin')) return true; // With this permission, the user has access to all repositories.
             let permissions = await prisma.repositoryPermission.findFirst({
                 where: {
                     userId: user.userRow.id,
@@ -97,6 +104,60 @@ export namespace SINVRepositories {
                 },
             });
             return results;
+        }
+
+        public async getTypes() {
+            await this.awaitInitialization();
+            return await prisma.objectType.findMany({
+                where: {
+                    repositoryId: this.repositoryID,
+                },
+                select: {
+                    id: true,
+                    name: true,
+                },
+            });
+        }
+
+        public async userHasPermissionOrThrow(
+            userInfo: SINVUserSystem.identificationObject
+        ) {
+            let user = new SINVUserSystem.User(userInfo);
+            if (!(await this.userHasPermission(user)))
+                throw Error('repository_permission_denied');
+        }
+
+        public async changeTypeName(id: number, name: string) {
+            await this.awaitInitialization();
+            let types = await prisma.objectType.findFirst({
+                where: { id, repositoryId: this.repositoryID },
+            });
+            if (types == null) throw Error('type_not_in_this_repository');
+            await prisma.objectType.update({
+                where: { id },
+                data: {
+                    name,
+                },
+            });
+        }
+
+        public async deleteType(id: number) {
+            await this.awaitInitialization();
+            let types = await prisma.objectType.findFirst({
+                where: { id, repositoryId: this.repositoryID },
+            });
+            if (types == null) throw Error('type_not_in_this_repository');
+            await prisma.objectType.delete({ where: { id } });
+        }
+
+        public async createType(name: string) {
+            await this.awaitInitialization();
+            await prisma.objectType.create({
+                data: {
+                    name,
+                    repositoryId: this.repositoryID,
+                },
+            });
         }
     }
 }

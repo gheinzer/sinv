@@ -49,7 +49,7 @@ export namespace SINVAPI {
         }
 
         for (let field of actionInfo.requiresDataFields) {
-            if (!data[field])
+            if (data[field] === undefined)
                 return {
                     success: false,
                     error: 'required_field_nonexistent_' + field,

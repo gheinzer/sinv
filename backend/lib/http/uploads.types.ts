@@ -1,5 +1,10 @@
+import formidable from 'formidable';
 export interface UploadRequest {
     sessionID: string;
-    attachmentID: number;
+    mimeType: string;
+}
+
+export interface UploadedFile {
+    fileObject: formidable.File;
     mimeType: string;
 }

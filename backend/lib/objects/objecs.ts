@@ -6,11 +6,12 @@ import {
     PrismaClient,
 } from '@prisma/client';
 import { SINVUserSystem } from '../auth/users';
+import { SINVConfig } from '../config';
 import { InitializableClass } from '../types';
 import { SINVRepositories } from './repositories';
 
 namespace SINVObjects {
-    const prisma = new PrismaClient();
+    const prisma = SINVConfig.getPrismaClient();
 
     export async function addObject(data: {
         objectID: string;

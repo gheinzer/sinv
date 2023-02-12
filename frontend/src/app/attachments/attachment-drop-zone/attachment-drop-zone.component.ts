@@ -20,8 +20,7 @@ export class AttachmentDropZoneComponent {
     let uploadedFiles = [];
     //@ts-ignore
     for (let file of [...event.dataTransfer.files]) {
-      if (file.size == 0) continue;
-      this.attachments.push(file);
+      if (file.size > 0) this.attachments.push(file);
     }
   }
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WsModule } from '../ws/ws.module';
 import { APIResponse } from '../../../../../backend/lib/api/api.types';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   declarations: [],

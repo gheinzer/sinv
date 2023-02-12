@@ -9,17 +9,14 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transition: filter 0.2s;
-    &.empty {
-        cursor: pointer;
-    }
+    transition: 0.2s;
     gap: $standard-padding;
     padding: $standard-padding;
     app-attachment-editor {
         width: 100%;
     }
     &.dragover {
-        filter: brightness(150%);
+        background-color: color.adjust($root-bg, $lightness: 7.5%);
         .placeholder,
         app-attachment-editor {
             pointer-events: none;
