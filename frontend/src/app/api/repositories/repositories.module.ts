@@ -86,6 +86,17 @@ export class RepositoriesModule extends InitializableClass {
     ).data.types;
   }
 
+  public async getRepositoryAttachmentCategories(): Promise<
+    { name: string; id: number }[]
+  > {
+    await this.awaitInitialization();
+    return (
+      await this.apiModule.call('repo/getAttachmentTypes', {
+        repositoryID: this.selectedRepository,
+      })
+    ).data.types;
+  }
+
   public async changeCategoryName(id: number, newName: string) {
     await this.apiModule.call('repo/changeTypeName', {
       categoryID: id,
@@ -105,6 +116,31 @@ export class RepositoriesModule extends InitializableClass {
 
   public async createCategory(name: string) {
     await this.apiModule.call('repo/createType', {
+      name,
+      repositoryID: this.selectedRepository,
+    });
+    this.runRepositoryUpdateCallbacks();
+  }
+
+  public async changeAttachmentCategoryName(id: number, newName: string) {
+    await this.apiModule.call('repo/changeAttachmentTypeName', {
+      categoryID: id,
+      name: newName,
+      repositoryID: this.selectedRepository,
+    });
+    this.runRepositoryUpdateCallbacks();
+  }
+
+  public async deleteAttachmentCategory(id: number) {
+    await this.apiModule.call('repo/deleteAttachmentType', {
+      categoryID: id,
+      repositoryID: this.selectedRepository,
+    });
+    this.runRepositoryUpdateCallbacks();
+  }
+
+  public async createAttachmentCategory(name: string) {
+    await this.apiModule.call('repo/createAttachmentType', {
       name,
       repositoryID: this.selectedRepository,
     });

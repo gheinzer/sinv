@@ -13,12 +13,11 @@ export class AttachmentModule {
   public async upload(
     uploadFile: File,
     progressCallback: (ev: ProgressEvent) => void
-  ) {
+  ): Promise<string> {
     await this.AuthModule.awaitAuthentication();
     if (!this.AuthModule.authenticationData.sessionID)
       throw Error('Not authenticated');
 
-    console.log('hello');
     let xhr = new XMLHttpRequest();
 
     let formdata = new FormData();
@@ -33,9 +32,8 @@ export class AttachmentModule {
 
     xhr.upload.addEventListener('progress', progressCallback);
 
-    console.log(xhr);
-
     xhr.open('POST', '/upload');
     xhr.send(formdata);
+    return data.data.uploadID;
   }
 }

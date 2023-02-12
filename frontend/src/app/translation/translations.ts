@@ -140,4 +140,12 @@ export var translations: { [key: string]: translation } = {
     en: 'Category',
     de: 'Kategorie',
   },
+  addAttachmentCategory: {
+    en: 'Add attachment category',
+    de: 'Anhangkategorie hinzufügen',
+  },
+  attachmentCategoryName: {
+    en: 'Attachment category name',
+    de: 'Anhangkategoriename',
+  },
 };

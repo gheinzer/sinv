@@ -28,12 +28,35 @@
     <h2>
         <translation id="attachmentCategories"></translation>
     </h2>
+    <div class="category-list">
+        <div class="category-item" *ngFor="let category of attachmentCategories">
+            <app-icon id="category"></app-icon>
+            <app-input [(value)]="category.name"></app-input>
+
+            <app-icon id="save" (click)="saveAttachmentCategory(category.id)"></app-icon>
+            <app-icon id="delete" (click)="deleteAttachmentCategory(category.id)"></app-icon>
+        </div>
+        <h3 *ngIf="attachmentCategories.length == 0">
+            <translation id="noCategoriesDefined"></translation>
+        </h3>
+        <app-button icon="add" (click)="addAttachmentCategory = true">
+            <translation id="addCategory"></translation>
+        </app-button>
+    </div>
 </div>
 <app-window-overlay *ngIf="addCategory" [windowTitle]="translationModule.getTranslation('addCategory')" windowIcon="add" [closable]="true" (close)="addCategory = false">
     <div class="flex-container">
         <app-input [placeholder]="translationModule.getTranslation('categoryName')" [(value)]="newCategoryName" (enter)="createCategory()" autofocus></app-input>
         <app-button icon="save" (click)="createCategory()" [loader]="windowOverlayLoader" [disabled]="windowOverlayLoader">
             <translation id="addCategory"></translation>
+        </app-button>
+    </div>
+</app-window-overlay>
+<app-window-overlay *ngIf="addAttachmentCategory" [windowTitle]="translationModule.getTranslation('addAttachmentCategory')" windowIcon="add" [closable]="true" (close)="addCategory = false">
+    <div class="flex-container">
+        <app-input [placeholder]="translationModule.getTranslation('attachmentCategoryName')" [(value)]="newAttachmentCategoryName" (enter)="createAttachmentCategory()" autofocus></app-input>
+        <app-button icon="save" (click)="createAttachmentCategory()" [loader]="windowOverlayLoader" [disabled]="windowOverlayLoader">
+            <translation id="addAttachmentCategory"></translation>
         </app-button>
     </div>
 </app-window-overlay>

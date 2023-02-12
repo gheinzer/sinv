@@ -12,9 +12,12 @@ import { TranslationModule } from '../translation/translation.module';
 })
 export class RepoSettingsComponent {
   public categories: { id: number; name: string }[] = [];
+  public attachmentCategories: { id: number; name: string }[] = [];
   public addCategory: boolean = false;
+  public addAttachmentCategory: boolean = false;
   public windowOverlayLoader: boolean = false;
   public newCategoryName: string = '';
+  public newAttachmentCategoryName: string = '';
 
   constructor(
     private apiModule: APIModule,
@@ -29,6 +32,8 @@ export class RepoSettingsComponent {
     await this.authModule.awaitAuthentication();
     await this.repositoriesModule.awaitInitialization();
     this.categories = await this.repositoriesModule.getRepositoryCategories();
+    this.attachmentCategories =
+      await this.repositoriesModule.getRepositoryAttachmentCategories();
     this.loaderModule.satisfyRequirement();
   };
 
@@ -60,5 +65,35 @@ export class RepoSettingsComponent {
       }
     }
     await this.repositoriesModule.changeCategoryName(id, categoryName);
+  }
+
+  async deleteAttachmentCategory(id: number) {
+    await this.repositoriesModule.deleteAttachmentCategory(id);
+    await this.getCategories();
+  }
+
+  async createAttachmentCategory() {
+    if (this.windowOverlayLoader) return;
+    this.windowOverlayLoader = true;
+    await this.repositoriesModule.createAttachmentCategory(
+      this.newAttachmentCategoryName
+    );
+    this.addAttachmentCategory = false;
+    this.newAttachmentCategoryName = '';
+    this.windowOverlayLoader = false;
+  }
+
+  async saveAttachmentCategory(id: number) {
+    let categoryName = '';
+    for (let category of this.attachmentCategories) {
+      if (category.id == id) {
+        categoryName = category.name;
+        break;
+      }
+    }
+    await this.repositoriesModule.changeAttachmentCategoryName(
+      id,
+      categoryName
+    );
   }
 }

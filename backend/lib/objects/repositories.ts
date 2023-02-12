@@ -118,6 +118,18 @@ export namespace SINVRepositories {
                 },
             });
         }
+        public async getAttachmentTypes() {
+            await this.awaitInitialization();
+            return await prisma.attachmentType.findMany({
+                where: {
+                    repositoryId: this.repositoryID,
+                },
+                select: {
+                    id: true,
+                    name: true,
+                },
+            });
+        }
 
         public async userHasPermissionOrThrow(
             userInfo: SINVUserSystem.identificationObject
@@ -153,6 +165,39 @@ export namespace SINVRepositories {
         public async createType(name: string) {
             await this.awaitInitialization();
             await prisma.objectType.create({
+                data: {
+                    name,
+                    repositoryId: this.repositoryID,
+                },
+            });
+        }
+
+        public async changeAttachmentTypeName(id: number, name: string) {
+            await this.awaitInitialization();
+            let types = await prisma.attachmentType.findFirst({
+                where: { id, repositoryId: this.repositoryID },
+            });
+            if (types == null) throw Error('type_not_in_this_repository');
+            await prisma.attachmentType.update({
+                where: { id },
+                data: {
+                    name,
+                },
+            });
+        }
+
+        public async deleteAttachmentType(id: number) {
+            await this.awaitInitialization();
+            let types = await prisma.attachmentType.findFirst({
+                where: { id, repositoryId: this.repositoryID },
+            });
+            if (types == null) throw Error('type_not_in_this_repository');
+            await prisma.attachmentType.delete({ where: { id } });
+        }
+
+        public async createAttachmentType(name: string) {
+            await this.awaitInitialization();
+            await prisma.attachmentType.create({
                 data: {
                     name,
                     repositoryId: this.repositoryID,

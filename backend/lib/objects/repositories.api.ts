@@ -40,6 +40,22 @@ SINVAPI.addAction('repo/getTypes', {
         };
     },
 });
+SINVAPI.addAction('repo/getAttachmentTypes', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
+        return {
+            success: true,
+            data: {
+                types: await repo.getAttachmentTypes(),
+            },
+        };
+    },
+});
 SINVAPI.addAction('repo/changeTypeName', {
     needsAuthentication: true,
     needsPermissions: [],
@@ -70,6 +86,39 @@ SINVAPI.addAction('repo/createType', {
         let repo = await SINVRepositories.getRepository(data.repositoryID);
         await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
         await repo.createType(data.name);
+        return { success: true };
+    },
+});
+SINVAPI.addAction('repo/createAttachmentType', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID', 'name'],
+    actionHandler: async (data, auth) => {
+        let repo = await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
+        await repo.createAttachmentType(data.name);
+        return { success: true };
+    },
+});
+SINVAPI.addAction('repo/deleteAttachmentType', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID', 'categoryID'],
+    actionHandler: async (data, auth) => {
+        let repo = await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
+        await repo.deleteAttachmentType(data.categoryID);
+        return { success: true };
+    },
+});
+SINVAPI.addAction('repo/changeAttachmentTypeName', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID', 'categoryID', 'name'],
+    actionHandler: async (data, auth) => {
+        let repo = await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
+        await repo.changeAttachmentTypeName(data.categoryID, data.name);
         return { success: true };
     },
 });
