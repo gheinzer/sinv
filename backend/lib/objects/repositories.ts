@@ -6,7 +6,11 @@ import {
 } from '@prisma/client';
 import { SINVUserSystem } from '../auth/users';
 import { SINVConfig } from '../config';
-import { AttachmentData } from './repositories.types';
+import {
+    AttachmentData,
+    AttachmentProperties,
+    ObjectProperties,
+} from './repositories.types';
 import { SINVUploads } from '../http/uploads';
 export namespace SINVRepositories {
     const prisma = SINVConfig.getPrismaClient();
@@ -257,6 +261,45 @@ export namespace SINVRepositories {
                 },
             });
             return objects !== null;
+        }
+
+        public async getObjectProperties(
+            objectIdentifier: string
+        ): Promise<ObjectProperties> {
+            await this.awaitInitialization();
+            let objectRow = await prisma.object.findFirstOrThrow({
+                where: {
+                    userDefinedID: objectIdentifier,
+                    repositoryId: this.repositoryID,
+                },
+                include: {
+                    attachments: {
+                        include: {
+                            AttachmentType: true,
+                        },
+                    },
+                    ObjectType: true,
+                },
+            });
+            let attachmentProperties: AttachmentProperties[] = [];
+            for (let attachment of objectRow.attachments) {
+                attachmentProperties.push({
+                    attachmentID: attachment.id,
+                    categoryID: attachment.attachmentTypeId,
+                    categoryName: attachment.AttachmentType.name,
+                    extension: attachment.fileExtension,
+                    name: attachment.comment,
+                });
+            }
+            return {
+                attachments: attachmentProperties,
+                categoryID: objectRow.objectTypeId,
+                categoryName: objectRow.ObjectType.name,
+                description: objectRow.description,
+                identifier: objectRow.userDefinedID,
+                name: objectRow.name,
+                id: objectRow.id,
+            };
         }
     }
 }

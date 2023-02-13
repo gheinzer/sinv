@@ -48,29 +48,34 @@ $badge-menu-padding: $standard-padding;
 $badge-menu-border-radius: $standard-border-radius;
 $badge-menu-top: 30px;
 $badge-menu-right: 0;
+// * File icon varialbes
+$file-icon-size: 40px;
 // * Mixins
 @mixin default-font($italic: 0, $weight: 400) {
-    font-family: "Source Code Pro", monospace;
-    font-weight: $weight;
-    font-size: $root-font-size;
-    @if ($italic==1) {
-        font-style: italic;
-    }
+  font-family: "Source Code Pro", monospace;
+  font-weight: $weight;
+  font-size: $root-font-size;
+  @if ($italic==1) {
+    font-style: italic;
+  }
 }
 
-@mixin box( $background-color: color.adjust($root-bg, $lightness: 2), $border-color: color.adjust($root-bg, $lightness: 7)) {
-    background: $background-color;
-    border: $border-color solid 1px;
+@mixin box(
+  $background-color: color.adjust($root-bg, $lightness: 2),
+  $border-color: color.adjust($root-bg, $lightness: 7)
+) {
+  background: $background-color;
+  border: $border-color solid 1px;
 }
 
 @mixin mobile-only() {
-    @media #{$mediaquery-desktop} {
-        display: none !important;
-    }
+  @media #{$mediaquery-desktop} {
+    display: none !important;
+  }
 }
 
 @mixin desktop-only() {
-    @media #{$mediaquery-mobile} {
-        display: none !important;
-    }
+  @media #{$mediaquery-mobile} {
+    display: none !important;
+  }
 }

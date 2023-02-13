@@ -10,8 +10,9 @@ import { SINVRepositories } from '../objects/repositories';
 export namespace SINVUploads {
     let uploadRequests: { [key: string]: UploadRequest } = {};
     let uploadedFiles: { [key: string]: UploadedFile } = {};
-    let downloadRequests: { [key: string]: { id: string; mimeType: string } } =
-        {};
+    let downloadRequests: {
+        [key: string]: { id: string; mimeType: string; fileExtension: string };
+    } = {};
 
     const prisma = SINVConfig.getPrismaClient();
 
@@ -128,6 +129,10 @@ export namespace SINVUploads {
             return;
         }
         res.setHeader('Content-Type', downloadRequestData.mimeType);
+        res.setHeader(
+            'Content-Disposition',
+            `attachment; filename="attachment.${downloadRequestData.fileExtension}"`
+        );
         res.end(readFileSync(attachmentPath));
         delete downloadRequests[dlid];
     }
@@ -150,6 +155,7 @@ export namespace SINVUploads {
         downloadRequests[downloadID] = {
             id: attachmentRow.id.toString(),
             mimeType: attachmentRow.mimeType.toString(),
+            fileExtension: attachmentRow.fileExtension,
         };
         return downloadID;
     }

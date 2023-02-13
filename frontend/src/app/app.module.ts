@@ -34,6 +34,7 @@ import { AttachmentDropZoneComponent } from './attachments/attachment-drop-zone/
 import { FileIconModule } from './attachments/file-icon/file-icon.module';
 import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
 import { WindowOverlayComponent } from './window-overlay/window-overlay.component';
+import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { WindowOverlayComponent } from './window-overlay/window-overlay.componen
     AttachmentDropZoneComponent,
     RepoSettingsComponent,
     WindowOverlayComponent,
+    ObjectViewerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

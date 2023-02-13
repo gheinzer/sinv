@@ -4,7 +4,10 @@ import { APIModule } from '../api/api.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoaderModule } from '../../loader/loader.module';
 import { InitializableClass } from '../../../../../backend/lib/types';
-import { AttachmentData } from '../../../../../backend/lib/objects/repositories.types';
+import {
+  AttachmentData,
+  ObjectProperties,
+} from '../../../../../backend/lib/objects/repositories.types';
 
 @NgModule({
   declarations: [],
@@ -79,6 +82,7 @@ export class RepositoriesModule extends InitializableClass {
   public async getRepositoryCategories(): Promise<
     { name: string; id: number }[]
   > {
+    await this.authModule.awaitAuthentication();
     await this.awaitInitialization();
     return (
       await this.apiModule.call('repo/getTypes', {
@@ -90,6 +94,7 @@ export class RepositoriesModule extends InitializableClass {
   public async getRepositoryAttachmentCategories(): Promise<
     { name: string; id: number }[]
   > {
+    await this.authModule.awaitAuthentication();
     await this.awaitInitialization();
     return (
       await this.apiModule.call('repo/getAttachmentTypes', {
@@ -99,6 +104,8 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async changeCategoryName(id: number, newName: string) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/changeTypeName', {
       categoryID: id,
       name: newName,
@@ -108,6 +115,8 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async deleteCategory(id: number) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/deleteType', {
       categoryID: id,
       repositoryID: this.selectedRepository,
@@ -116,6 +125,8 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async createCategory(name: string) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/createType', {
       name,
       repositoryID: this.selectedRepository,
@@ -124,6 +135,8 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async changeAttachmentCategoryName(id: number, newName: string) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/changeAttachmentTypeName', {
       categoryID: id,
       name: newName,
@@ -133,6 +146,8 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async deleteAttachmentCategory(id: number) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/deleteAttachmentType', {
       categoryID: id,
       repositoryID: this.selectedRepository,
@@ -141,6 +156,8 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async createAttachmentCategory(name: string) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/createAttachmentType', {
       name,
       repositoryID: this.selectedRepository,
@@ -155,6 +172,8 @@ export class RepositoriesModule extends InitializableClass {
     description: string,
     attachments: AttachmentData[]
   ) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     await this.apiModule.call('repo/addObject', {
       name,
       repositoryID: this.selectedRepository,
@@ -166,10 +185,22 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   public async identifierExists(identifier: string) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
     let result = await this.apiModule.call('repo/identifierExists', {
       identifier,
       repositoryID: this.selectedRepository,
     });
     return result.data.identifierExists;
+  }
+
+  public async getObjectData(identifier: string): Promise<ObjectProperties> {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    let result = await this.apiModule.call('repo/getObjectData', {
+      identifier,
+      repositoryID: this.selectedRepository,
+    });
+    return result.data.objectData;
   }
 }

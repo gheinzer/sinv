@@ -26,7 +26,7 @@ export class ObjectCreatorComponet {
   public identifierExists: boolean = false;
 
   constructor(
-    public AttachmentModule: AttachmentModule,
+    public attachmentModule: AttachmentModule,
     private repositoriesModule: RepositoriesModule,
     private loaderModule: LoaderModule,
     private authModule: AuthModule,
@@ -72,11 +72,12 @@ export class ObjectCreatorComponet {
     if (this.submitDisabled || this.checkingSubmitState) return;
     if (this.creatingObject) return;
     this.creatingObject = true;
+    let description = this.description.replaceAll('\n', '\\n');
     await this.repositoriesModule.createObject(
       this.identifier,
       this.name,
       parseInt(this.objectCategory),
-      this.description,
+      description,
       this.attachmentInformation.attachmentData
     );
     this.router.navigateByUrl('/object/view/' + this.identifier);
@@ -85,7 +86,6 @@ export class ObjectCreatorComponet {
 
   async ngOnInit() {
     await this.authModule.awaitAuthentication();
-    this.AttachmentModule.downloadFile(5);
     this.updateCategories();
     this.repositoriesModule.addRepositoryUpdateCallback(this.updateCategories);
   }

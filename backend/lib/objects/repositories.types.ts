@@ -6,3 +6,22 @@ export interface AttachmentData {
     mimeType: string;
     fileExtension: string;
 }
+
+export interface ObjectProperties {
+    name: string;
+    identifier: string;
+    description: string;
+    categoryID: number;
+    categoryName: string;
+    attachments: AttachmentProperties[];
+    id: number;
+}
+
+export interface AttachmentProperties {
+    extension: string;
+    attachmentID: number;
+    name: string;
+    categoryID: number;
+    categoryName: string;
+    fileIconClass?: string;
+}

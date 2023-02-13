@@ -1,0 +1,51 @@
+<div class="content">
+  <h1>{{ objectData.name }}</h1>
+  <div class="metadata">
+    <table>
+      <tr>
+        <td>
+          <translation id="category"></translation>
+        </td>
+        <td>{{ objectData.categoryName }}</td>
+      </tr>
+      <tr>
+        <td>
+          <translation id="identifier"></translation>
+        </td>
+        <td>{{ objectData.identifier }}</td>
+      </tr>
+    </table>
+  </div>
+  <h2>
+    <translation id="description"></translation>
+  </h2>
+  <span [innerHTML]="objectData.description"></span>
+  <div class="attachments" *ngIf="this.objectData.attachments.length > 0">
+    <br />
+    <h2>
+      <translation id="attachments"></translation>
+    </h2>
+    <div class="attachment-list">
+      <div
+        class="attachment"
+        *ngFor="let attachment of objectData.attachments"
+        (click)="downloadAttachment(attachment.attachmentID)"
+      >
+        <div
+          class="fiv-viv file-icon"
+          [ngClass]="attachment.fileIconClass"
+        ></div>
+        <div class="text-info">
+          <span class="name">{{ attachment.name }}</span>
+          <div class="small-info">
+            <span class="category">{{ attachment.categoryName }}</span>
+            <span>∙</span>
+            <span class="extension">{{
+              attachment.extension.toUpperCase()
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

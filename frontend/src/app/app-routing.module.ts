@@ -7,6 +7,7 @@ import { NotFoundComponent } from './pageComponents/not-found/not-found.componen
 import { LoginComponent } from './pageComponents/login/login.component';
 import { ObjectCreatorComponet } from './objects/creator/creator.component';
 import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
+import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'object/new',
     component: ObjectCreatorComponet,
+  },
+  {
+    path: 'object/view/:objectIdentifier',
+    component: ObjectViewerComponent,
   },
   {
     path: 'repo-settings',

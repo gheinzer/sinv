@@ -165,3 +165,21 @@ SINVAPI.addAction('repo/identifierExists', {
         };
     },
 });
+SINVAPI.addAction('repo/getObjectData', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID', 'identifier'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        return {
+            success: true,
+            data: {
+                objectData: await repo.getObjectProperties(data.identifier),
+            },
+        };
+    },
+});
