@@ -36,4 +36,13 @@ export class AttachmentModule {
     xhr.send(formdata);
     return data.data.uploadID;
   }
+
+  public async downloadFile(attachmentID: number) {
+    let { downloadID } = (
+      await this.APIModule.call('uploads/initializeDownload', {
+        attachmentID,
+      })
+    ).data;
+    window.open('/attachment?dlid=' + downloadID);
+  }
 }

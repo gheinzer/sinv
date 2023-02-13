@@ -148,4 +148,8 @@ export var translations: { [key: string]: translation } = {
     en: 'Attachment category name',
     de: 'Anhangkategoriename',
   },
+  identifierAlreadyExists: {
+    en: 'This identifier already exists.',
+    de: 'Diese Identifikationsnummer exisitert bereits.',
+  },
 };

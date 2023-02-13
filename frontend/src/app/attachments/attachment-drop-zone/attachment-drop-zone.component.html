@@ -1,5 +1,5 @@
 <div class="drop-zone" [ngClass]="{ dragover: dragover, empty: attachments.length == 0 }" (dragenter)="dragover = true" (dragleave)="dragover = false" (drop)="dropHandler($event)" (dragover)="$event.preventDefault()">
-    <app-attachment-editor *ngFor="let attachment of attachments" [fileObject]="attachment" [createNew]="true"></app-attachment-editor>
+    <app-attachment-editor *ngFor="let attachment of attachments" [fileObject]="attachment" [createNew]="true" (attachmentDataChange)="updateAttachmentData($event)"></app-attachment-editor>
     <div class="placeholder" *ngIf="attachments.length == 0">
         <app-icon id="upload"></app-icon>
         <span>

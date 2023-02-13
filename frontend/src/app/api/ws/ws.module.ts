@@ -15,18 +15,28 @@ interface FrontendRequestHandler {
 })
 export class WsModule {
   private protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
-  private socket: WebSocket;
+  private socket!: WebSocket;
   private activeRequests: WSTypes.WebsocketRequestData[] = [];
   private highestRequestID: number = -1;
   private openingHandlers: (() => void)[] = [];
   constructor(private loaderModule: LoaderModule) {
+    this.openSocket();
+  }
+
+  private openSocket() {
     let websocketURL = `${this.protocol}://${window.location.host}`;
     this.socket = new WebSocket(websocketURL);
-    loaderModule.addRequirement();
+    this.loaderModule.addRequirement();
     this.socket.onopen = (ev) => {
       this.initializeSocket(ev);
-      loaderModule.satisfyRequirement();
+      this.loaderModule.satisfyRequirement();
     };
+    setTimeout(() => {
+      if (this.socket.readyState !== this.socket.OPEN) {
+        this.openSocket();
+        this.loaderModule.satisfyRequirement();
+      }
+    }, 5000);
   }
 
   private frontendRequestHandlers: { [key: string]: FrontendRequestHandler } =
@@ -75,7 +85,9 @@ export class WsModule {
     delete this.activeRequests[JSONData.requestID]; // Marks the conversation as closed
   };
 
-  private closeHandler(event: CloseEvent) {}
+  private closeHandler(event: CloseEvent) {
+    this.openSocket();
+  }
 
   public async sendMessageAwaitResponse(
     action: string,
@@ -113,7 +125,7 @@ export class WsModule {
     //@ts-ignore
     this.socket = ev.target;
     this.socket.onmessage = this.messageHandler;
-    this.socket.onclose = this.closeHandler;
+    this.socket.addEventListener('close', (ev) => this.closeHandler(ev));
     for (let handler of this.openingHandlers) {
       handler();
     }

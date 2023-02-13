@@ -6,6 +6,8 @@ import {
 } from '@prisma/client';
 import { SINVUserSystem } from '../auth/users';
 import { SINVConfig } from '../config';
+import { AttachmentData } from './repositories.types';
+import { SINVUploads } from '../http/uploads';
 export namespace SINVRepositories {
     const prisma = SINVConfig.getPrismaClient();
 
@@ -203,6 +205,58 @@ export namespace SINVRepositories {
                     repositoryId: this.repositoryID,
                 },
             });
+        }
+
+        public async createObject(
+            identifier: string,
+            name: string,
+            typeID: number,
+            description: string,
+            attachments: AttachmentData[],
+            creator: SINVUserSystem.User
+        ) {
+            await this.awaitInitialization();
+            await creator.awaitInitialization();
+            if (await this.identifierExists(identifier))
+                throw Error('identifier_already_used');
+            let newObject = await prisma.object.create({
+                data: {
+                    userDefinedID: identifier,
+                    name,
+                    objectTypeId: typeID,
+                    description,
+                    creatorID: creator.userRow.id,
+                    repositoryId: this.repositoryID,
+                },
+            });
+            for (let attachment of attachments) {
+                let attachmentRow = await prisma.attachment.create({
+                    data: {
+                        comment: attachment.name,
+                        mimeType: attachment.mimeType,
+                        attachmentTypeId: parseInt(
+                            attachment.attachmentCategory
+                        ),
+                        objectId: newObject.id,
+                        fileExtension: attachment.fileExtension,
+                    },
+                });
+                SINVUploads.moveAttachmentFile(
+                    attachment.uploadID,
+                    attachmentRow.id
+                );
+            }
+        }
+
+        public async identifierExists(identifier: string) {
+            await this.awaitInitialization();
+            let objects = await prisma.object.findFirst({
+                where: {
+                    userDefinedID: identifier,
+                    repositoryId: this.repositoryID,
+                },
+            });
+            return objects !== null;
         }
     }
 }

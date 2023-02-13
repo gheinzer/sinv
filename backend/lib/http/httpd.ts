@@ -5,6 +5,7 @@ import mime from 'mime';
 import path from 'path';
 import { SINVConfig } from '../config';
 import { SINVUploads } from './uploads';
+import formidable from 'formidable';
 
 export namespace SINVHTTPD {
     const HTTPSOptions: https.ServerOptions = {
@@ -22,7 +23,9 @@ export namespace SINVHTTPD {
         req: http.IncomingMessage,
         res: http.ServerResponse
     ) {
-        if (req.method == 'GET') handleGET(req, res);
+        if (req.method == 'GET' && req.url?.startsWith('/attachment'))
+            SINVUploads.handleAttachmentRequest(req, res);
+        else if (req.method == 'GET') handleGET(req, res);
         else if (req.method == 'POST' && req.url == '/upload')
             SINVUploads.handleUpload(req, res);
         else res.end();

@@ -17,10 +17,19 @@
             grid-column: 1/2;
             grid-row: 1/1;
         }
-        app-input {
+        app-input,
+        .input {
             grid-row: 1/1;
             grid-column: 2/2;
             height: max-content;
+        }
+        .input {
+            display: flex;
+            flex-direction: column;
+            gap: $standard-padding;
+            .error-banner {
+                width: max-content;
+            }
         }
     }
 }

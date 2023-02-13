@@ -4,6 +4,7 @@ import { APIModule } from '../api/api.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoaderModule } from '../../loader/loader.module';
 import { InitializableClass } from '../../../../../backend/lib/types';
+import { AttachmentData } from '../../../../../backend/lib/objects/repositories.types';
 
 @NgModule({
   declarations: [],
@@ -145,5 +146,30 @@ export class RepositoriesModule extends InitializableClass {
       repositoryID: this.selectedRepository,
     });
     this.runRepositoryUpdateCallbacks();
+  }
+
+  public async createObject(
+    identifier: string,
+    name: string,
+    category: number,
+    description: string,
+    attachments: AttachmentData[]
+  ) {
+    await this.apiModule.call('repo/addObject', {
+      name,
+      repositoryID: this.selectedRepository,
+      identifier,
+      typeID: category,
+      description,
+      attachments,
+    });
+  }
+
+  public async identifierExists(identifier: string) {
+    let result = await this.apiModule.call('repo/identifierExists', {
+      identifier,
+      repositoryID: this.selectedRepository,
+    });
+    return result.data.identifierExists;
   }
 }

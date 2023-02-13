@@ -17,3 +17,21 @@ SINVAPI.addAction('uploads/initializeUpload', {
         };
     },
 });
+SINVAPI.addAction('uploads/initializeDownload', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['attachmentID'],
+    actionHandler: async (data, auth) => {
+        let downloadID = await SINVUploads.initializeDownloadRequest(
+            data.attachmentID,
+            //@ts-ignore
+            auth.sessionID
+        );
+        return {
+            success: true,
+            data: {
+                downloadID,
+            },
+        };
+    },
+});

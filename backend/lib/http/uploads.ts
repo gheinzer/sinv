@@ -1,14 +1,17 @@
-import { PrismaClient } from '@prisma/client';
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, fstat, mkdirSync, renameSync, readFileSync } from 'fs';
 import { SINVConfig } from '../config';
 import { UploadRequest, UploadedFile } from './uploads.types';
 import * as http from 'http';
 import formidable from 'formidable';
 import { randomUUID } from 'crypto';
+import path from 'path';
+import { SINVRepositories } from '../objects/repositories';
 
 export namespace SINVUploads {
     let uploadRequests: { [key: string]: UploadRequest } = {};
     let uploadedFiles: { [key: string]: UploadedFile } = {};
+    let downloadRequests: { [key: string]: { id: string; mimeType: string } } =
+        {};
 
     const prisma = SINVConfig.getPrismaClient();
 
@@ -74,8 +77,84 @@ export namespace SINVUploads {
             res.end('upload completed.');
         });
     }
+
+    export function moveAttachmentFile(
+        uploadID: string,
+        attachmentID: number
+    ): string {
+        let upload = uploadedFiles[uploadID];
+        if (!upload) throw Error('invalid_upload_id');
+        let oldpath = upload.fileObject.filepath;
+        let mimeType = upload.fileObject.mimetype;
+        if (!mimeType) mimeType = '';
+        let newpath = path.resolve(
+            SINVConfig.config.uploadDirectory,
+            attachmentID.toString()
+        );
+        renameSync(oldpath, newpath);
+        delete uploadedFiles[uploadID];
+        return mimeType;
+    }
+
+    export function handleAttachmentRequest(
+        req: http.IncomingMessage,
+        res: http.ServerResponse
+    ) {
+        if (!req.url) {
+            res.end();
+            return;
+        }
+        let url = new URL('http://dummyserver/' + req.url); // The dummyserver thing is required for the constructor
+        let dlid = url.searchParams.get('dlid');
+        if (!dlid) {
+            res.statusCode = 400;
+            res.end('dlid_null');
+            return;
+        }
+        let downloadRequestData = downloadRequests[dlid];
+        if (!downloadRequestData) {
+            res.statusCode = 400;
+            res.end('dlid_invalid');
+            return;
+        }
+        let attachmentPath = path.resolve(
+            SINVConfig.config.uploadDirectory,
+            downloadRequestData.id
+        );
+        if (!existsSync(attachmentPath)) {
+            res.statusCode = 400;
+            res.end('attachment_not_found');
+            delete downloadRequests[dlid];
+            return;
+        }
+        res.setHeader('Content-Type', downloadRequestData.mimeType);
+        res.end(readFileSync(attachmentPath));
+        delete downloadRequests[dlid];
+    }
+    export async function initializeDownloadRequest(
+        attachmentID: number,
+        sessionID: string
+    ) {
+        let attachmentRow = await prisma.attachment.findUniqueOrThrow({
+            where: { id: attachmentID },
+            include: { Object: true },
+        });
+        let repoID = attachmentRow.Object.repositoryId;
+        if (!repoID) throw Error('unknown_repo_id');
+        let repo = await SINVRepositories.getRepository(repoID);
+        await repo.userHasPermissionOrThrow({ sessionID });
+        let downloadID: string = randomUUID();
+        while (downloadRequests[downloadID]) {
+            downloadID = randomUUID();
+        }
+        downloadRequests[downloadID] = {
+            id: attachmentRow.id.toString(),
+            mimeType: attachmentRow.mimeType.toString(),
+        };
+        return downloadID;
+    }
 }
 
-if (existsSync(SINVConfig.config.uploadDirectory)) {
+if (!existsSync(SINVConfig.config.uploadDirectory)) {
     mkdirSync(SINVConfig.config.uploadDirectory, { recursive: true });
 }

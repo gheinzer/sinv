@@ -5,7 +5,7 @@
   }" class="button" (click)="clickHandler($event)">
     <app-loader [ngStyle]="{ display: loader ? 'block' : 'none' }"></app-loader>
     <div class="content">
-        <app-icon [id]="icon" *ngIf="icon !== ''"></app-icon>
+        <app-icon [id]="icon" *ngIf="icon !== '' && !loader"></app-icon>
         <span class="label"><ng-content></ng-content></span>
     </div>
 </div>

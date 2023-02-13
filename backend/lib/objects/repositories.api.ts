@@ -122,3 +122,46 @@ SINVAPI.addAction('repo/changeAttachmentTypeName', {
         return { success: true };
     },
 });
+SINVAPI.addAction('repo/addObject', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: [
+        'name',
+        'identifier',
+        'typeID',
+        'repositoryID',
+        'attachments',
+        'description',
+    ],
+    actionHandler: async (data, auth) => {
+        let repo = await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
+        let user = new SINVUserSystem.User({ sessionID: auth.sessionID });
+        await user.awaitInitialization();
+        await repo.createObject(
+            data.identifier,
+            data.name,
+            data.typeID,
+            data.description,
+            data.attachments,
+            user
+        );
+        return { success: true };
+    },
+});
+SINVAPI.addAction('repo/identifierExists', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID', 'identifier'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({ sessionID: auth.sessionID });
+        return {
+            success: true,
+            data: {
+                identifierExists: await repo.identifierExists(data.identifier),
+            },
+        };
+    },
+});

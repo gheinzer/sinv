@@ -39,3 +39,21 @@ h6.has-icon {
         display: block;
     }
 }
+
+.error-banner {
+    display: flex;
+    flex-direction: row;
+    color: $accent-color;
+    font-weight: 800;
+    font-size: 13px;
+    align-items: center;
+    gap: 0.75ch;
+    translation {
+        width: max-content;
+        display: block;
+    }
+    app-icon {
+        fill: $accent-color;
+        height: 1.2em;
+    }
+}

@@ -4,13 +4,7 @@ import { TranslationModule } from '../../translation/translation.module';
 import { FileIconModule } from '../file-icon/file-icon.module';
 import { AttachmentModule } from '../../api/attachments/attachments.module';
 import { RepositoriesModule } from '../../api/repositories/repositories.module';
-
-interface AttachmentData {
-  uploadID: string;
-  name: string;
-  attachmentCategory: string;
-  uploadFinished: boolean;
-}
+import { AttachmentData } from '../../../../../backend/lib/objects/repositories.types';
 
 @Component({
   selector: 'app-attachment-editor',
@@ -27,7 +21,6 @@ export class AttachmentEditorComponent {
 
   @Input() createNew: boolean = false;
   @Input() fileObject!: File;
-  @Input() fileBlob!: Blob;
 
   public fileIconClass: string = 'fiv-icon-blank';
   public uploadPercentage: number = 0;
@@ -42,6 +35,8 @@ export class AttachmentEditorComponent {
     name: '',
     uploadID: '',
     uploadFinished: false,
+    mimeType: '',
+    fileExtension: '',
   };
 
   private getAttachmentCategories = async () => {
@@ -73,17 +68,23 @@ export class AttachmentEditorComponent {
     this.repositoriesModule.addRepositoryUpdateCallback(
       this.getAttachmentCategories
     );
+    this.attachmentData.fileExtension =
+      this.fileObject.name.split('.').pop() ?? '';
     this.propagateAttachmentDataChange();
   }
 
   public async upload() {
+    this.attachmentData.mimeType = this.fileObject.type;
     this.attachmentData.uploadID = await this.attachmentModule.upload(
       this.fileObject,
       (progress) => {
         this.uploadPercentage = (progress.loaded / progress.total) * 100;
+        if (this.uploadPercentage == 100) {
+          this.attachmentData.uploadFinished = true;
+          this.propagateAttachmentDataChange();
+        }
       }
     );
-    this.attachmentData.uploadFinished = true;
     this.propagateAttachmentDataChange();
   }
 }

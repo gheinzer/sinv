@@ -43,6 +43,7 @@ model Object {
     Repository       Repository?      @relation(fields: [repositoryId], references: [id])
     repositoryId     Int?
     description      String
+    name             String
 }
 
 model ObjectRelation {
@@ -68,7 +69,7 @@ model ObjectType {
     name         String
     objects      Object[]
     Repository   Repository? @relation(fields: [repositoryId], references: [id])
-    repositoryId Int?
+    repositoryId Int
 }
 
 model AttachmentType {
@@ -87,6 +88,7 @@ model Attachment {
     attachmentTypeId Int
     Object           Object         @relation(fields: [objectId], references: [id])
     objectId         Int
+    fileExtension    String
 }
 
 model User {

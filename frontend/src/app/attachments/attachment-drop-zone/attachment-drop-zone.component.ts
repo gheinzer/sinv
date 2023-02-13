@@ -1,4 +1,16 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { AttachmentData } from '../../../../../backend/lib/objects/repositories.types';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+
+export interface AttachmentsInformation {
+  attachmentData: AttachmentData[];
+  uploadsFinished: boolean;
+}
 
 @Component({
   selector: 'app-attachment-drop-zone',
@@ -8,6 +20,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 export class AttachmentDropZoneComponent {
   public attachments: File[] = [];
   public dragover = false;
+  private attachmentData: { [key: string]: AttachmentData } = {};
+  @Output() attachmentDataChange = new EventEmitter<AttachmentsInformation>();
 
   public dropHandler(event: DragEvent) {
     event.preventDefault();
@@ -22,6 +36,26 @@ export class AttachmentDropZoneComponent {
     for (let file of [...event.dataTransfer.files]) {
       if (file.size > 0) this.attachments.push(file);
     }
+  }
+
+  private uploadsFinished() {
+    for (let attachment of Object.values(this.attachmentData)) {
+      if (!attachment.uploadFinished) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public updateAttachmentData(data: AttachmentData) {
+    if (data.uploadID == '') {
+      return;
+    }
+    this.attachmentData[data.uploadID] = data;
+    this.attachmentDataChange.emit({
+      attachmentData: Object.values(this.attachmentData),
+      uploadsFinished: this.uploadsFinished(),
+    });
   }
 
   @ViewChild('fileInput') fileInput!: ElementRef;
