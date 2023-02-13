@@ -3,9 +3,11 @@
     background: fill == 'background',
     accent: fill == 'accent'
   }" class="button" (click)="clickHandler($event)">
-    <app-loader [ngStyle]="{ display: loader ? 'block' : 'none' }"></app-loader>
     <div class="content">
-        <app-icon [id]="icon" *ngIf="icon !== '' && !loader"></app-icon>
+        <div class="icon" *ngIf="icon || loader">
+            <app-icon [id]="icon" *ngIf="icon !== '' && !loader"></app-icon>
+            <app-loader [ngStyle]="{ display: loader ? 'block' : 'none' }"></app-loader>
+        </div>
         <span class="label"><ng-content></ng-content></span>
     </div>
 </div>
