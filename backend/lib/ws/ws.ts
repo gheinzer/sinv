@@ -3,14 +3,17 @@ import { SINVHTTPD } from '../http/httpd';
 import { SINVAPI } from '../api/api';
 import { APIResponse, AuthenticationData } from '../api/api.types';
 import { WebsocketRequestData, WebsocketMessage } from './ws.types';
+import { SINVConfig } from '../config';
 
 export namespace SINVWebSocket {
     const WSServer = new ws.WebSocket.Server({
         server: SINVHTTPD.serverHTTP,
     });
-    const WSSServer = new ws.WebSocket.Server({
-        server: SINVHTTPD.serverHTTPS,
-    });
+    const WSSServer: ws.WebSocketServer | null = SINVHTTPD.serverHTTPS
+        ? new ws.WebSocket.Server({
+              server: SINVHTTPD.serverHTTPS,
+          })
+        : null;
 
     class WebsocketConnection {
         private activeRequests: WebsocketRequestData[] = [];
@@ -111,7 +114,7 @@ export namespace SINVWebSocket {
 
     export function initializeServer() {
         WSServer.on('connection', connectionHandler);
-        WSSServer.on('connection', connectionHandler);
+        if (WSSServer) WSSServer.on('connection', connectionHandler);
     }
 
     function connectionHandler(socket: ws.WebSocket) {

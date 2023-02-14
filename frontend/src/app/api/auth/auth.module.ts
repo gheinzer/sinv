@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthenticationData } from '@sinv/backend/lib/api/api.types';
 import { APIModule } from '../api/api.module';
 import { Router } from '@angular/router';
 import { LoaderModule } from '../../loader/loader.module';
+import { AuthenticationData } from '../../../../../backend/lib/api/api.types';
 
 @NgModule({
   declarations: [],

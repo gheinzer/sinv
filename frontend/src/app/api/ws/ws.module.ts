@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as WSTypes from '../../../../../backend/lib/ws/ws.types';
 
-import { APIResponse } from '@sinv/backend/lib/api/api.types';
 import { LoaderModule } from '../../loader/loader.module';
+import { APIResponse } from '../../../../../backend/lib/api/api.types';
 
 interface FrontendRequestHandler {
   handler: (data: { [key: string]: any }) => APIResponse;
