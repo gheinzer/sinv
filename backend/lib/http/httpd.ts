@@ -5,19 +5,18 @@ import mime from 'mime';
 import path from 'path';
 import { SINVConfig } from '../config';
 import { SINVUploads } from './uploads';
-import formidable from 'formidable';
 
 export namespace SINVHTTPD {
-    const HTTPSOptions: https.ServerOptions = {
-        key: readFileSync(SINVConfig.config.httpd.https.key_location),
-        cert: readFileSync(SINVConfig.config.httpd.https.cert_location),
-    };
+    const HTTPSOptions: https.ServerOptions | null = SINVConfig.config.httpd
+        .https.enable_HTTPS
+        ? {
+              key: readFileSync(SINVConfig.config.httpd.https.key_location),
+              cert: readFileSync(SINVConfig.config.httpd.https.cert_location),
+          }
+        : null;
 
     export const serverHTTP: http.Server = http.createServer(requestHandler);
-    export const serverHTTPS: https.Server = https.createServer(
-        HTTPSOptions,
-        requestHandler
-    );
+    export var serverHTTPS: https.Server | null = null;
 
     function requestHandler(
         req: http.IncomingMessage,
@@ -36,7 +35,10 @@ export namespace SINVHTTPD {
      */
     export function initializeServer() {
         serverHTTP.listen(SINVConfig.config.httpd.http.port);
-        serverHTTPS.listen(SINVConfig.config.httpd.https.port);
+        if (SINVConfig.config.httpd.https.enable_HTTPS && HTTPSOptions) {
+            serverHTTPS = https.createServer(HTTPSOptions, requestHandler);
+            serverHTTPS.listen(SINVConfig.config.httpd.https.port);
+        }
     }
 
     function handleGET(req: http.IncomingMessage, res: http.ServerResponse) {

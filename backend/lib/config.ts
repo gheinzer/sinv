@@ -18,7 +18,7 @@ export namespace SINVConfig {
                 key_location: string;
                 cert_location: string;
                 port: number;
-                enableHTTPS: boolean;
+                enable_HTTPS: boolean;
             };
         };
         uploadDirectory: string;
@@ -32,14 +32,14 @@ export namespace SINVConfig {
     const defaultConfiguration: SINVConfigurationObject = {
         httpd: {
             http: {
-                port: 8080,
+                port: 80,
             },
             content_path: 'dist/frontend',
             https: {
                 key_location: 'data/key.pem',
                 cert_location: 'data/certificate.pem',
                 port: 443,
-                enableHTTPS: false,
+                enable_HTTPS: false,
             },
         },
         uploadDirectory: 'data/uploads',
