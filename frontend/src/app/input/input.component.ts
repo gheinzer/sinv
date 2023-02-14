@@ -49,8 +49,10 @@ export class InputComponent {
     }
   }
 
-  public keydown(event: KeyboardEvent) {
-    if (event.key == 'Enter') this.enter.emit();
+  public onchange(event?: KeyboardEvent) {
+    if (event?.key == 'Enter') this.enter.emit();
+    this.value = this.input.nativeElement.value;
+    this.valueChange.emit(this.value);
   }
 
   public getEntries = Object.entries;

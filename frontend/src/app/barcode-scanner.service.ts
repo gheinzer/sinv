@@ -72,6 +72,7 @@ export class BarcodeScannerService {
           this.barcodePrefix,
           ''
         );
+      this.eventTarget.dispatchEvent(new Event('change'));
     }
     let preferredHandler: {
       handler: (value: string) => void;
@@ -84,7 +85,6 @@ export class BarcodeScannerService {
       if (handler.hasPriority || !preferredHandler.hasPriority)
         preferredHandler = handler;
     }
-    console.log(this.handlers);
     preferredHandler.handler(this.currentBarcodeValue);
     this.currentPrefix = '';
     this.currentBarcodeValue = '';
