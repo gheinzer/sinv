@@ -10,8 +10,8 @@ export class BarcodeScannerService {
       hasPriority: boolean;
     };
   } = {};
-  public barcodePrefix: string = '{{SCANVALUE}}';
-  public barcodeTimeout: number = 50;
+  public barcodePrefix: string = 'abc';
+  public barcodeTimeout: number = 5000;
   public barcodeTerminator: string | null = 'Tab';
   private currentPrefix: string = '';
   private currentBarcodeValue: string = '';
@@ -23,8 +23,9 @@ export class BarcodeScannerService {
   }
 
   private keydownHandler = (ev: KeyboardEvent) => {
+    console.log(ev);
     if (ev.key.length > 1 && ev.key !== this.barcodeTerminator) {
-      this.timeoutReset(); // Ignore special characters and keys like CTRL.
+      // Ignore special characters and keys like CTRL.
       return;
     }
     if (this.barcodePrefix[this.currentPrefix.length] == ev.key) {
