@@ -1,5 +1,6 @@
 FROM node
 WORKDIR /
+VOLUME ["/data"]
 
 # Install the dependencies for building
 COPY package*.json /
@@ -33,6 +34,6 @@ WORKDIR /frontend
 RUN npx ng build --configuration=production
 
 # Start the server and expose the ports
-WORKDIR /
+WORKDIR /backend
 EXPOSE 80 443
-CMD node dist/backend/index
+CMD npx prisma migrate deploy && cd / && node dist/backend/index
