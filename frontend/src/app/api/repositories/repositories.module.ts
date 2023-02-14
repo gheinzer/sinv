@@ -41,19 +41,21 @@ export class RepositoriesModule extends InitializableClass {
   }
 
   private async init() {
-    this.loaderModule.addRequirement();
     await this.authModule.awaitAuthentication();
-    let lastRepo = window.localStorage.getItem(this.lastRepoCookieName);
-    if (this.authModule.isAuthenticated) {
-      this.repositoryList = await this.getUserRepositories();
-      for (let repo of this.repositoryList) {
-        this.repositories[repo.id] = repo.name;
+    if (this.authModule.authenticationData.isAuthenticated) {
+      this.loaderModule.addRequirement();
+      let lastRepo = window.localStorage.getItem(this.lastRepoCookieName);
+      if (this.authModule.isAuthenticated) {
+        this.repositoryList = await this.getUserRepositories();
+        for (let repo of this.repositoryList) {
+          this.repositories[repo.id] = repo.name;
+        }
       }
+      this.loaderModule.satisfyRequirement();
+      if (lastRepo) this.selectedRepository = parseInt(lastRepo);
+      else this.selectedRepository = this.repositoryList[0].id;
+      this.updateRepository();
     }
-    this.loaderModule.satisfyRequirement();
-    if (lastRepo) this.selectedRepository = parseInt(lastRepo);
-    else this.selectedRepository = this.repositoryList[0].id;
-    this.updateRepository();
     this.markAsInitialized();
     this.runRepositoryUpdateCallbacks();
   }

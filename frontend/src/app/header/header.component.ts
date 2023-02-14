@@ -29,9 +29,12 @@ export class HeaderComponent {
   }
 
   async ngOnInit() {
-    this.loaderModule.addRequirement();
-    this.maxIdentifierLength = await this.repoModule.getMaxIdentifierLength();
-    this.loaderModule.satisfyRequirement();
+    await this.authModule.awaitAuthentication();
+    if (this.authModule.authenticationData.isAuthenticated) {
+      this.loaderModule.addRequirement();
+      this.maxIdentifierLength = await this.repoModule.getMaxIdentifierLength();
+      this.loaderModule.satisfyRequirement();
+    }
   }
 
   public focusSearch = () => {
