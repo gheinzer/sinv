@@ -1,0 +1,55 @@
+<div class="creation-form">
+    <h1>
+        <translation id="createObject"></translation>
+    </h1>
+    <div class="label-input-container">
+        <label><translation id="identifier"></translation>
+
+      <span class="info-text"
+        ><translation id="identifierHint"></translation></span
+    ></label>
+        <div class="input">
+            <app-input type="text" icon="123" autofocus [(value)]="identifier" (valueChange)="updateSubmitAbilityState()"></app-input>
+            <span class="error-banner" *ngIf="identifierExists"><app-icon id="warning"></app-icon
+        ><translation id="identifierAlreadyExists"></translation
+      ></span>
+        </div>
+    </div>
+    <div class="label-input-container">
+        <label><translation id="category"></translation>
+      <span class="info-text"
+        ><translation id="categoriesInfoText"></translation
+      ></span>
+    </label>
+        <app-input type="dropdown" [choices]="categoryChoices" icon="category" [(value)]="objectCategory"></app-input>
+    </div>
+    <div class="label-input-container">
+        <label><translation id="name"></translation
+      ><span class="info-text"><translation id="nameHint"></translation></span
+    ></label>
+
+        <app-input type="text" icon="object-name" [(value)]="name" (valueChange)="updateSubmitAbilityState()"></app-input>
+    </div>
+    <div class="label-input-container">
+        <label><translation id="description"></translation
+      ><span class="info-text"
+        ><translation id="descriptionHint"></translation></span
+    ></label>
+        <app-input type="textarea" style="height: 10rem" [(value)]="description" (valueChange)="updateSubmitAbilityState()"></app-input>
+    </div>
+    <section class="attachments">
+        <h1>
+            <translation id="attachments"></translation>
+        </h1>
+        <app-attachment-drop-zone (attachmentDataChange)="updateAttachmentInformation($event)"></app-attachment-drop-zone>
+    </section>
+    <app-button icon="add" [disabled]="submitDisabled || checkingSubmitState" [loader]="creatingObject || checkingSubmitState" (click)="createObject()">
+        <translation id="createObject"></translation>
+    </app-button>
+</div>
+<div class="mobile-notice">
+    <h1>
+        <translation id="actionNotAvailable"></translation>
+    </h1>
+    <i><translation id="notAvailableOnMobile"></translation></i>
+</div>

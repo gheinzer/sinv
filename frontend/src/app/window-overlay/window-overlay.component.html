@@ -1,0 +1,13 @@
+<div class="background">
+    <div class="window">
+        <div class="titlebar">
+            <h2 class="has-icon">
+                <app-icon [id]="windowIcon" *ngIf="windowIcon"></app-icon>{{ windowTitle }}
+            </h2>
+            <app-icon id="close" class="close" (click)="close.emit()" *ngIf="closable"></app-icon>
+        </div>
+        <div class="window-content">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

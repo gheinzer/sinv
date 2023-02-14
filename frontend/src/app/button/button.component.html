@@ -1,0 +1,13 @@
+<div [ngClass]="{
+    disabled: disabled == true,
+    background: fill == 'background',
+    accent: fill == 'accent'
+  }" class="button" (click)="clickHandler($event)">
+    <div class="content">
+        <div class="icon" *ngIf="icon || loader">
+            <app-icon [id]="icon" *ngIf="icon !== '' && !loader"></app-icon>
+            <app-loader [ngStyle]="{ display: loader ? 'block' : 'none' }"></app-loader>
+        </div>
+        <span class="label"><ng-content></ng-content></span>
+    </div>
+</div>

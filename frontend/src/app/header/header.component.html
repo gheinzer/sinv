@@ -1,3 +1,52 @@
 <header class="main-header">
+  <nav class="left"></nav>
+  <div class="logo-container">
     <app-logo></app-logo>
+  </div>
+  <nav class="left" *ngIf="authModule.isAuthenticated">
+    <app-input
+      icon="search"
+      type="text"
+      [placeholder]="
+        translationModule.getTranslation('searchNormalPlaceholder')
+      "
+      [(value)]="searchValue"
+      (enter)="textSearch()"
+      (valueChange)="textSearch()"
+      [shortcut]="['alt', '/']"
+      [keyboardShortcut]="[{ keys: ['alt', '/'], handler: focusSearch }]"
+      #search
+    ></app-input>
+
+    <app-input
+      icon="id-search"
+      type="text"
+      [placeholder]="translationModule.getTranslation('searchIDPlaceholder')"
+      (valueChange)="searchForID($event)"
+      [(value)]="idSearchValue"
+      (enter)="searchForID(idSearchValue)"
+      #idsearch
+    ></app-input>
+    <div
+      class="error-banner"
+      *ngIf="identifierDoesNotExist && idSearchValue !== ''"
+    >
+      <app-icon id="warning"></app-icon>
+      <translation id="identififerDoesNotExist"></translation>
+    </div>
+  </nav>
+  <nav class="right">
+    <app-link routerLink="/login" *ngIf="!authModule.isAuthenticated">
+      <translation id="login"></translation>
+    </app-link>
+    <app-user-badge *ngIf="authModule.isAuthenticated"></app-user-badge>
+    <app-input
+      icon="repository"
+      type="dropdown"
+      *ngIf="authModule.isAuthenticated"
+      [choices]="repoModule.repositories"
+      (valueChange)="repoModule.changeRepository($event)"
+      [value]="repoModule.selectedRepository"
+    ></app-input>
+  </nav>
 </header>

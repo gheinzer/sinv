@@ -1,0 +1,16 @@
+<div class="attachment-container" [ngSwitch]="createNew">
+    <div class="fiv-viv file-icon" [ngClass]="fileIconClass"></div>
+    <section class="info">
+        <p>{{ fileObject.name }}</p>
+        <div class="small">
+            <span>{{ readableFileSize }}</span>
+            <span>∙</span>
+            <span>{{ round(uploadPercentage) }} %</span>
+        </div>
+    </section>
+    <app-input type="text" [placeholder]="translationModule.getTranslation('name')" class="name" [(value)]="attachmentData.name" (valueChange)="propagateAttachmentDataChange()"></app-input>
+    <app-input type="dropdown" [choices]="attachmentCategoryChoices" [(value)]="attachmentData.attachmentCategory" (valueChange)="propagateAttachmentDataChange()" icon="category"></app-input>
+    <div class="progress-bar-container">
+        <div class="progress-bar" [ngStyle]="{ width: uploadPercentage + '%' }"></div>
+    </div>
+</div>

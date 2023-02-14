@@ -1,0 +1,17 @@
+@import "src/globals.scss";
+.banner-container {
+    @include box;
+    padding: $banner-padding;
+    border-radius: $banner-border-radius;
+    text-align: left;
+    .header {
+        display: flex;
+        font-weight: 800;
+        align-items: center;
+        gap: 1ch;
+        padding-bottom: $banner-padding;
+        app-icon {
+            fill: white;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+@import "src/globals.scss";
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: $standard-padding;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $standard-padding;
+    width: 100%;
+    .category-item {
+        @include box;
+        min-width: 25%;
+        padding: $standard-padding;
+        border-radius: $standard-border-radius;
+        display: grid;
+        gap: $standard-padding;
+        grid-template-columns: max-content auto max-content max-content;
+        align-items: center;
+        app-icon {
+            fill: white;
+            width: 24px;
+            display: block;
+        }
+        #delete,
+        #save {
+            cursor: pointer;
+            transition: 0.2s;
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: $standard-padding;
+}

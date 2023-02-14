@@ -4,21 +4,37 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    max-width: max-content;
-    @include input;
+    height: 100%;
+    @include box;
     transition: 0.2s;
     border-radius: $input-border-radius;
-    padding: $input-padding;
     gap: $input-gap;
-    .icon {
+    padding-left: $input-padding;
+    width: 100%;
+    .icon,
+    .text-container .expand-arrow {
         height: $input-icon-size;
         fill: $root-color;
     }
-    input {
-        padding: 0;
+    .text-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: $input-padding;
+    }
+    input,
+    .value-container,
+    textarea {
+        padding: $input-padding 0;
         background-color: transparent;
         border: none;
         outline: none;
+        width: 100%;
+        height: 100%;
+        resize: none;
         &,
         &::placeholder {
             color: $root-color;
@@ -27,5 +43,39 @@
         &::placeholder {
             opacity: $input-placeholder-opacity;
         }
+    }
+    &:invalid:not(:focus) {
+        border: red solid;
+    }
+    .dropdown-menu {
+        position: absolute;
+        @include box;
+        padding: $input-padding;
+        display: flex;
+        opacity: 0;
+        pointer-events: none;
+        flex-direction: column;
+        gap: $input-padding;
+        border-radius: $input-border-radius;
+        min-width: 100%;
+        top: $input-dropdown-menu-top;
+        right: 0;
+        width: max-content;
+        transition: 0.2s;
+        span {
+            cursor: pointer;
+            transition: 0.2s;
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+    &.dropdown:focus-within .dropdown-menu {
+        opacity: 1;
+        pointer-events: all;
+        z-index: 90;
+    }
+    &.dropdown {
+        cursor: pointer;
     }
 }

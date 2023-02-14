@@ -1,0 +1,46 @@
+@use "sass:color";
+@import "src/globals.scss";
+div.button {
+    border-radius: $standard-border-radius;
+    padding: $button-padding;
+    @include default-font();
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s;
+    display: grid;
+    grid-template-columns: 0 auto;
+    grid-template-rows: max-content;
+    .content {
+        grid-column: 2/2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $button-gap;
+    }
+    app-loader {
+        grid-column: 1/2;
+    }
+    &.background {
+        @include box;
+        color: $root-color;
+        fill: $root-color;
+    }
+    &.accent {
+        @include box($accent-color, $accent-color);
+        color: $root-bg;
+        fill: $root-bg;
+        app-loader {
+            border-top-color: $root-bg !important;
+        }
+    }
+    .label {
+        width: max-content;
+    }
+    &:hover {
+        opacity: 0.4;
+    }
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}

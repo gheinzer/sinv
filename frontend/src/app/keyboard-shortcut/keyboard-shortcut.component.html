@@ -1,0 +1,12 @@
+<div class="box">
+    <app-icon id="keyboard" class="keyboard-icon" *ngIf="keyboardIconShown"></app-icon>
+    <span class="shortcut" *ngFor="let key of getEntries(keys)">
+    <span [ngSwitch]="key[1]">
+      <span *ngSwitchCase="'ctrl'">ctrl</span>
+    <span *ngSwitchCase="'alt'">alt</span>
+    <span *ngSwitchCase="'shift'">shift</span>
+    <span *ngSwitchDefault="">{{ key[1] }}</span>
+    </span>
+    <span *ngIf="parseInt(key[0]) < keys.length - 1">+</span>
+    </span>
+</div>

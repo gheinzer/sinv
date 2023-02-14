@@ -1,0 +1,20 @@
+@import "src/globals.scss";
+:host {
+    border: $loader-normal-border;
+    border-top: $loader-segment-border;
+    border-width: $loader-border-thickness;
+    height: 20px;
+    width: 20px;
+    display: block;
+    border-radius: 100%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

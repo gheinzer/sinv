@@ -1,0 +1,53 @@
+@import "src/globals.scss";
+@import "/src/assets/file-icons/file-icon-vivid.min.css";
+.content {
+  padding: $standard-padding;
+}
+
+.metadata {
+  tr td:first-of-type {
+    opacity: 0.5;
+    padding-right: $standard-padding * 2;
+  }
+  table {
+    border-spacing: 0 $standard-padding;
+  }
+}
+
+.attachment-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: $standard-padding;
+  .attachment {
+    @include box;
+    padding: $standard-padding;
+    border-radius: $standard-border-radius;
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: $standard-padding;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
+    .file-icon {
+      width: $file-icon-size;
+      height: $file-icon-size;
+    }
+    .small-info {
+      display: flex;
+      flex-direction: row;
+      gap: 1ch;
+      font-size: 13px;
+      opacity: 0.5;
+    }
+    .name {
+      font-size: 20px;
+      font-weight: 900;
+    }
+  }
+}
+
+h2 {
+  margin-bottom: $standard-padding;
+}

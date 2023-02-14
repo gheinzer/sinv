@@ -1,0 +1,55 @@
+{
+    // Place your sinv workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+    // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+    // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+    // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+    // Placeholders with the same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"scope": "javascript,typescript",
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+    "Import global variables": {
+        "body": ["@import \"src/globals.scss\";"],
+        "description": "Inserts the code for importing the globals from globals.scss",
+        "prefix": "globals",
+        "scope": "scss"
+    },
+    "Mediaquery for mobile": {
+        "body": ["@media #{$mediaquery-mobile} {", "", "}"],
+        "description": "Inserts the mobile mediaquery.",
+        "prefix": "mq-mobile",
+        "scope": "scss"
+    },
+    "Mediaquery for desktop": {
+        "body": ["@media #{$mediaquery-desktop} {", "", "}"],
+        "description": "Inserts the desktop mediaquery.",
+        "prefix": "mq-desktop",
+        "scope": "scss"
+    },
+    "API action definition": {
+        "body": [
+            "SINVAPI.addAction('${1:action}', {",
+            "needsAuthentication: ${2:false},",
+            "needsPermissions: [$3],",
+            "requiresDataFields: [${4:'username'}],",
+            "actionHandler: async (data, auth) => {$0},",
+            "});"
+        ],
+        "prefix": "apidef",
+        "description": "Inserts an API definition template",
+        "scope": "typescript"
+    },
+    "Translation": {
+        "body": ["${1}: {", "en: '${2}',", "de: '${3}'", "}"],
+        "prefix": "translation",
+        "description": "Inserts a template for a translation",
+        "scope": "typescript"
+    }
+}

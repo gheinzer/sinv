@@ -5,6 +5,10 @@ $root-bg: rgb(30, 30, 30);
 $root-color: rgb(220, 220, 220);
 $root-font-size: 15px;
 $accent-color: #ff9900;
+$standard-padding: 15px;
+// * Media query variables
+$mediaquery-mobile: "( max-width: 768px )";
+$mediaquery-desktop: "( min-width: 768px )";
 // * Standards
 $standard-border-radius: 5px;
 // * Logo variables
@@ -17,25 +21,61 @@ $logo-font-size: 20px;
 $link-font-weight: 800;
 $link-mouseover-opacity: 0.3;
 $link-padding: 5px;
+// * Header variables
+$header-padding: 0 20px;
 // * Footer variables
-$footer-padding: 20px;
+$footer-padding: $standard-padding;
 $footer-github-logo-size: 30px;
 // * Input variables
 $input-placeholder-opacity: 0.4;
 $input-icon-size: 25px;
-$input-padding: 15px;
+$input-padding: $standard-padding;
 $input-gap: $input-padding;
-$input-border-radius: $standard-border-radius; // * Mixins
+$input-border-radius: $standard-border-radius;
+$input-dropdown-menu-top: 55px;
+// * Banner variables
+$banner-border-radius: $standard-border-radius;
+$banner-padding: $standard-padding;
+// * Button variables
+$button-padding: $standard-padding 30px;
+$button-gap: 1ch;
+// * Loader variables
+$loader-border-thickness: 2px;
+$loader-normal-border: solid transparent;
+$loader-segment-border: solid $accent-color;
+// * User badge variables
+$badge-menu-padding: $standard-padding;
+$badge-menu-border-radius: $standard-border-radius;
+$badge-menu-top: 30px;
+$badge-menu-right: 0;
+// * File icon varialbes
+$file-icon-size: 40px;
+// * Mixins
 @mixin default-font($italic: 0, $weight: 400) {
-    font-family: "Source Code Pro", monospace;
-    font-weight: $weight;
-    font-size: $root-font-size;
-    @if ($italic==1) {
-        font-style: italic;
-    }
+  font-family: "Source Code Pro", monospace;
+  font-weight: $weight;
+  font-size: $root-font-size;
+  @if ($italic==1) {
+    font-style: italic;
+  }
 }
 
-@mixin input($base-color: white) {
-    background: color.change($base-color, $alpha: 0.03);
-    border: color.change($base-color, $alpha: 0.1) solid 1px;
+@mixin box(
+  $background-color: color.adjust($root-bg, $lightness: 2),
+  $border-color: color.adjust($root-bg, $lightness: 7)
+) {
+  background: $background-color;
+  border: $border-color solid 1px;
+}
+
+@mixin mobile-only() {
+  @media #{$mediaquery-desktop} {
+    display: none !important;
+  }
+}
+
+@mixin desktop-only() {
+  @media #{$mediaquery-mobile} {
+    display: none !important;
+  }
 }

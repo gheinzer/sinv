@@ -5,3 +5,9 @@
     </div>
     <app-footer></app-footer>
 </div>
+<div class="loader-overlay" [ngStyle]="{
+    opacity: this.loaded ? 0 : 1,
+    pointerEvents: this.loaded ? 'none' : 'all'
+  }">
+    <app-loader></app-loader>
+</div>

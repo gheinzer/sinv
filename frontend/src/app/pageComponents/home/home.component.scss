@@ -1,0 +1,16 @@
+@import "src/globals.scss";
+.content {
+    padding: $standard-padding;
+    display: flex;
+    gap: $standard-padding;
+    flex-direction: column;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    gap: $standard-padding;
+    * {
+        width: max-content;
+    }
+}

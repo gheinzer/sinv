@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:../../data/sinv.db"
+}
+
+model Repository {
+    id              Int                    @id @default(autoincrement())
+    permissions     RepositoryPermission[]
+    name            String                 @unique
+    description     String
+    Objects         Object[]
+    RelationTypes   RelationType[]
+    ObjectTypes     ObjectType[]
+    AttachmentTypes AttachmentType[]
+}
+
+model RepositoryPermission {
+    id           Int         @id @default(autoincrement())
+    Repository   Repository? @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
+    User         User?       @relation(fields: [userId], references: [id])
+    userId       Int?
+}
+
+model Object {
+    id               Int              @id @default(autoincrement())
+    userDefinedID    String
+    createdBy        User             @relation(fields: [creatorID], references: [id])
+    creatorID        Int
+    attachments      Attachment[]
+    ObjectType       ObjectType       @relation(fields: [objectTypeId], references: [id])
+    objectTypeId     Int
+    Object1Relations ObjectRelation[] @relation("Object1")
+    Object2Relations ObjectRelation[] @relation("Object2")
+    lastAccessed     DateTime         @default(now())
+    Repository       Repository?      @relation(fields: [repositoryId], references: [id])
+    repositoryId     Int?
+    description      String
+    name             String
+}
+
+model ObjectRelation {
+    id             Int          @id @default(autoincrement())
+    RelationType   RelationType @relation(fields: [relationTypeId], references: [id])
+    relationTypeId Int
+    Object1        Object       @relation(fields: [object1ID], references: [id], name: "Object1")
+    object1ID      Int
+    Object2        Object       @relation(fields: [object2ID], references: [id], name: "Object2")
+    object2ID      Int
+}
+
+model RelationType {
+    id           Int              @id @default(autoincrement())
+    name         String           @unique
+    relations    ObjectRelation[]
+    Repository   Repository?      @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
+}
+
+model ObjectType {
+    id           Int         @id @default(autoincrement())
+    name         String
+    objects      Object[]
+    Repository   Repository? @relation(fields: [repositoryId], references: [id])
+    repositoryId Int
+}
+
+model AttachmentType {
+    id           Int          @id @default(autoincrement())
+    name         String
+    attachments  Attachment[]
+    Repository   Repository?  @relation(fields: [repositoryId], references: [id])
+    repositoryId Int?
+}
+
+model Attachment {
+    id               Int            @id @default(autoincrement())
+    mimeType         String
+    comment          String
+    AttachmentType   AttachmentType @relation(fields: [attachmentTypeId], references: [id])
+    attachmentTypeId Int
+    Object           Object         @relation(fields: [objectId], references: [id])
+    objectId         Int
+    fileExtension    String
+}
+
+model User {
+    id                    Int                    @id @default(autoincrement())
+    username              String                 @unique
+    passwordHash          String
+    createdObjects        Object[]
+    sessions              UserSession[]
+    permissionString      String                 @default("{}")
+    repositoryPermissions RepositoryPermission[]
+}
+
+model UserSession {
+    id     String   @id
+    opened DateTime @default(now())
+    User   User?    @relation(fields: [userId], references: [id])
+    userId Int?
+}
