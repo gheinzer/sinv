@@ -22,7 +22,6 @@ export class ObjectViewerComponent {
     public fileIconModule: FileIconModule,
     private attachmentModule: AttachmentModule
   ) {
-    this.loaderModule.addRequirement();
     activatedRoute.params.subscribe((val) => {
       if (val['objectIdentifier']) {
         this.objectIdentifier = val['objectIdentifier'];
@@ -32,6 +31,7 @@ export class ObjectViewerComponent {
   }
 
   private async init() {
+    this.loaderModule.addRequirement();
     this.objectData = await this.repositoriesModule.getObjectData(
       this.objectIdentifier
     );

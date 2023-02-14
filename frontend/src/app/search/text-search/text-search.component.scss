@@ -1,0 +1,61 @@
+@import "src/globals.scss";
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: $standard-padding;
+  img {
+    @media #{$mediaquery-mobile} {
+      width: 90vw;
+    }
+    @media #{$mediaquery-desktop} {
+      width: 25vw;
+    }
+  }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: $standard-padding;
+  position: relative;
+}
+
+:host {
+  height: 100%;
+}
+
+.content {
+  height: 100%;
+  padding: $standard-padding;
+}
+
+.results {
+  padding: $standard-padding 0;
+  display: flex;
+  flex-direction: column;
+  gap: $standard-padding;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.5;
+  }
+  .result {
+    @include box;
+    padding: $standard-padding;
+    border-radius: $standard-border-radius;
+    display: flex;
+    flex-direction: column;
+    .metadata {
+      width: max-content;
+      border-spacing: 0 $standard-padding / 2;
+      tr td:first-of-type {
+        opacity: 0.5;
+        padding-right: $standard-padding;
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import {
     ObjectProperties,
 } from './repositories.types';
 import { SINVUploads } from '../http/uploads';
+import { SearchResult } from './repositories.types';
 
 export namespace SINVRepositories {
     const prisma = SINVConfig.getPrismaClient();
@@ -79,7 +80,7 @@ export namespace SINVRepositories {
             return permissions !== null;
         }
 
-        public async search(searchString: string) {
+        public async textSearch(searchString: string): Promise<SearchResult[]> {
             await this.awaitInitialization();
             let results = await prisma.object.findMany({
                 where: {
@@ -104,13 +105,37 @@ export namespace SINVRepositories {
                                 contains: searchString,
                             },
                         },
+                        {
+                            name: {
+                                contains: searchString,
+                            },
+                        },
                     ],
                 },
                 orderBy: {
                     lastAccessed: 'desc',
                 },
+                select: {
+                    name: true,
+                    description: true,
+                    userDefinedID: true,
+                    ObjectType: {
+                        select: {
+                            name: true,
+                        },
+                    },
+                },
             });
-            return results;
+            let objects: SearchResult[] = [];
+            for (let obj of results) {
+                objects.push({
+                    name: obj.name,
+                    description: obj.description,
+                    identifier: obj.userDefinedID,
+                    categoryName: obj.ObjectType.name,
+                });
+            }
+            return objects;
         }
 
         public async getTypes() {

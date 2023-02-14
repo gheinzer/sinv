@@ -17,6 +17,13 @@ export interface ObjectProperties {
     id: number;
 }
 
+export interface SearchResult {
+    name: string;
+    identifier: string;
+    description: string;
+    categoryName: string;
+}
+
 export interface AttachmentProperties {
     extension: string;
     attachmentID: number;

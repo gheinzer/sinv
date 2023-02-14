@@ -152,4 +152,20 @@ export var translations: { [key: string]: translation } = {
     en: 'This identifier already exists.',
     de: 'Diese Identifikationsnummer exisitert bereits.',
   },
+  search: {
+    en: 'Search',
+    de: 'Suche',
+  },
+  noResultsFound: {
+    en: 'No results found.',
+    de: 'Keine Ergebnisse gefunden.',
+  },
+  home: {
+    en: 'Home',
+    de: 'Home',
+  },
+  identififerDoesNotExist: {
+    en: 'Identifier does not exist',
+    de: 'Identifikationsnummer existiert nicht',
+  },
 };

@@ -214,4 +214,14 @@ export class RepositoriesModule extends InitializableClass {
     });
     return result.data.maxIdentifierLength;
   }
+
+  public async textSearch(searchString: string) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    let result = await this.apiModule.call('repo/textSearch', {
+      repositoryID: this.selectedRepository,
+      searchString,
+    });
+    return result.data.results;
+  }
 }

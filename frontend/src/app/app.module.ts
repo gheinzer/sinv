@@ -35,6 +35,7 @@ import { FileIconModule } from './attachments/file-icon/file-icon.module';
 import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
 import { WindowOverlayComponent } from './window-overlay/window-overlay.component';
 import { ObjectViewerComponent } from './objects/viewer/viewer.component';
+import { TextSearchComponent } from './search/text-search/text-search.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ObjectViewerComponent } from './objects/viewer/viewer.component';
     RepoSettingsComponent,
     WindowOverlayComponent,
     ObjectViewerComponent,
+    TextSearchComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

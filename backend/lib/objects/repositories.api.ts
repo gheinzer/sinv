@@ -201,3 +201,21 @@ SINVAPI.addAction('repo/getMaxIdentifierLength', {
         };
     },
 });
+SINVAPI.addAction('repo/textSearch', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID', 'searchString'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        return {
+            success: true,
+            data: {
+                results: await repo.textSearch(data.searchString),
+            },
+        };
+    },
+});

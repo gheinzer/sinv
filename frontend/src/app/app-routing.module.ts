@@ -8,6 +8,7 @@ import { LoginComponent } from './pageComponents/login/login.component';
 import { ObjectCreatorComponet } from './objects/creator/creator.component';
 import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
 import { ObjectViewerComponent } from './objects/viewer/viewer.component';
+import { TextSearchComponent } from './search/text-search/text-search.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'repo-settings',
     component: RepoSettingsComponent,
+  },
+  {
+    path: 'search/text/:searchString',
+    component: TextSearchComponent,
   },
   { path: '**', component: NotFoundComponent },
 ];

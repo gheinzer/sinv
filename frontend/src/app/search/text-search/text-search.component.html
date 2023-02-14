@@ -1,0 +1,45 @@
+<div class="content">
+  <h1>
+    <translation id="searchNormalPlaceholder"></translation>
+  </h1>
+  <div class="no-results" *ngIf="results.length == 0 && !resultsLoading">
+    <img src="/assets/illustrations/search-no-results.svg" alt="" />
+    <h1>
+      <translation id="noResultsFound"></translation>
+    </h1>
+    <app-button icon="home" routerLink="/">
+      <translation id="home"></translation>
+    </app-button>
+  </div>
+  <div class="loader" *ngIf="resultsLoading">
+    <app-loader></app-loader>
+  </div>
+  <div class="results" *ngIf="results.length > 0">
+    <div
+      class="result"
+      *ngFor="let result of results"
+      (click)="openResult(result.identifier)"
+    >
+      <h2>{{ result.name }}</h2>
+      <table class="metadata">
+        <tr>
+          <td>
+            <translation id="identifier"></translation>
+          </td>
+          <td>
+            <span class="identifier">{{ result.identifier }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <translation id="category"></translation>
+          </td>
+          <td>
+            <span class="category">{{ result.categoryName }}</span>
+          </td>
+        </tr>
+      </table>
+      <span class="description">{{ result.description }}</span>
+    </div>
+  </div>
+</div>

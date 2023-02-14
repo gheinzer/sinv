@@ -12,19 +12,28 @@
       "
       [(value)]="searchValue"
       (enter)="textSearch()"
+      (valueChange)="textSearch()"
       [shortcut]="['alt', '/']"
       [keyboardShortcut]="[{ keys: ['alt', '/'], handler: focusSearch }]"
       #search
     ></app-input>
+
     <app-input
       icon="id-search"
       type="text"
       [placeholder]="translationModule.getTranslation('searchIDPlaceholder')"
-      (valueChange)="idSearchOnChange($event)"
+      (valueChange)="searchForID($event)"
       [(value)]="idSearchValue"
       (enter)="searchForID(idSearchValue)"
       #idsearch
     ></app-input>
+    <div
+      class="error-banner"
+      *ngIf="identifierDoesNotExist && idSearchValue !== ''"
+    >
+      <app-icon id="warning"></app-icon>
+      <translation id="identififerDoesNotExist"></translation>
+    </div>
   </nav>
   <nav class="right">
     <app-link routerLink="/login" *ngIf="!authModule.isAuthenticated">

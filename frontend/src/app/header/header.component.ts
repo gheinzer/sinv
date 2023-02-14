@@ -4,7 +4,7 @@ import { AuthModule } from '../api/auth/auth.module';
 import { RepositoriesModule } from '../api/repositories/repositories.module';
 import { TranslationModule } from '../translation/translation.module';
 import { BarcodeScannerService } from '../barcode-scanner.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +16,7 @@ export class HeaderComponent {
   private maxIdentifierLength: number = 1;
   public idSearchValue: string = '';
   public searchValue: string = '';
+  public identifierDoesNotExist: boolean = false;
 
   constructor(
     public authModule: AuthModule,
@@ -23,37 +24,33 @@ export class HeaderComponent {
     private loaderModule: LoaderModule,
     public translationModule: TranslationModule,
     barcodeScannerService: BarcodeScannerService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     barcodeScannerService.addHandler(this.searchForID);
   }
-
-  async ngOnInit() {
-    await this.authModule.awaitAuthentication();
-    if (this.authModule.authenticationData.isAuthenticated) {
-      this.loaderModule.addRequirement();
-      this.maxIdentifierLength = await this.repoModule.getMaxIdentifierLength();
-      this.loaderModule.satisfyRequirement();
-    }
-  }
-
   public focusSearch = () => {
     //@ts-ignore
     this.searchInput.input.nativeElement.focus();
   };
 
   public textSearch() {
+    if (this.searchValue == '') {
+      this.router.navigateByUrl('/');
+      return;
+    }
     this.router.navigateByUrl('/search/text/' + this.searchValue);
   }
 
-  public searchForID = (id: string) => {
+  public searchForID = async (id: string) => {
     this.idSearchValue = id;
-    this.router.navigateByUrl('/search/id/' + id);
-  };
+    this.identifierDoesNotExist = !(await this.repoModule.identifierExists(
+      this.idSearchValue
+    ));
 
-  public idSearchOnChange(value: string) {
-    if (value.length >= this.maxIdentifierLength) {
-      this.searchForID(value);
+    if (!this.identifierDoesNotExist) {
+      this.router.navigateByUrl('/object/view/' + this.idSearchValue);
+      this.idSearchValue = '';
     }
-  }
+  };
 }
