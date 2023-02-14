@@ -4,7 +4,10 @@ import { Directive, Input } from '@angular/core';
   selector: '[keyboardShortcut]',
 })
 export class KeyboardShortcutDirective {
-  @Input() keyboardShortcut: { keys: string[]; handler: () => void }[] = [];
+  @Input() keyboardShortcut: {
+    keys: string[];
+    handler: () => void;
+  }[] = [];
 
   constructor() {
     window.addEventListener('keydown', (ev) => {
@@ -29,6 +32,7 @@ export class KeyboardShortcutDirective {
           default:
             if (ev.key.toLowerCase() === key.toLowerCase()) keysSatisifed++;
         }
+
         if (keysSatisifed == shortcut.keys.length) {
           shortcut.handler();
           break;

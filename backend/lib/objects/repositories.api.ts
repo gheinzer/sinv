@@ -183,3 +183,21 @@ SINVAPI.addAction('repo/getObjectData', {
         };
     },
 });
+SINVAPI.addAction('repo/getMaxIdentifierLength', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['repositoryID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        return {
+            success: true,
+            data: {
+                maxIdentifierLength: await repo.getMaxIdentifierLength(),
+            },
+        };
+    },
+});

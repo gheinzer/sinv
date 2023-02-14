@@ -5,6 +5,7 @@ import { LoaderModule } from '../../loader/loader.module';
 import { AttachmentsInformation } from '../../attachments/attachment-drop-zone/attachment-drop-zone.component';
 import { AuthModule } from '../../api/auth/auth.module';
 import { Router } from '@angular/router';
+import { BarcodeScannerService } from '../../barcode-scanner.service';
 
 @Component({
   templateUrl: './creator.component.html',
@@ -24,15 +25,23 @@ export class ObjectCreatorComponet {
   public creatingObject: boolean = false;
   public checkingSubmitState: boolean = false;
   public identifierExists: boolean = false;
+  private barcodeScannerHandlerID: number = 1;
 
   constructor(
     public attachmentModule: AttachmentModule,
     private repositoriesModule: RepositoriesModule,
     private loaderModule: LoaderModule,
     private authModule: AuthModule,
-    private router: Router
+    private router: Router,
+    private barcodeScannerService: BarcodeScannerService
   ) {
     authModule.redirectIfNotLoggedIn('/login');
+    this.barcodeScannerHandlerID = barcodeScannerService.addHandler(
+      (value: string) => {
+        this.identifier = value;
+      },
+      true
+    );
   }
 
   public updateCategories = async () => {
@@ -88,5 +97,9 @@ export class ObjectCreatorComponet {
     await this.authModule.awaitAuthentication();
     this.updateCategories();
     this.repositoriesModule.addRepositoryUpdateCallback(this.updateCategories);
+  }
+
+  ngOnDestroy() {
+    this.barcodeScannerService.removeHandler(this.barcodeScannerHandlerID);
   }
 }

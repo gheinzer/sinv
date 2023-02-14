@@ -203,4 +203,13 @@ export class RepositoriesModule extends InitializableClass {
     });
     return result.data.objectData;
   }
+
+  public async getMaxIdentifierLength() {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    let result = await this.apiModule.call('repo/getMaxIdentifierLength', {
+      repositoryID: this.selectedRepository,
+    });
+    return result.data.maxIdentifierLength;
+  }
 }

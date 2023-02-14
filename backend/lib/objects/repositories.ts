@@ -12,6 +12,7 @@ import {
     ObjectProperties,
 } from './repositories.types';
 import { SINVUploads } from '../http/uploads';
+
 export namespace SINVRepositories {
     const prisma = SINVConfig.getPrismaClient();
 
@@ -300,6 +301,19 @@ export namespace SINVRepositories {
                 name: objectRow.name,
                 id: objectRow.id,
             };
+        }
+
+        public async getMaxIdentifierLength() {
+            let objects = await prisma.object.findMany({
+                select: { userDefinedID: true },
+                where: { repositoryId: this.repositoryID },
+            });
+            let maxLength = 0;
+            for (let object of objects) {
+                if (object.userDefinedID.length > maxLength)
+                    maxLength = object.userDefinedID.length;
+            }
+            return maxLength;
         }
     }
 }
