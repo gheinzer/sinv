@@ -23,9 +23,9 @@ model Repository {
 
 model RepositoryPermission {
     id           Int         @id @default(autoincrement())
-    Repository   Repository? @relation(fields: [repositoryId], references: [id])
+    Repository   Repository? @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
     repositoryId Int?
-    User         User?       @relation(fields: [userId], references: [id])
+    User         User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId       Int?
 }
 
@@ -35,12 +35,12 @@ model Object {
     createdBy        User             @relation(fields: [creatorID], references: [id])
     creatorID        Int
     attachments      Attachment[]
-    ObjectType       ObjectType       @relation(fields: [objectTypeId], references: [id])
+    ObjectType       ObjectType       @relation(fields: [objectTypeId], references: [id], onDelete: Cascade)
     objectTypeId     Int
     Object1Relations ObjectRelation[] @relation("Object1")
     Object2Relations ObjectRelation[] @relation("Object2")
     lastAccessed     DateTime         @default(now())
-    Repository       Repository?      @relation(fields: [repositoryId], references: [id])
+    Repository       Repository?      @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
     repositoryId     Int?
     description      String
     name             String
@@ -48,11 +48,11 @@ model Object {
 
 model ObjectRelation {
     id             Int          @id @default(autoincrement())
-    RelationType   RelationType @relation(fields: [relationTypeId], references: [id])
+    RelationType   RelationType @relation(fields: [relationTypeId], references: [id], onDelete: Cascade)
     relationTypeId Int
-    Object1        Object       @relation(fields: [object1ID], references: [id], name: "Object1")
+    Object1        Object       @relation(fields: [object1ID], references: [id], name: "Object1", onDelete: Cascade)
     object1ID      Int
-    Object2        Object       @relation(fields: [object2ID], references: [id], name: "Object2")
+    Object2        Object       @relation(fields: [object2ID], references: [id], name: "Object2", onDelete: Cascade)
     object2ID      Int
 }
 
@@ -60,7 +60,7 @@ model RelationType {
     id           Int              @id @default(autoincrement())
     name         String           @unique
     relations    ObjectRelation[]
-    Repository   Repository?      @relation(fields: [repositoryId], references: [id])
+    Repository   Repository?      @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
     repositoryId Int?
 }
 
@@ -68,7 +68,7 @@ model ObjectType {
     id           Int         @id @default(autoincrement())
     name         String
     objects      Object[]
-    Repository   Repository? @relation(fields: [repositoryId], references: [id])
+    Repository   Repository? @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
     repositoryId Int
 }
 
@@ -76,7 +76,7 @@ model AttachmentType {
     id           Int          @id @default(autoincrement())
     name         String
     attachments  Attachment[]
-    Repository   Repository?  @relation(fields: [repositoryId], references: [id])
+    Repository   Repository?  @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
     repositoryId Int?
 }
 
@@ -84,9 +84,9 @@ model Attachment {
     id               Int            @id @default(autoincrement())
     mimeType         String
     comment          String
-    AttachmentType   AttachmentType @relation(fields: [attachmentTypeId], references: [id])
+    AttachmentType   AttachmentType @relation(fields: [attachmentTypeId], references: [id], onDelete: Cascade)
     attachmentTypeId Int
-    Object           Object         @relation(fields: [objectId], references: [id])
+    Object           Object         @relation(fields: [objectId], references: [id], onDelete: Cascade)
     objectId         Int
     fileExtension    String
 }
@@ -104,6 +104,6 @@ model User {
 model UserSession {
     id     String   @id
     opened DateTime @default(now())
-    User   User?    @relation(fields: [userId], references: [id])
+    User   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int?
 }
