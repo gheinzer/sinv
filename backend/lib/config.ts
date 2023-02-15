@@ -75,7 +75,6 @@ export namespace SINVConfig {
                 readFileSync(configPath).toString()
             );
         config = _.defaultsDeep(userConfig, defaultConfiguration);
-        console.log(userConfig);
     }
 
     export function getPrismaClient() {

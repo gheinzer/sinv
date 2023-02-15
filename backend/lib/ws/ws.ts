@@ -9,11 +9,7 @@ export namespace SINVWebSocket {
     const WSServer = new ws.WebSocket.Server({
         server: SINVHTTPD.serverHTTP,
     });
-    const WSSServer: ws.WebSocketServer | null = SINVHTTPD.serverHTTPS
-        ? new ws.WebSocket.Server({
-              server: SINVHTTPD.serverHTTPS,
-          })
-        : null;
+    var WSSServer: ws.WebSocketServer | null = null;
 
     class WebsocketConnection {
         private activeRequests: WebsocketRequestData[] = [];
@@ -114,7 +110,15 @@ export namespace SINVWebSocket {
 
     export function initializeServer() {
         WSServer.on('connection', connectionHandler);
-        if (WSSServer) WSSServer.on('connection', connectionHandler);
+        if (
+            SINVConfig.config.httpd.https.enable_HTTPS &&
+            SINVHTTPD.serverHTTPS
+        ) {
+            WSSServer = new ws.WebSocketServer({
+                server: SINVHTTPD.serverHTTPS,
+            });
+            WSSServer.on('connection', connectionHandler);
+        }
     }
 
     function connectionHandler(socket: ws.WebSocket) {
