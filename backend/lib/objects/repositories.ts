@@ -340,5 +340,39 @@ export namespace SINVRepositories {
             }
             return maxLength;
         }
+
+        public async rename(newName: string) {
+            await prisma.repository.update({
+                where: { id: this.repositoryID },
+                data: { name: newName },
+            });
+        }
+
+        public async delete() {
+            await prisma.repository.delete({
+                where: {
+                    id: this.repositoryID,
+                },
+            });
+        }
+
+        public async givePermission(userID: number) {
+            await prisma.repositoryPermission.create({
+                data: {
+                    repositoryId: this.repositoryID,
+                    userId: userID,
+                },
+            });
+        }
+
+        public async revokePermission(userID: number) {
+            await prisma.repositoryPermission.deleteMany({
+                where: {
+                    repositoryId: this.repositoryID,
+                    userId: userID,
+                },
+            });
+            1;
+        }
     }
 }

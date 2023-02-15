@@ -219,3 +219,65 @@ SINVAPI.addAction('repo/textSearch', {
         };
     },
 });
+SINVAPI.addAction('repo/rename', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID', 'name'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.rename(data.name);
+        return {
+            success: true,
+        };
+    },
+});
+SINVAPI.addAction('repo/delete', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.delete();
+        return {
+            success: true,
+        };
+    },
+});
+SINVAPI.addAction('repo/givePermission', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID', 'userID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.givePermission(data.userID);
+        return {
+            success: true,
+        };
+    },
+});
+SINVAPI.addAction('repo/revokePermission', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID', 'userID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.revokePermission(data.userID);
+        return { success: true };
+    },
+});
