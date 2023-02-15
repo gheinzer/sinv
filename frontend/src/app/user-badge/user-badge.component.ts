@@ -9,6 +9,7 @@ import { LoaderModule } from '../loader/loader.module';
 })
 export class UserBadgeComponent implements OnInit {
   public username: string = '';
+  public hasAdminPermissions: boolean = false;
 
   constructor(
     public authModule: AuthModule,
@@ -18,6 +19,10 @@ export class UserBadgeComponent implements OnInit {
   async ngOnInit() {
     this.loaderModule.addRequirement();
     this.username = await this.authModule.getUsername();
+
+    this.hasAdminPermissions =
+      (await this.authModule.hasPermission('repositoryAdmin')) ||
+      (await this.authModule.hasPermission('userAdmin'));
     this.loaderModule.satisfyRequirement();
   }
 }

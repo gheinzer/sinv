@@ -87,6 +87,10 @@ export namespace SINVUserSystem {
         return new User({ username });
     }
 
+    export async function getAllUsers(): Promise<DBUser[]> {
+        return await prisma.user.findMany();
+    }
+
     export class User extends InitializableClass {
         public userRow!: DBUser; // This variable is assigned in the init method called by the constructor.
         private permissionObject!: permissionObject;

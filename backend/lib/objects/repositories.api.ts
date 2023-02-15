@@ -219,17 +219,17 @@ SINVAPI.addAction('repo/textSearch', {
         };
     },
 });
-SINVAPI.addAction('repo/rename', {
+SINVAPI.addAction('repo/edit', {
     needsAuthentication: true,
     needsPermissions: ['repositoryAdmin'],
-    requiresDataFields: ['repositoryID', 'name'],
+    requiresDataFields: ['repositoryID', 'name', 'description'],
     actionHandler: async (data, auth) => {
         let repo: SINVRepositories.Repository =
             await SINVRepositories.getRepository(data.repositoryID);
         await repo.userHasPermissionOrThrow({
             sessionID: auth.sessionID,
         });
-        await repo.rename(data.name);
+        await repo.edit(data.name, data.description);
         return {
             success: true,
         };
@@ -278,6 +278,28 @@ SINVAPI.addAction('repo/revokePermission', {
             sessionID: auth.sessionID,
         });
         await repo.revokePermission(data.userID);
+        return { success: true };
+    },
+});
+SINVAPI.addAction('repo/getAllRepositories', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: [],
+    actionHandler: async (data, auth) => {
+        return {
+            success: true,
+            data: {
+                repositories: await SINVRepositories.getRepositories(),
+            },
+        };
+    },
+});
+SINVAPI.addAction('repo/createRepository', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['name', 'description'],
+    actionHandler: async (data, auth) => {
+        await SINVRepositories.createRepository(data.name, data.description);
         return { success: true };
     },
 });

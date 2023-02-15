@@ -67,3 +67,40 @@ SINVAPI.addAction('auth/logout', {
         return { success: true };
     },
 });
+SINVAPI.addAction('auth/hasPermission', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['permissionName'],
+    actionHandler: async (data, auth) => {
+        let user = new SINVUserSystem.User(auth);
+        return {
+            success: true,
+            data: {
+                hasPermission: await user.hasPermission(data.permissionName),
+            },
+        };
+    },
+});
+SINVAPI.addAction('auth/getUsers', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: [],
+    actionHandler: async (data, auth) => {
+        let user = new SINVUserSystem.User(auth);
+        if (
+            (await user.hasPermission('repositoryAdmin')) ||
+            (await user.hasPermission('userAdmin'))
+        ) {
+            return {
+                success: true,
+                data: {
+                    users: await SINVUserSystem.getAllUsers(),
+                },
+            };
+        }
+        return {
+            success: false,
+            error: 'insufficient_permissions',
+        };
+    },
+});

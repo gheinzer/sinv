@@ -118,4 +118,15 @@ export class AuthModule {
     window.location.reload();
     this.updateAuthenticationState();
   }
+
+  public async hasPermission(permissionName: string) {
+    await this.awaitAuthentication();
+    return (await this.apiModule.call('auth/hasPermission', { permissionName }))
+      .data.hasPermission;
+  }
+
+  public async getAllUsers() {
+    await this.awaitAuthentication();
+    return (await this.apiModule.call('auth/getUsers', {})).data.users;
+  }
 }

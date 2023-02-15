@@ -17,11 +17,7 @@ import { SearchResult } from './repositories.types';
 export namespace SINVRepositories {
     const prisma = SINVConfig.getPrismaClient();
 
-    export async function createRepository(
-        name: string,
-        owner: DBUser,
-        description: string
-    ) {
+    export async function createRepository(name: string, description: string) {
         await prisma.repository.create({
             data: {
                 name,
@@ -33,14 +29,26 @@ export namespace SINVRepositories {
                 name,
             },
         });
-        await prisma.repositoryPermission.create({
-            data: { userId: owner.id, repositoryId: repositoryRow.id },
-        });
     }
 
     export async function getRepository(id: number): Promise<Repository> {
         await prisma.repository.findUniqueOrThrow({ where: { id } });
         return new Repository(id);
+    }
+
+    export async function getRepositories(): Promise<DBRepository[]> {
+        return await prisma.repository.findMany({
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                permissions: {
+                    select: {
+                        User: true,
+                    },
+                },
+            },
+        });
     }
 
     export class Repository extends InitializableClass {
@@ -341,10 +349,10 @@ export namespace SINVRepositories {
             return maxLength;
         }
 
-        public async rename(newName: string) {
+        public async edit(newName: string, description: string) {
             await prisma.repository.update({
                 where: { id: this.repositoryID },
-                data: { name: newName },
+                data: { name: newName, description },
             });
         }
 

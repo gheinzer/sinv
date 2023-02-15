@@ -1,14 +1,21 @@
 <div class="badge" tabindex="-1">
-    <icon-text icon="username" class="username">{{ username }}</icon-text>
+  <icon-text icon="username" class="username">{{ username }}</icon-text>
 </div>
 <div class="badge-menu" tabindex="-1">
-    <icon-text icon="settings" routerLink="/settings">
-        <translation id="settings"></translation>
-    </icon-text>
-    <icon-text icon="repo-settings" routerLink="/repo-settings">
-        <translation id="repoSettings"></translation>
-    </icon-text>
-    <icon-text icon="logout" (click)="authModule.logout()">
-        <translation id="logout"></translation>
-    </icon-text>
+  <icon-text icon="settings" routerLink="/settings">
+    <translation id="settings"></translation>
+  </icon-text>
+  <icon-text icon="repo-settings" routerLink="/repo-settings">
+    <translation id="repoSettings"></translation>
+  </icon-text>
+  <icon-text
+    icon="admin-settings"
+    routerLink="/admin-settings"
+    *ngIf="hasAdminPermissions"
+  >
+    <translation id="adminSettings"></translation>
+  </icon-text>
+  <icon-text icon="logout" (click)="authModule.logout()">
+    <translation id="logout"></translation>
+  </icon-text>
 </div>

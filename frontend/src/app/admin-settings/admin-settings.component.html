@@ -1,0 +1,181 @@
+<div class="content">
+  <div class="repo-admin" *ngIf="hasRepositoryAdminPermission">
+    <h1>
+      <translation id="repoManagement"></translation>
+    </h1>
+    <app-button icon="add" (click)="showAddRepositoryOverlay = true">
+      <translation id="createRepository"></translation>
+    </app-button>
+    <div
+      class="repository"
+      *ngFor="let repository of HTMLRepositories"
+      (click)="editRepository(HTMLRepositories.indexOf(repository))"
+    >
+      <app-icon class="repository-icon" id="repository"></app-icon>
+      <div class="info-section">
+        <h2 class="name">{{ repository.name }}</h2>
+        <span class="description" [innerHTML]="repository.description"></span>
+        <span class="info-text"
+          >{{ repository.permissions.length }}
+          <translation id="nUsersHaveAccess"></translation
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="user-admin" *ngIf="hasUserAdminPermission">
+    <h1>
+      <translation id="userManagement"></translation>
+    </h1>
+    <app-button icon="add-user">
+      <translation id="createUser"></translation>
+    </app-button>
+  </div>
+</div>
+<app-window-overlay
+  windowIcon="tune"
+  [windowTitle]="translationModule.getTranslation('manageRepository')"
+  *ngIf="editingRepositoryID !== null"
+  (close)="editingRepositoryID = null"
+  [closable]="true"
+>
+  <div class="window-overlay-content">
+    <div class="two-column-grid">
+      <label><translation id="name"></translation></label>
+      <app-input
+        type="text"
+        [(value)]="editedRepositories[editingRepositoryID].name"
+        (valueChange)="checkRepositoryEditInput()"
+      ></app-input>
+      <label><translation id="description"></translation></label>
+      <app-input
+        type="textarea"
+        [(value)]="editedRepositories[editingRepositoryID].description"
+        (valueChange)="checkRepositoryEditInput()"
+      ></app-input>
+    </div>
+    <div
+      class="error-banner"
+      *ngIf="repositoryEditingError"
+      [ngSwitch]="repositoryEditingError"
+    >
+      <app-icon id="warning"></app-icon>
+      <translation
+        id="repositoryNameUsed"
+        *ngSwitchCase="'name-exists'"
+      ></translation>
+      <translation id="nameEmpty" *ngSwitchCase="'name-empty'"></translation>
+    </div>
+    <div class="two-column-grid">
+      <app-button
+        icon="save"
+        [disabled]="repositoryEditingError !== null"
+        (click)="saveRepository()"
+      >
+        <translation id="save"></translation>
+      </app-button>
+      <app-button
+        icon="tune"
+        fill="background"
+        (click)="
+          editingRepositoryPermissionID = editingRepositoryID;
+          editingRepositoryID = null
+        "
+      >
+        <translation id="managePermissions"></translation>
+      </app-button>
+    </div>
+  </div>
+</app-window-overlay>
+<app-window-overlay
+  *ngIf="editingRepositoryPermissionID !== null"
+  (close)="editingRepositoryPermissionID = null"
+  [closable]="true"
+  [windowTitle]="translationModule.getTranslation('managePermissions')"
+  windowIcon="tune"
+>
+  <div class="window-overlay-content repository-permission-window">
+    <app-input
+      class="search"
+      icon="search"
+      [placeholder]="translationModule.getTranslation('searchUser')"
+      [(value)]="permissionUserSearchString"
+      (valueChange)="updatePermissionUserSearchResults()"
+    ></app-input>
+    <div
+      class="user-suggestion"
+      *ngFor="let user of permissionUserSearchResults"
+    >
+      <span class="username">{{ user.username }}</span>
+      <app-button
+        fill="background"
+        icon="plus"
+        *ngIf="!user.hasPermission"
+        class="permissionToggleButton"
+        (click)="giveRepositoryPermission(user.id)"
+      >
+        <translation id="givePermission"></translation>
+      </app-button>
+      <app-button
+        fill="accent"
+        icon="minus"
+        *ngIf="user.hasPermission"
+        class="permissionToggleButton"
+        (click)="revokeRepositoryPermission(user.id)"
+      >
+        <translation id="revokePermission"></translation>
+      </app-button>
+    </div>
+
+    <div
+      class="noUserSuggestionMessage"
+      *ngIf="permissionUserSearchResults.length == 0"
+    >
+      <h2>
+        <translation id="noResultsFound"></translation>
+      </h2>
+    </div>
+  </div>
+</app-window-overlay>
+<app-window-overlay
+  *ngIf="showAddRepositoryOverlay"
+  windowIcon="add"
+  [windowTitle]="translationModule.getTranslation('createRepository')"
+  [closable]="true"
+  (close)="showAddRepositoryOverlay = false"
+>
+  <div class="window-overlay-content">
+    <div class="two-column-grid">
+      <translation id="name"></translation>
+      <app-input
+        type="text"
+        [(value)]="newRepositoryName"
+        (valueChange)="checkRepositoryCreateInput()"
+      ></app-input>
+      <translation id="description"></translation>
+      <app-input
+        type="textarea"
+        [(value)]="newRepositoryDescription"
+        (valueChange)="checkRepositoryCreateInput()"
+      ></app-input>
+    </div>
+    <div
+      class="error-banner"
+      *ngIf="repositoryEditingError"
+      [ngSwitch]="repositoryEditingError"
+    >
+      <app-icon id="warning"></app-icon>
+      <translation
+        id="repositoryNameUsed"
+        *ngSwitchCase="'name-exists'"
+      ></translation>
+      <translation id="nameEmpty" *ngSwitchCase="'name-empty'"></translation>
+    </div>
+    <app-button
+      icon="save"
+      (click)="createRepository()"
+      [disabled]="repositoryEditingError !== null"
+    >
+      <translation id="save"></translation>
+    </app-button>
+  </div>
+</app-window-overlay>
