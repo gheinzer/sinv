@@ -13,7 +13,15 @@ import { FileIconModule } from '../../attachments/file-icon/file-icon.module';
 })
 export class ObjectViewerComponent {
   public objectIdentifier: string = '';
-  public objectData!: ObjectProperties;
+  public objectData: ObjectProperties = {
+    attachments: [],
+    categoryID: 0,
+    categoryName: '',
+    description: '',
+    id: 0,
+    identifier: '',
+    name: '',
+  };
 
   constructor(
     activatedRoute: ActivatedRoute,
