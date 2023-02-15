@@ -56,7 +56,7 @@ export namespace SINVConfig {
         },
     };
 
-    const configPath = '../../data/config.json';
+    const configPath = 'data/config.json';
     /**
      * This is the configuration obejct read from the configuration file (unset entries are defaulted). The entries can be directly accessed.
      */
@@ -75,6 +75,7 @@ export namespace SINVConfig {
                 readFileSync(configPath).toString()
             );
         config = _.defaultsDeep(userConfig, defaultConfiguration);
+        console.log(userConfig);
     }
 
     export function getPrismaClient() {
