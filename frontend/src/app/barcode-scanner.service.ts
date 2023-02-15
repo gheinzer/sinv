@@ -10,8 +10,8 @@ export class BarcodeScannerService {
       hasPriority: boolean;
     };
   } = {};
-  public barcodePrefix: string = 'abc';
-  public barcodeTimeout: number = 5000;
+  public barcodePrefix: string = '~FromBarcodeScanner~';
+  public barcodeTimeout: number = 100;
   public barcodeTerminator: string | null = 'Tab';
   private currentPrefix: string = '';
   private currentBarcodeValue: string = '';
@@ -23,7 +23,6 @@ export class BarcodeScannerService {
   }
 
   private keydownHandler = (ev: KeyboardEvent) => {
-    console.log(ev);
     if (ev.key.length > 1 && ev.key !== this.barcodeTerminator) {
       // Ignore special characters and keys like CTRL.
       return;
