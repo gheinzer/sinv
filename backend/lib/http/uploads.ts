@@ -1,4 +1,12 @@
-import { existsSync, fstat, mkdirSync, renameSync, readFileSync } from 'fs';
+import {
+    existsSync,
+    fstat,
+    mkdirSync,
+    renameSync,
+    readFileSync,
+    copyFileSync,
+    unlinkSync,
+} from 'fs';
 import { SINVConfig } from '../config';
 import { UploadRequest, UploadedFile } from './uploads.types';
 import * as http from 'http';
@@ -92,7 +100,9 @@ export namespace SINVUploads {
             SINVConfig.config.uploadDirectory,
             attachmentID.toString()
         );
-        renameSync(oldpath, newpath);
+        // fs.rename does not work across filesytems
+        copyFileSync(oldpath, newpath);
+        unlinkSync(oldpath);
         delete uploadedFiles[uploadID];
         return mimeType;
     }

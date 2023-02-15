@@ -1,15 +1,47 @@
-<div class="container" [ngClass]="{ dropdown: type == 'dropdown' }" (keydown)="keydown($event)">
-    <app-icon class="icon" [id]="icon" *ngIf="icon !== ''"></app-icon>
-    <div class="text-container" [ngSwitch]="type">
-        <div class="value-container" *ngSwitchCase="'dropdown'" tabindex="-1">
-            {{ choices[value] }}
-        </div>
-        <textarea *ngSwitchCase="'textarea'" [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" [placeholder]="placeholder" #input></textarea>
-        <input *ngSwitchDefault="" [type]="type" [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" #input />
-        <app-keyboard-shortcut [keyboardIconShown]="false" [keys]="shortcut" *ngIf="type !== 'dropdown' && shortcut.length > 0"></app-keyboard-shortcut>
-        <app-icon class="expand-arrow" id="expand" *ngIf="type == 'dropdown'" tabindex="-1"></app-icon>
-        <div class="dropdown-menu">
-            <span *ngFor="let choice of getEntries(choices)" (click)="value = choice[0]; valueChange.emit(choice[0])" tabindex="-1">{{ choice[1] }}</span
+<div
+  class="container"
+  [ngClass]="{ dropdown: type == 'dropdown' }"
+  (keydown)="onchange($event)"
+>
+  <app-icon class="icon" [id]="icon" *ngIf="icon !== ''"></app-icon>
+  <div class="text-container" [ngSwitch]="type">
+    <div class="value-container" *ngSwitchCase="'dropdown'" tabindex="-1">
+      {{ choices[value] }}
+    </div>
+    <textarea
+      *ngSwitchCase="'textarea'"
+      [(ngModel)]="value"
+      (ngModelChange)="valueChange.emit($event)"
+      [placeholder]="placeholder"
+      (change)="onchange()"
+      #input
+    ></textarea>
+    <input
+      *ngSwitchDefault=""
+      [type]="type"
+      [placeholder]="placeholder"
+      [(ngModel)]="value"
+      (ngModelChange)="valueChange.emit($event)"
+      (change)="onchange()"
+      #input
+    />
+    <app-keyboard-shortcut
+      [keyboardIconShown]="false"
+      [keys]="shortcut"
+      *ngIf="type !== 'dropdown' && shortcut.length > 0"
+    ></app-keyboard-shortcut>
+    <app-icon
+      class="expand-arrow"
+      id="expand"
+      *ngIf="type == 'dropdown'"
+      tabindex="-1"
+    ></app-icon>
+    <div class="dropdown-menu">
+      <span
+        *ngFor="let choice of getEntries(choices)"
+        (click)="value = choice[0]; valueChange.emit(choice[0])"
+        tabindex="-1"
+        >{{ choice[1] }}</span
       >
     </div>
   </div>
