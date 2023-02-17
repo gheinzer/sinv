@@ -65,6 +65,7 @@ export class AdminSettingsComponent {
   public editRepository(arrayID: number) {
     this.editedRepositories = _.cloneDeep(this.cachedRepositories); // Thos ensures that there is no reference between the two objects
     this.editingRepositoryID = arrayID;
+    this.checkRepositoryEditInput();
   }
 
   public checkRepositoryEditInput() {

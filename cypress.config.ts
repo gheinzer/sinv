@@ -2,6 +2,7 @@
 import { defineConfig } from 'cypress';
 import { SINVUserSystem } from './backend/lib/auth/users';
 import { SINVConfig } from './backend/lib/config';
+import { SINVRepositories } from './backend/lib/objects/repositories';
 
 let sessionIDs: { [key: string]: string } = {};
 
@@ -18,6 +19,12 @@ export default defineConfig({
                         username: username,
                     });
                     return await user.createSession();
+                },
+
+                async createRepositoryIfNotExists(name: string) {
+                    if (!(await SINVRepositories.repositoryExists(name)))
+                        await SINVRepositories.createRepository(name, '');
+                    return null;
                 },
             });
         },

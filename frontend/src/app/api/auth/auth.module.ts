@@ -115,8 +115,8 @@ export class AuthModule {
     if (!this.authenticationData.isAuthenticated) return;
     window.localStorage.removeItem(this.sessionIDCookieName);
     await this.apiModule.call('auth/logout', {});
-    window.location.reload();
     this.updateAuthenticationState();
+    window.location.reload();
   }
 
   public async hasPermission(permissionName: string) {
