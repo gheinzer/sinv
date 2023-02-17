@@ -60,12 +60,17 @@ export namespace SINVRepositories {
         }
 
         private async init() {
-            this.repositoryRow = await prisma.repository.findUniqueOrThrow({
-                where: {
-                    id: this.repositoryID,
-                },
-            });
-            this.markAsInitialized();
+            try {
+                this.repositoryRow = await prisma.repository.findUniqueOrThrow({
+                    where: {
+                        id: this.repositoryID,
+                    },
+                });
+                this.markAsInitialized();
+            } catch (e) {
+                //@ts-ignore
+                this.initializationError = e.message;
+            }
         }
 
         /**
