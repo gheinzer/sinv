@@ -47,7 +47,7 @@ SINVAPI.addAction('auth/getUsername', {
     needsPermissions: [],
     requiresDataFields: [],
     actionHandler: async (data, auth) => {
-        let user = new SINVUserSystem.User(auth);
+        let user = new SINVUserSystem.User({ sessionID: auth.sessionID });
         await user.awaitInitialization();
         return {
             success: true,
@@ -72,7 +72,7 @@ SINVAPI.addAction('auth/hasPermission', {
     needsPermissions: [],
     requiresDataFields: ['permissionName'],
     actionHandler: async (data, auth) => {
-        let user = new SINVUserSystem.User(auth);
+        let user = new SINVUserSystem.User({ sessionID: auth.sessionID });
         return {
             success: true,
             data: {
@@ -86,7 +86,7 @@ SINVAPI.addAction('auth/getUsers', {
     needsPermissions: [],
     requiresDataFields: [],
     actionHandler: async (data, auth) => {
-        let user = new SINVUserSystem.User(auth);
+        let user = new SINVUserSystem.User({ sessionID: auth.sessionID });
         if (
             (await user.hasPermission('repositoryAdmin')) ||
             (await user.hasPermission('userAdmin'))
