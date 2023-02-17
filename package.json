@@ -20,6 +20,7 @@
     },
     "homepage": "https://github.com/gheinzer/sinv#readme",
     "devDependencies": {
+        "cypress": "^12.6.0",
         "typescript": "^4.9.5"
     }
 }

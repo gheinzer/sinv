@@ -5,3 +5,4 @@
 *.db-journal
 data/*
 cypress/videos
+cypress/screenshots
