@@ -27,5 +27,11 @@ jobs:
       - name: Install dependencies
         run: npm i --include=dev
         
+      - name: Get cypress version
+        run: npx cypress version
+        
+      - name: List directory
+        run: ls -al
+        
       - name: Run cypress tests
         run: npx cypress run
