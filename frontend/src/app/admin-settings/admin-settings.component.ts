@@ -17,7 +17,8 @@ export class AdminSettingsComponent {
   public HTMLRepositories: any[] = [];
   public editedRepositories: any[] = [];
   public editingRepositoryID: number | null = null;
-  public repositoryEditingError: 'name-empty' | 'name-exists' | null = null;
+  public repositoryEditingError: 'name-empty' | 'name-exists' | null =
+    'name-empty';
   public editingRepositoryPermissionID: number | null = null;
   public permissionUserSearchResults: any[] = [];
   public cachedUsers: any[] = [];
