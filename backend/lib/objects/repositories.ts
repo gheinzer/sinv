@@ -51,6 +51,11 @@ export namespace SINVRepositories {
         });
     }
 
+    export async function repositoryExists(name: string) {
+        let repo = await prisma.repository.findFirst({ where: { name: name } });
+        return repo !== null;
+    }
+
     export class Repository extends InitializableClass {
         public repositoryRow!: DBRepository;
 
