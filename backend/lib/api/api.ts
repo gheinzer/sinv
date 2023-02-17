@@ -22,8 +22,6 @@ export namespace SINVAPI {
         let actionInfo = actions[action];
         let result: APIResponse;
 
-        console.log(action);
-
         if (!actionInfo) return { success: false, error: 'invalid_action' };
 
         if (
