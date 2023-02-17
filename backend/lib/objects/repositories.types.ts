@@ -1,3 +1,4 @@
+import { User as DBUser } from '@prisma/client';
 export interface AttachmentData {
     uploadID: string;
     name: string;

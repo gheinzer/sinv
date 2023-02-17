@@ -13,7 +13,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent {
   @ViewChild('search') searchInput!: ElementRef;
-  private maxIdentifierLength: number = 1;
   public idSearchValue: string = '';
   public searchValue: string = '';
   public identifierDoesNotExist: boolean = false;
@@ -29,6 +28,7 @@ export class HeaderComponent {
   ) {
     barcodeScannerService.addHandler(this.searchForID);
   }
+
   public focusSearch = () => {
     //@ts-ignore
     this.searchInput.input.nativeElement.focus();

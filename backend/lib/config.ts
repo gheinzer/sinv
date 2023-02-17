@@ -1,6 +1,6 @@
-import { Prisma, PrismaClient } from '@prisma/client';
 import { readFileSync, existsSync } from 'fs';
 import _ from 'lodash';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 /**
  * `SINVConfig` is responsible for reading the SINV configuration file. Access the configuration object by using `SINVConfig.config`.
@@ -20,6 +20,7 @@ export namespace SINVConfig {
                 port: number;
                 enable_HTTPS: boolean;
             };
+            host: string;
         };
         uploadDirectory: string;
         users: {
@@ -41,6 +42,7 @@ export namespace SINVConfig {
                 port: 443,
                 enable_HTTPS: false,
             },
+            host: '127.0.0.1',
         },
         uploadDirectory: 'data/uploads',
         users: {
@@ -56,7 +58,7 @@ export namespace SINVConfig {
         },
     };
 
-    const configPath = '../../data/config.json';
+    const configPath = 'data/config.json';
     /**
      * This is the configuration obejct read from the configuration file (unset entries are defaulted). The entries can be directly accessed.
      */

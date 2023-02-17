@@ -1,0 +1,75 @@
+@import "src/globals.scss";
+.content {
+  padding: $standard-padding;
+}
+
+.content,
+.repo-admin,
+.user-admin,
+.window-overlay-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $standard-padding;
+  flex-direction: column;
+  width: 100%;
+}
+
+.repository,
+.user {
+  @include box;
+  padding: $standard-padding;
+  border-radius: $standard-border-radius;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: $standard-padding;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.5;
+  }
+  app-icon {
+    fill: white;
+  }
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    .userAccessInfo {
+      opacity: 0.5;
+    }
+  }
+}
+
+.two-column-grid {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: $standard-padding;
+  app-input {
+    min-width: 25vw;
+    &[type="textarea"] {
+      min-height: 10rem;
+    }
+  }
+}
+
+.repository-permission-window {
+  .user-suggestion {
+    @include box;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr max-content;
+    padding: $standard-padding;
+    border-radius: $standard-border-radius;
+    gap: $standard-padding;
+    width: 100%;
+    min-width: 35vw;
+  }
+  .search {
+    width: 100%;
+    min-width: 35vw;
+  }
+}

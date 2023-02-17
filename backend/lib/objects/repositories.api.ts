@@ -219,3 +219,87 @@ SINVAPI.addAction('repo/textSearch', {
         };
     },
 });
+SINVAPI.addAction('repo/edit', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID', 'name', 'description'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.edit(data.name, data.description);
+        return {
+            success: true,
+        };
+    },
+});
+SINVAPI.addAction('repo/delete', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.delete();
+        return {
+            success: true,
+        };
+    },
+});
+SINVAPI.addAction('repo/givePermission', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID', 'userID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.givePermission(data.userID);
+        return {
+            success: true,
+        };
+    },
+});
+SINVAPI.addAction('repo/revokePermission', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['repositoryID', 'userID'],
+    actionHandler: async (data, auth) => {
+        let repo: SINVRepositories.Repository =
+            await SINVRepositories.getRepository(data.repositoryID);
+        await repo.userHasPermissionOrThrow({
+            sessionID: auth.sessionID,
+        });
+        await repo.revokePermission(data.userID);
+        return { success: true };
+    },
+});
+SINVAPI.addAction('repo/getAllRepositories', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: [],
+    actionHandler: async (data, auth) => {
+        return {
+            success: true,
+            data: {
+                repositories: await SINVRepositories.getRepositories(),
+            },
+        };
+    },
+});
+SINVAPI.addAction('repo/createRepository', {
+    needsAuthentication: true,
+    needsPermissions: ['repositoryAdmin'],
+    requiresDataFields: ['name', 'description'],
+    actionHandler: async (data, auth) => {
+        await SINVRepositories.createRepository(data.name, data.description);
+        return { success: true };
+    },
+});

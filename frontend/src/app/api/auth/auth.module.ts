@@ -115,7 +115,18 @@ export class AuthModule {
     if (!this.authenticationData.isAuthenticated) return;
     window.localStorage.removeItem(this.sessionIDCookieName);
     await this.apiModule.call('auth/logout', {});
-    window.location.reload();
     this.updateAuthenticationState();
+    window.location.reload();
+  }
+
+  public async hasPermission(permissionName: string) {
+    await this.awaitAuthentication();
+    return (await this.apiModule.call('auth/hasPermission', { permissionName }))
+      .data.hasPermission;
+  }
+
+  public async getAllUsers() {
+    await this.awaitAuthentication();
+    return (await this.apiModule.call('auth/getUsers', {})).data.users;
   }
 }

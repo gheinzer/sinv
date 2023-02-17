@@ -168,4 +168,68 @@ export var translations: { [key: string]: translation } = {
     en: 'Identifier does not exist',
     de: 'Identifikationsnummer existiert nicht',
   },
+  adminSettings: {
+    en: 'Admin settings',
+    de: 'Administrationseinstellungen',
+  },
+  userManagement: {
+    en: 'User management',
+    de: 'Benutzerverwaltung',
+  },
+  repoManagement: {
+    en: 'Repository management',
+    de: 'Ablagenverwaltung',
+  },
+  createUser: {
+    en: 'Create user',
+    de: 'Benutzer hinzufügen',
+  },
+  createRepository: {
+    en: 'Create repository',
+    de: 'Ablage hinzufügen',
+  },
+  nUsersHaveAccess: {
+    en: ' users have access',
+    de: ' Benutzer haben Zugriff.',
+  },
+  manageRepository: {
+    en: 'Manage Repository',
+    de: 'Ablage verwalten',
+  },
+  save: {
+    en: 'Save',
+    de: 'Speichern',
+  },
+  managePermissions: {
+    en: 'Manage permissions',
+    de: 'Berechtigungen verwalten',
+  },
+  repositoryNameUsed: {
+    en: 'This name is already used.',
+    de: 'Dieser Name wird schon verwendet.',
+  },
+  descriptionEmpty: {
+    en: 'Please enter a description.',
+    de: 'Bitte geben Sie eine Beschreibung ein.',
+  },
+  nameEmpty: {
+    en: 'Please enter a name',
+    de: 'Bitte geben Sie einen Namen ein',
+  },
+  searchUser: {
+    en: 'Search username',
+    de: 'Benutzername',
+  },
+  givePermission: {
+    en: 'Give access',
+    de: 'Zugang erlauben',
+  },
+  revokePermission: {
+    en: 'Revoke access',
+    de: 'Zugang entfernen',
+  },
+  close: {
+    en: 'Close',
+    de: 'Schliessen',
+  },
 };

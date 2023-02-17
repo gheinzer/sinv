@@ -87,6 +87,10 @@ export namespace SINVUserSystem {
         return new User({ username });
     }
 
+    export async function getAllUsers(): Promise<DBUser[]> {
+        return await prisma.user.findMany();
+    }
+
     export class User extends InitializableClass {
         public userRow!: DBUser; // This variable is assigned in the init method called by the constructor.
         private permissionObject!: permissionObject;
@@ -133,7 +137,8 @@ export namespace SINVUserSystem {
                         where: { id: this.identification.userID },
                     })) ?? undefined;
             } else {
-                throw Error('user_identification_not_defined');
+                this.initializationError = 'user_identification_not_defined';
+                return;
             }
             if (row) {
                 this.userRow = row;
@@ -142,7 +147,10 @@ export namespace SINVUserSystem {
                         this.userRow.permissionString
                     );
                 this.markAsInitialized();
-            } else throw Error('user_not_found');
+            } else {
+                this.initializationError = 'user_not_found';
+                return;
+            }
             this.username = this.userRow.username;
         }
 

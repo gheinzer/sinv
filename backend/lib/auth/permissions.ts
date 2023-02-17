@@ -6,6 +6,7 @@ export namespace SINVPermissions {
         superuser: false,
         repositoryAdmin: false,
         upload: true,
+        userAdmin: false,
     };
 
     /**

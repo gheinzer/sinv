@@ -36,6 +36,7 @@ import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
 import { WindowOverlayComponent } from './window-overlay/window-overlay.component';
 import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 import { TextSearchComponent } from './search/text-search/text-search.component';
+import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { TextSearchComponent } from './search/text-search/text-search.component'
     WindowOverlayComponent,
     ObjectViewerComponent,
     TextSearchComponent,
+    AdminSettingsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

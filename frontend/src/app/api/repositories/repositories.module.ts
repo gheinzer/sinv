@@ -224,4 +224,59 @@ export class RepositoriesModule extends InitializableClass {
     });
     return result.data.results;
   }
+
+  public async editRepository(
+    newName: string,
+    description: string,
+    repositoryID: number
+  ) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    await this.apiModule.call('repo/edit', {
+      repositoryID,
+      name: newName,
+      description,
+    });
+    await this.init();
+  }
+
+  public async deleteRepository(repositoryID: number) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    await this.apiModule.call('repo/rename', {
+      repositoryID,
+    });
+  }
+
+  public async giveRepositoryPermission(userID: number, repositoryID: number) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    await this.apiModule.call('repo/givePermission', {
+      userID,
+      repositoryID,
+    });
+  }
+
+  public async revokeRepositoryPermission(
+    userID: number,
+    repositoryID: number
+  ) {
+    await this.authModule.awaitAuthentication();
+    await this.awaitInitialization();
+    await this.apiModule.call('repo/revokePermission', {
+      userID,
+      repositoryID,
+    });
+  }
+
+  public async getAllRepositories() {
+    await this.authModule.awaitAuthentication();
+    return (await this.apiModule.call('repo/getAllRepositories', {})).data
+      .repositories;
+  }
+
+  public async createRepository(name: string, description: string) {
+    await this.authModule.awaitAuthentication();
+    await this.apiModule.call('repo/createRepository', { name, description });
+  }
 }

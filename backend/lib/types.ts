@@ -8,7 +8,10 @@
 export class InitializableClass {
     protected isInitialized: boolean = false;
     protected initializationHandlers: (() => void)[] = [];
+    protected initializationError: string | null = null;
+
     public awaitInitialization() {
+        if (this.initializationError) throw Error(this.initializationError);
         if (this.isInitialized) return;
         return new Promise<void>((resolve, reject) => {
             this.initializationHandlers.push(resolve);

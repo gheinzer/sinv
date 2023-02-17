@@ -36,7 +36,7 @@ export namespace SINVAPI {
                     if (!(await user.hasPermission(permission))) {
                         return {
                             success: false,
-                            error: 'unsufficient_permissions_' + permission,
+                            error: 'insufficient_permissions_' + permission,
                         };
                     }
                 }
