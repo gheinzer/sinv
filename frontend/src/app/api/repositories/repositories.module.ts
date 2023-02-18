@@ -243,7 +243,7 @@ export class RepositoriesModule extends InitializableClass {
   public async deleteRepository(repositoryID: number) {
     await this.authModule.awaitAuthentication();
     await this.awaitInitialization();
-    await this.apiModule.call('repo/rename', {
+    await this.apiModule.call('repo/delete', {
       repositoryID,
     });
   }

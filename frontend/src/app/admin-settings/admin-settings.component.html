@@ -39,7 +39,7 @@
             <translation id="repositoryNameUsed" *ngSwitchCase="'name-exists'"></translation>
             <translation id="nameEmpty" *ngSwitchCase="'name-empty'"></translation>
         </div>
-        <div class="two-column-grid">
+        <div class="three-column-grid">
             <app-button icon="save" [disabled]="repositoryEditingError !== null" (click)="saveRepository()">
                 <translation id="save"></translation>
             </app-button>
@@ -48,6 +48,12 @@
           editingRepositoryID = null
         ">
                 <translation id="managePermissions"></translation>
+            </app-button>
+            <app-button icon="delete" fill="background" (click)="
+          deleteRepository(editedRepositories[editingRepositoryID].id);
+          editingRepositoryID = null
+        ">
+                <translation id="deleteRepository"></translation>
             </app-button>
         </div>
     </div>
