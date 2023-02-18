@@ -1,5 +1,4 @@
 ![logo][sinv_logo]
-# sinv
-A simple inventory system
+<span style="text-align: center;">`sinv` is a **s**imple **inv**entory system.</span>
 
-[sinv_logo]: /frontend/src/assets/sinv_logo.svg
+[sinv_logo]: /docs/sinv_github_header.svg
