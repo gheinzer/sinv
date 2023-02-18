@@ -42,18 +42,22 @@ export class RepositoriesModule extends InitializableClass {
 
   private async init() {
     await this.authModule.awaitAuthentication();
-    if (this.authModule.authenticationData.isAuthenticated) {
-      this.loaderModule.addRequirement();
-      let lastRepo = window.localStorage.getItem(this.lastRepoCookieName);
-      if (this.authModule.isAuthenticated) {
-        this.repositoryList = await this.getUserRepositories();
-        for (let repo of this.repositoryList) {
-          this.repositories[repo.id] = repo.name;
-        }
+    this.loaderModule.addRequirement();
+    let lastRepo: string | number | null = window.localStorage.getItem(
+      this.lastRepoCookieName
+    );
+    if (this.authModule.isAuthenticated) {
+      this.repositoryList = await this.getUserRepositories();
+      for (let repo of this.repositoryList) {
+        this.repositories[repo.id] = repo.name;
       }
       this.loaderModule.satisfyRequirement();
-      if (lastRepo) this.selectedRepository = parseInt(lastRepo);
-      else this.selectedRepository = this.repositoryList[0].id;
+      if (lastRepo) {
+        lastRepo = parseInt(lastRepo);
+        if (!this.repositories[lastRepo])
+          lastRepo = this.selectedRepository = this.repositoryList[0].id;
+        this.selectedRepository = lastRepo;
+      } else this.selectedRepository = this.repositoryList[0].id;
       this.updateRepository();
     }
     this.markAsInitialized();
@@ -68,6 +72,7 @@ export class RepositoriesModule extends InitializableClass {
 
   public async updateRepository() {
     let lastRepo = window.localStorage.getItem(this.lastRepoCookieName);
+
     window.localStorage.setItem(
       this.lastRepoCookieName,
       this.selectedRepository.toString()
