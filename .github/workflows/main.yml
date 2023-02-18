@@ -23,5 +23,8 @@ jobs:
                   npx prisma generate
                   cd ..
 
+            - name: Give permissions for sinv.db
+              run: sudo chmod +rwx data/sinv.db
+
             - name: Run cypress tests
-              run: sudo npx cypress run
+              run: npx cypress run
