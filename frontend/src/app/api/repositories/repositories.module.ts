@@ -51,7 +51,6 @@ export class RepositoriesModule extends InitializableClass {
       for (let repo of this.repositoryList) {
         this.repositories[repo.id] = repo.name;
       }
-      this.loaderModule.satisfyRequirement();
       if (lastRepo) {
         lastRepo = parseInt(lastRepo);
         if (!this.repositories[lastRepo])
@@ -61,6 +60,7 @@ export class RepositoriesModule extends InitializableClass {
       this.updateRepository();
     }
     this.markAsInitialized();
+    this.loaderModule.satisfyRequirement();
     this.runRepositoryUpdateCallbacks();
   }
 
