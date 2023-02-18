@@ -1,8 +1,8 @@
 name: Cypress tests
 on: [push, pull_request, release, workflow_dispatch]
 jobs:
-    start_server:
-        name: Build everything and start the backend
+    cypress_tests:
+        name: Run cypress tests
         runs-on: ubuntu-latest
 
         steps:
@@ -24,4 +24,4 @@ jobs:
                   cd ..
 
             - name: Run cypress tests
-              run: npx cypress run
+              run: sudo npx cypress run
