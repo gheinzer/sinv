@@ -232,4 +232,8 @@ export var translations: { [key: string]: translation } = {
     en: 'Close',
     de: 'Schliessen',
   },
+  deleteRepository: {
+    en: 'Delete repository',
+    de: 'Ablage löschen',
+  },
 };

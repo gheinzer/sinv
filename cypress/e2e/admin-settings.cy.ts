@@ -105,6 +105,14 @@ describe('Test header settings', () => {
                 cy.contains('Give access').click();
                 cy.contains('Revoke access').click();
             });
+
+            it('Test repository deletion', () => {
+                cy.get('app-button').contains('Delete repository').click();
+                cy.get('.repository').should(
+                    'not.contain',
+                    testingRepositoryName
+                );
+            });
         });
     });
 });

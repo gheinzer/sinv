@@ -182,4 +182,9 @@ export class AdminSettingsComponent {
     this.creatingRepository = false;
     this.showAddRepositoryOverlay = false;
   }
+
+  public async deleteRepository(id: number) {
+    this.repositoriesModule.deleteRepository(id);
+    await this.updateData();
+  }
 }

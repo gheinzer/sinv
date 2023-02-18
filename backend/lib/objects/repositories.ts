@@ -56,6 +56,14 @@ export namespace SINVRepositories {
         return repo !== null;
     }
 
+    export async function initializeDefaultRepository() {
+        if (!(await repositoryExists('default')))
+            createRepository(
+                'default',
+                'The default repository, automatically created.\nNote: This repository has to exist. If you delete it, it will automatically be recreated when the server restarts.'
+            );
+    }
+
     export class Repository extends InitializableClass {
         public repositoryRow!: DBRepository;
 
