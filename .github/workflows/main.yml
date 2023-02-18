@@ -17,14 +17,11 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  npm i --include=dev
+                  sudo npm i --include=dev
                   cd backend
-                  npm i --include=dev
-                  npx prisma generate
+                  sudo npm i --include=dev
+                  sudo npx prisma generate
                   cd ..
 
-            - name: Give permissions for sinv.db
-              run: sudo chmod +rwx data/sinv.db
-
             - name: Run cypress tests
-              run: npx cypress run
+              run: sudo npx cypress run
