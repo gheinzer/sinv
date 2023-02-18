@@ -1,37 +1,27 @@
 name: Cypress tests
 on: [push, pull_request, release, workflow_dispatch]
 jobs:
-  start_server:
-    name: Build everything and start the backend
-    runs-on: ubuntu-latest
-    
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      
-      - name: Build docker image
-        run: docker build . -t sinv
-      
-      - name: Start docker container
-        run: docker run -p 80:80 -d sinv
-        
-  cypress_tests:
-    name: Run the cypress tests
-    runs-on: ubuntu-latest
-    needs: start_server
-    
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      
-      - name: Install dependencies
-        run: npm i --include=dev
-        
-      - name: Get cypress version
-        run: npx cypress version
-        
-      - name: List directory
-        run: ls -al
-        
-      - name: Run cypress tests
-        run: npx cypress run
+    cypress_tests:
+        name: Run cypress tests
+        runs-on: ubuntu-latest
+
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v3
+
+            - name: Build docker image
+              run: docker build . -t sinv
+
+            - name: Start docker container
+              run: docker run -p 80:80 -v "$(pwd)"/data:/data -d sinv
+
+            - name: Install dependencies
+              run: |
+                  sudo npm i --include=dev
+                  cd backend
+                  sudo npm i --include=dev
+                  sudo npx prisma generate
+                  cd ..
+
+            - name: Run cypress tests
+              run: sudo npx cypress run

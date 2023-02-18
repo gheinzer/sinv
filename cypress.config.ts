@@ -1,7 +1,19 @@
-//@ts-nocheck
 import { defineConfig } from 'cypress';
-import { SINVUserSystem } from './backend/lib/auth/users';
 import { SINVConfig } from './backend/lib/config';
+
+SINVConfig.overrideConfig = {
+    httpd: {},
+    prismaClientOptions: {
+        datasources: {
+            db: {
+                url: `file:${__dirname}/data/sinv.db`,
+            },
+        },
+    },
+};
+SINVConfig.readConfig();
+
+import { SINVUserSystem } from './backend/lib/auth/users';
 import { SINVRepositories } from './backend/lib/objects/repositories';
 
 let sessionIDs: { [key: string]: string } = {};

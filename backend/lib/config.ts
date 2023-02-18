@@ -8,6 +8,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
  * console.log(SINVConfig.config.foo); // Gets the `foo` configuration entry from the config file
  *  */
 export namespace SINVConfig {
+    export var overrideConfig: any | null = null;
     export interface SINVConfigurationObject {
         httpd: {
             http: {
@@ -76,6 +77,10 @@ export namespace SINVConfig {
             var userConfig: Object = JSON.parse(
                 readFileSync(configPath).toString()
             );
+
+        if (overrideConfig !== null) {
+            userConfig = _.defaultsDeep(overrideConfig, userConfig);
+        }
         config = _.defaultsDeep(userConfig, defaultConfiguration);
     }
 
