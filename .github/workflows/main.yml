@@ -13,16 +13,7 @@ jobs:
               run: docker build . -t sinv
 
             - name: Start docker container
-              run: docker run -p 80:80 -v "$(pwd)"/data:/data sinv > sinv.log &
-
-    cypress_tests:
-        name: Run the cypress tests
-        runs-on: ubuntu-latest
-        needs: start_server
-
-        steps:
-            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-            - uses: actions/checkout@v3
+              run: docker run -p 80:80 -v "$(pwd)"/data:/data -d sinv
 
             - name: Install dependencies
               run: |
@@ -31,9 +22,6 @@ jobs:
                   npm i --include=dev
                   npx prisma generate
                   cd ..
-
-            - name: Get sinv container logs
-              run: cat sinv.log
 
             - name: Run cypress tests
               run: npx cypress run
