@@ -13,7 +13,7 @@ jobs:
               run: docker build . -t sinv
 
             - name: Start docker container
-              run: docker run -p 80:80 -v "$(pwd)"/data:/data -d sinv
+              run: docker run -p 80:80 -v "$(pwd)"/data:/data sinv > sinv.log &
 
     cypress_tests:
         name: Run the cypress tests
@@ -32,11 +32,8 @@ jobs:
                   npx prisma generate
                   cd ..
 
-            - name: Get cypress version
-              run: npx cypress version
-
-            - name: List directory
-              run: ls -al
+            - name: Get sinv container logs
+              run: cat sinv.log
 
             - name: Run cypress tests
               run: npx cypress run
