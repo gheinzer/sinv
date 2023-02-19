@@ -1,7 +1,7 @@
 name: Release tasks
 on:
     release:
-        types: [created]
+        types: [created, unpublished]
     workflow_dispatch:
 permissions: write-all
 jobs:
@@ -30,7 +30,7 @@ jobs:
               run: cd $GITHUB_WORKSPACE/frontend && npm version --no-git-tag-version from-git
 
             - name: Change git branch
-              run: git branch main
+              run: git checkout main
 
             - name: Push changes to GitHub
               run: |
