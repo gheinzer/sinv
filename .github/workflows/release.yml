@@ -1,5 +1,8 @@
 name: Release tasks
-on: [release, workflow_dispatch]
+on:
+    release:
+        types: [published]
+    workflow_dispatch:
 permissions: write-all
 jobs:
     update_version_numbers:
