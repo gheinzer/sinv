@@ -35,7 +35,8 @@ jobs:
               run: |
                   git add -A
                   git commit -m "🔁 Updated version numbers (commit made by GitHub actions workflow)"
-                  git push
+                  git tag -m "🔁 Updated version numbers (commit made by GitHub actions workflow)" -f -a "$(git describe --tags --abbrev=0)" "$(git log --format="%H" -n 1)"
+                  git push -f origin refs/tags/"$(git describe --tags --abbrev=0)"
 
     docker_build:
         name: Build and push docker image
@@ -64,4 +65,4 @@ jobs:
                   context: .
                   file: ./Dockerfile
                   push: true
-                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/sinv:$GITGUB_TAG,${{ secrets.DOCKERHUB_USERNAME }}/sinv:latest
+                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/sinv:${{ env.$GITHUB_TAG }},${{ secrets.DOCKERHUB_USERNAME }}/sinv:latest
