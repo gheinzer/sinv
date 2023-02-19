@@ -35,6 +35,7 @@ jobs:
               run: |
                   git add -A
                   git commit -m "🔁 Updated version numbers (commit made by GitHub actions workflow)"
+                  git push
                   git tag -m "🔁 Updated version numbers (commit made by GitHub actions workflow)" -f -a "$(git describe --tags --abbrev=0)" "$(git log --format="%H" -n 1)"
                   git push -f origin refs/tags/"$(git describe --tags --abbrev=0)"
 
