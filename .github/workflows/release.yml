@@ -1,6 +1,6 @@
 name: Release tasks
 on: [release, workflow_dispatch]
-permissions: read-all|write-all
+permissions: write-all
 jobs:
     update_version_numbers:
         name: Update all version numbers
