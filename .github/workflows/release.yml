@@ -1,5 +1,6 @@
 name: Release tasks
 on: [release, workflow_dispatch]
+permissions: read-all|write-all
 jobs:
     update_version_numbers:
         name: Update all version numbers
@@ -13,8 +14,8 @@ jobs:
 
             - name: Set git name and email
               run: |
-                  git config user.name "github-actions"
-                  git config user.email "github-actions@github.com"
+                  git config user.name "$GITHUB_ACTOR"
+                  git config user.email "$GITHUB_ACTOR_ID+$GITHUB_ACTOR@users.noreply.github.com"
 
             - name: Update version number of the root package
               run: npm version --no-git-tag-version from-git
