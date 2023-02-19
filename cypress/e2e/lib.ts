@@ -24,4 +24,14 @@ export namespace SINVCypressLib {
     export function createRepositoryIfNotExists(name: string) {
         cy.task('createRepositoryIfNotExists', name);
     }
+
+    export function getInput(placeholder: string) {
+        cy.get(`app-input input[placeholder=${placeholder}]`);
+    }
+
+    export function URLShouldBe(path: string) {
+        getConfig((config) => {
+            cy.url().should('equal', `http://${config.httpd.host}${path}`);
+        });
+    }
 }

@@ -41,7 +41,7 @@ export var translations: { [key: string]: translation } = {
     de: 'Letzte Objekte',
   },
   createObject: {
-    en: 'Create an object',
+    en: 'Create object',
     de: 'Objekt hinzufügen',
   },
   name: {

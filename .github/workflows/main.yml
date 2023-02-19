@@ -1,5 +1,5 @@
 name: Cypress tests
-on: [push, pull_request, release, workflow_dispatch]
+on: [push, release, workflow_dispatch]
 jobs:
     cypress_tests:
         name: Run cypress tests
