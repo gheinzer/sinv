@@ -20,10 +20,10 @@ jobs:
               run: npm version --no-git-tag-version from-git
 
             - name: Update backend version number
-              run: cd backend && npm version --no-git-tag-version from-git
+              run: cd $GITHUB_WORKSPACE/backend && npm version --no-git-tag-version from-git
 
             - name: Update frontend version nuber
-              run: cd ../frontend && npm version --no-git-tag-version from-git && cd ..
+              run: cd $GITHUB_WORKSPACE/frontend && npm version --no-git-tag-version from-git
 
             - name: Push changes to GitHub
               run: |
