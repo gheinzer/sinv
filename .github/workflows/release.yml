@@ -18,12 +18,15 @@ jobs:
                   git config user.email "$GITHUB_ACTOR_ID+$GITHUB_ACTOR@users.noreply.github.com"
 
             - name: Update version number of the root package
+              continue-on-error: true
               run: npm version --no-git-tag-version from-git
 
             - name: Update backend version number
+              continue-on-error: true
               run: cd $GITHUB_WORKSPACE/backend && npm version --no-git-tag-version from-git
 
             - name: Update frontend version number
+              continue-on-error: true
               run: cd $GITHUB_WORKSPACE/frontend && npm version --no-git-tag-version from-git
 
             - name: Change git branch
