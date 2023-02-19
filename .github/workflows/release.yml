@@ -17,13 +17,13 @@ jobs:
                   git config --global user.email "$GITHUB_ACTOR_ID+$GITHUB_ACTOR@users.noreply.github.com"
 
             - name: Update version number of the root package
-              run: npm version from-git
+              run: npm version --no-git-tag-version from-git
 
             - name: Update backend version number
-              run: cd backend && npm version from-git
+              run: cd backend && npm version --no-git-tag-version from-git
 
             - name: Update frontend version nuber
-              run: cd ../frontend && npm version from-git && cd ..
+              run: cd ../frontend && npm version --no-git-tag-version from-git && cd ..
 
             - name: Push changes to GitHub
               run: |
