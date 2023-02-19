@@ -29,11 +29,21 @@ export namespace SINVRepositories {
                 name,
             },
         });
+        return repositoryRow.id;
     }
 
     export async function getRepository(id: number): Promise<Repository> {
         await prisma.repository.findUniqueOrThrow({ where: { id } });
         return new Repository(id);
+    }
+
+    export async function getRepositoryByName(
+        name: string
+    ): Promise<Repository> {
+        let repoRow = await prisma.repository.findUniqueOrThrow({
+            where: { name },
+        });
+        return new Repository(repoRow.id);
     }
 
     export async function getRepositories(): Promise<DBRepository[]> {

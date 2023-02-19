@@ -38,6 +38,27 @@ export default defineConfig({
                         await SINVRepositories.createRepository(name, '');
                     return null;
                 },
+
+                async createTestingRepository() {
+                    try {
+                        let oldRepo =
+                            await SINVRepositories.getRepositoryByName(
+                                'testingRepository'
+                            );
+                        await oldRepo.delete();
+                    } catch {}
+                    let repoID = await SINVRepositories.createRepository(
+                        'testingRepository',
+                        'This is a repository created automatically when running the cypress tests. After running the test, feel free to delete it.'
+                    );
+                    let repo = await SINVRepositories.getRepository(repoID);
+                    await repo.createType('category0');
+                    await repo.createType('category1');
+                    await repo.createAttachmentType('category2');
+                    await repo.createAttachmentType('category3');
+
+                    return null;
+                },
             });
         },
     },
