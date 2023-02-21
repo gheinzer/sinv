@@ -1,4 +1,4 @@
-FROM node
+FROM --platform=linux/amd64 node
 WORKDIR /
 VOLUME ["/data"]
 
