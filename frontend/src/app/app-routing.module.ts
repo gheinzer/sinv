@@ -1,5 +1,12 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {
+  Route,
+  RouterModule,
+  Routes,
+  UrlMatchResult,
+  UrlSegment,
+  UrlSegmentGroup,
+} from '@angular/router';
 import { HomeComponent } from './pageComponents/home/home.component';
 import { NotFoundComponent } from './pageComponents/not-found/not-found.component';
 import { LoginComponent } from './pageComponents/login/login.component';
@@ -8,6 +15,7 @@ import { RepoSettingsComponent } from './repo-settings/repo-settings.component';
 import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 import { TextSearchComponent } from './search/text-search/text-search.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { DocsComponent } from './docs/docs.component';
 
 const routes: Routes = [
   {
@@ -37,6 +45,26 @@ const routes: Routes = [
   {
     path: 'search/text/:searchString',
     component: TextSearchComponent,
+  },
+  {
+    component: DocsComponent,
+    matcher(
+      segments: UrlSegment[],
+      group: UrlSegmentGroup,
+      route: Route
+    ): UrlMatchResult | null {
+      if (segments.length > 0) {
+        if (segments[0].path == 'docs') {
+          return {
+            consumed: segments,
+            posParams: {
+              docsPath: new UrlSegment(segments.slice(1).join('/'), {}),
+            },
+          };
+        }
+      }
+      return null;
+    },
   },
   { path: '**', component: NotFoundComponent },
 ];

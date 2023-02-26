@@ -15,6 +15,7 @@ export namespace SINVConfig {
                 port: number;
             };
             content_path: string;
+            docs_path: string;
             https: {
                 key_location: string;
                 cert_location: string;
@@ -37,6 +38,7 @@ export namespace SINVConfig {
                 port: 80,
             },
             content_path: 'dist/frontend',
+            docs_path: 'docs',
             https: {
                 key_location: 'data/key.pem',
                 cert_location: 'data/certificate.pem',

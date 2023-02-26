@@ -37,6 +37,7 @@ import { WindowOverlayComponent } from './window-overlay/window-overlay.componen
 import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 import { TextSearchComponent } from './search/text-search/text-search.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { DocsComponent } from './docs/docs.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
     ObjectViewerComponent,
     TextSearchComponent,
     AdminSettingsComponent,
+    DocsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

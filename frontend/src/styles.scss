@@ -57,3 +57,44 @@ h6.has-icon {
         height: 1.2em;
     }
 }
+
+.from-markdown {
+    table {
+        border-collapse: collapse;
+        tr td,
+        tr th {
+            border-left: calc($standard-padding * 2) solid transparent;
+            border-top: calc($standard-padding * 0.75) solid transparent;
+            &:first-of-type {
+                border-left: none;
+            }
+        }
+        tr:first-of-type th {
+            border-top: none;
+        }
+        tr:last-of-type td {
+            border-bottom: calc($standard-padding * 0.75) solid transparent;
+        }
+    }
+    .codespan {
+        font-size: 12px;
+        background-color: rgba(255, 255, 255, 0.075);
+        padding: 2px 5px;
+    }
+    .codeblock {
+        font-size: 13px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: $standard-padding;
+        display: block;
+        position: relative;
+        code {
+            counter-increment: line;
+            &:before {
+                content: counter(line);
+                opacity: 0.4;
+                padding-right: 1ch;
+            }
+        }
+        counter-reset: line;
+    }
+}

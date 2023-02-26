@@ -86,7 +86,7 @@ export namespace SINVHTTPD {
      * isInDirectory('foo/bar', 'foo/bar/../baz'); // Returns false
      * isInDirectory('foo/bar', 'foo/bar/baz'); // Returns true
      */
-    function isInDirectory(parent: string, child: string) {
+    export function isInDirectory(parent: string, child: string) {
         let parentAbsolute = path.resolve(parent);
         let childAbsolute = path.resolve(child);
         return !path.relative(parentAbsolute, childAbsolute).includes('..');

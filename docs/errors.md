@@ -21,3 +21,4 @@
 | `not_authenticated_when_required`       | No session ID was given, but would have be required.                  |
 | `required_field_nonexistent_{field}`    | One or more required fields were not given.                           |
 | `wrong_password`                        | The password given to authenticate the user was wrong.                |
+| `file_not_found`                        | The file was not found.                                               |
