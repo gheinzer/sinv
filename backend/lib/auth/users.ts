@@ -280,6 +280,11 @@ export namespace SINVUserSystem {
                 data: { permissionString },
             });
         }
+
+        public async delete() {
+            await this.awaitInitialization();
+            await prisma.user.delete({ where: { id: this.userRow.id } });
+        }
     }
 
     /**

@@ -158,4 +158,10 @@ export class AuthModule {
       window.location.host
     }/passwordreset/${resetID}`;
   }
+
+  public async deleteUser(userID: number) {
+    await this.apiModule.call('auth/deleteUser', {
+      userID,
+    });
+  }
 }

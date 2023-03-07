@@ -41,6 +41,7 @@
             <div class="actions">
                 <app-icon id="password-reset" (click)="resetPassword(user.id)"></app-icon>
                 <app-icon id="tune" (click)="changingPermissionUser = user; showManagePermissionOverlay = true"></app-icon>
+                <app-icon id="delete" (click)="deleteUser(user.id)"></app-icon>
             </div>
         </div>
     </div>

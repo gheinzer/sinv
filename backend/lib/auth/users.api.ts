@@ -143,3 +143,13 @@ SINVAPI.addAction('auth/updatePermissions', {
         };
     },
 });
+SINVAPI.addAction('auth/deleteUser', {
+    needsAuthentication: true,
+    needsPermissions: ['userAdmin'],
+    requiresDataFields: ['userID'],
+    actionHandler: async (data, auth) => {
+        let user = new SINVUserSystem.User({ userID: data.userID });
+        await user.delete();
+        return { success: true };
+    },
+});

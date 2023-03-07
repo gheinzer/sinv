@@ -297,4 +297,13 @@ export class AdminSettingsComponent {
     this.showManagePermissionOverlay = false;
     this.changingPermissionUser = null;
   }
+
+  public async deleteUser(userID: number) {
+    this.loaderModule.addRequirement();
+
+    await this.authModule.deleteUser(userID);
+    await this.updateData();
+
+    this.loaderModule.satisfyRequirement();
+  }
 }
