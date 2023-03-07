@@ -51,13 +51,15 @@ export class RepositoriesModule extends InitializableClass {
       for (let repo of this.repositoryList) {
         this.repositories[repo.id] = repo.name;
       }
-      if (lastRepo) {
-        lastRepo = parseInt(lastRepo);
-        if (!this.repositories[lastRepo])
-          lastRepo = this.selectedRepository = this.repositoryList[0].id;
-        this.selectedRepository = lastRepo;
-      } else this.selectedRepository = this.repositoryList[0].id;
-      this.updateRepository();
+      if (this.repositoryList.length !== 0) {
+        if (lastRepo) {
+          lastRepo = parseInt(lastRepo);
+          if (!this.repositories[lastRepo])
+            lastRepo = this.selectedRepository = this.repositoryList[0].id;
+          this.selectedRepository = lastRepo;
+        } else this.selectedRepository = this.repositoryList[0].id;
+        this.updateRepository();
+      }
     }
     this.markAsInitialized();
     this.loaderModule.satisfyRequirement();

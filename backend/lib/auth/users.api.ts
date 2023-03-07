@@ -104,3 +104,42 @@ SINVAPI.addAction('auth/getUsers', {
         };
     },
 });
+SINVAPI.addAction('auth/createUser', {
+    needsAuthentication: true,
+    needsPermissions: ['userAdmin'],
+    requiresDataFields: ['username'],
+    actionHandler: async (data, auth) => {
+        let user = await SINVUserSystem.createUser(data.username, '', true);
+        let passwordResetRequestID = await user.createPasswordResetRequest();
+        return { success: true, data: { passwordResetRequestID } };
+    },
+});
+
+SINVAPI.addAction('auth/requestPasswordResetForOtherUser', {
+    needsAuthentication: true,
+    needsPermissions: ['userAdmin'],
+    requiresDataFields: ['userID'],
+    actionHandler: async (data, auth) => {
+        let user: SINVUserSystem.User = new SINVUserSystem.User({
+            userID: data.userID,
+        });
+        return {
+            success: true,
+            data: {
+                passwordResetRequestID: await user.createPasswordResetRequest(),
+            },
+        };
+    },
+});
+SINVAPI.addAction('auth/updatePermissions', {
+    needsAuthentication: true,
+    needsPermissions: ['userAdmin'],
+    requiresDataFields: ['userID', 'permissionString'],
+    actionHandler: async (data, auth) => {
+        let user = new SINVUserSystem.User({ userID: data.userID });
+        await user.updatePermissions(data.permissionString);
+        return {
+            success: true,
+        };
+    },
+});

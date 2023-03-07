@@ -129,4 +129,33 @@ export class AuthModule {
     await this.awaitAuthentication();
     return (await this.apiModule.call('auth/getUsers', {})).data.users;
   }
+
+  public async createUser(username: string) {
+    await this.awaitAuthentication();
+    return (await this.apiModule.call('auth/createUser', { username })).data
+      .passwordResetRequestID;
+  }
+
+  public async requestPasswordResetForOtherUser(userID: number) {
+    await this.awaitAuthentication();
+    return (
+      await this.apiModule.call('auth/requestPasswordResetForOtherUser', {
+        userID,
+      })
+    ).data.passwordResetRequestID;
+  }
+
+  public async updateUserPermissions(userID: number, permissionString: string) {
+    await this.awaitAuthentication();
+    await this.apiModule.call('auth/updatePermissions', {
+      userID,
+      permissionString,
+    });
+  }
+
+  public getPasswordResetLink(resetID: string) {
+    return `${window.location.protocol.replace(':', '')}://${
+      window.location.host
+    }/passwordreset/${resetID}`;
+  }
 }

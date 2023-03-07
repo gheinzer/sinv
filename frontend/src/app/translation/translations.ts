@@ -236,4 +236,48 @@ export var translations: { [key: string]: translation } = {
     en: 'Delete repository',
     de: 'Ablage löschen',
   },
+  noSpecialPermissions: {
+    en: 'No special permissions',
+    de: 'Keine speziellen Berechtigungen',
+  },
+  usernameAlreadyExists: {
+    en: 'This username is already in use',
+    de: 'Dieser Benutzername wird bereits verwendet',
+  },
+  newUserCreatedHint: {
+    en: 'Please forward the link below to the owner of the account so the password can be set.',
+    de: 'Bitte leiten Sie den untenstehenden Link an den Besitzer des Kontos weiter, damit das Passwort festgelegt werden kann.',
+  },
+  copyAndClose: {
+    en: 'Copy and close',
+    de: 'Kopieren und schliessen',
+  },
+  manageUser: {
+    en: 'Manage user',
+    de: 'Benutzer verwalten',
+  },
+  passwordResetHint: {
+    en: 'Please forward the link below to the owner of the account so they can reset their password.',
+    de: 'Bitte leiten Sie den untenstehenden Link an den Besitzer des Kontos weiter, damit das Passwort zurückgesetzt werden kann.',
+  },
+  'permissionInfo-login': {
+    en: 'Allows the user to login and perform very basic actions. If revoked, the user cannot do anything and is blocked.',
+    de: 'Erlaubt dem Benutzer das Anmelden und die Durchführung von einigen Aktionen. Ist diese Berechtigung nicht gegeben, ist der Benutzer blockiert.',
+  },
+  'permissionInfo-superuser': {
+    en: 'Allows the user to do anything and grants all permissions.',
+    de: 'Erlaubt dem Benutzer das Durchführen von allen Aktionen und gibt somit alle Berechtigungen.',
+  },
+  'permissionInfo-repositoryAdmin': {
+    en: 'Allows the administration of all repositories including deleting, creating repositories and changing repository permissions.',
+    de: 'Erlaubt die Administration von allen Ablagen. Das beinhaltet auch das Erstellen, Löschen von Ablagen und das ändern von Ablage-Berechtigungen.',
+  },
+  'permissionInfo-userAdmin': {
+    en: 'Allows the administration of all users including deleting and creating users, resetting passwords and managing user permissions.',
+    de: 'Erlaubt die Administratino von allen Benutzern. Das beinhaltet auch das Erstellen und löschen von Benutzern, das Zurücksetzen von Passwörtern sowie das Ändern von Benutzerberechtigungen.',
+  },
+  'permissionInfo-upload': {
+    en: 'Allows the user to upload files to the server. Revoke this permission if you think someone is filling your storage unnecessarily.',
+    de: 'Erlaubt das Hochladen von Dateien auf den Server. Deaktivieren Sie diese Berechtigungen, wenn Sie vermuten, dass jemand Ihren Speicherplatz unnötigerweise füllt.',
+  },
 };

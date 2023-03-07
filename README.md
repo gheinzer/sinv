@@ -5,11 +5,6 @@
 
 # Todos
 
--   [ ] Object Editing
--   [ ] User Settings
--   [ ] User administration
--   [ ] Version field
-
 | Effort | Meaning      |
 | -----: | :----------- |
 |     ++ | a lot        |
@@ -25,3 +20,4 @@
 | Add password-forgot feature             | +             | (-)    | ++         |
 | Add version display in footer           | -             | --     | --         |
 | Add cookie alert                        | -             | --     | ++         |
+| Add better loader                       | +             | (-)    | -          |

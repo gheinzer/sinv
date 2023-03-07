@@ -32,6 +32,7 @@ export namespace SINVUserSystem {
             await createUser(
                 'admin',
                 'admin',
+                false,
                 SINVPermissions.permissionStringToObject('{"superuser": true}')
             );
         } catch {}
@@ -64,6 +65,7 @@ export namespace SINVUserSystem {
     export async function createUser(
         username: string,
         password: string,
+        deactivated: boolean = false,
         permissions: permissionObject = SINVPermissions.permissionStringToObject(
             '{}'
         )
@@ -82,13 +84,22 @@ export namespace SINVUserSystem {
                 username,
                 passwordHash,
                 permissionString: permissionString,
+                deactivated,
             },
         });
         return new User({ username });
     }
 
-    export async function getAllUsers(): Promise<DBUser[]> {
-        return await prisma.user.findMany();
+    export async function getAllUsers(): Promise<
+        { username: string; permissionString: string }[]
+    > {
+        return await prisma.user.findMany({
+            select: {
+                username: true,
+                permissionString: true,
+                id: true,
+            },
+        });
     }
 
     export class User extends InitializableClass {
@@ -244,6 +255,30 @@ export namespace SINVUserSystem {
                 }
             }
             return repositories;
+        }
+
+        public async createPasswordResetRequest() {
+            await this.awaitInitialization();
+            while (true) {
+                try {
+                    var request = await prisma.passwordResetRequest.create({
+                        data: {
+                            id: crypto.randomUUID(),
+                            userId: this.userRow.id,
+                        },
+                    });
+                    break;
+                } catch {}
+            }
+            return request.id;
+        }
+
+        public async updatePermissions(permissionString: string) {
+            await this.awaitInitialization();
+            await prisma.user.update({
+                where: { id: this.userRow.id },
+                data: { permissionString },
+            });
         }
     }
 

@@ -1,91 +1,163 @@
 @import "src/globals.scss";
 .content {
-    padding: $standard-padding;
+  padding: $standard-padding;
 }
 
 .content,
 .repo-admin,
 .user-admin,
 .window-overlay-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: $standard-padding;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $standard-padding;
+  flex-direction: column;
+  width: 100%;
+}
+
+.window-overlay-content {
+  position: relative;
+  app-input,
+  app-button,
+  .reset-link,
+  .info-text.full-width {
     width: 100%;
+    max-width: unset !important;
+  }
 }
 
 .repository,
 .user {
-    @include box;
-    padding: $standard-padding;
-    border-radius: $standard-border-radius;
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: $standard-padding;
+  @include box;
+  padding: $standard-padding;
+  border-radius: $standard-border-radius;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: $standard-padding;
+  transition: 0.2s;
+  &.repository {
     cursor: pointer;
-    transition: 0.2s;
     &:hover {
+      opacity: 0.5;
+    }
+  }
+  app-icon {
+    fill: white;
+    &.delete {
+      transition: 0.2s;
+      cursor: pointer;
+      &:hover {
         opacity: 0.5;
+      }
     }
+    &#repository,
+    &#username {
+      grid-column: 1/1;
+    }
+  }
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    .userAccessInfo {
+      opacity: 0.5;
+    }
+  }
+  .actions {
+    grid-column: 3/3;
+    display: flex;
+    gap: $standard-padding;
     app-icon {
-        fill: white;
-        &.delete {
-            transition: 0.2s;
-            cursor: pointer;
-            &:hover {
-                opacity: 0.5;
-            }
-        }
+      &:hover {
+        cursor: pointer;
+        transition: 0.2s;
+        opacity: 0.5;
+      }
     }
-    .info-section {
-        display: flex;
-        flex-direction: column;
-        .userAccessInfo {
-            opacity: 0.5;
-        }
-    }
+  }
 }
 
 .two-column-grid,
 .three-column-grid {
-    display: grid;
-    gap: $standard-padding;
-    width: 100%;
-    app-input {
-        min-width: 25vw;
-        &[type="textarea"] {
-            min-height: 10rem;
-        }
+  display: grid;
+  gap: $standard-padding;
+  width: 100%;
+  app-input {
+    min-width: 25vw;
+    &[type="textarea"] {
+      min-height: 10rem;
     }
+  }
 }
 
 .two-column-grid {
-    grid-template-columns: max-content auto;
+  grid-template-columns: max-content auto;
 }
 
 .three-column-grid {
-    grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto;
 }
 
 .repository-permission-window {
-    .user-suggestion {
-        @include box;
-        display: grid;
-        justify-content: center;
-        align-items: center;
-        grid-template-columns: 1fr max-content;
-        padding: $standard-padding;
-        border-radius: $standard-border-radius;
-        gap: $standard-padding;
-        width: 100%;
-        min-width: 35vw;
+  .user-suggestion {
+    @include box;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr max-content;
+    padding: $standard-padding;
+    border-radius: $standard-border-radius;
+    gap: $standard-padding;
+    width: 100%;
+    min-width: 35vw;
+  }
+  .search {
+    width: 100%;
+    min-width: 35vw;
+  }
+}
+
+.reset-link {
+  @include box;
+  padding: $standard-padding;
+  border-radius: $standard-border-radius;
+  display: grid;
+  grid-template-columns: auto max-content;
+  gap: $standard-padding;
+  app-icon {
+    fill: white;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      opacity: 0.5;
     }
-    .search {
-        width: 100%;
-        min-width: 35vw;
+  }
+}
+
+.user-permission {
+  @include box();
+  padding: $standard-padding / 2;
+  border-radius: $standard-border-radius;
+  cursor: pointer;
+  transition: 0.2s;
+  .permission-name {
+    font-size: 20px;
+    font-weight: 800;
+  }
+  width: 100%;
+  &:hover {
+    opacity: 0.5;
+  }
+  &.permission-active {
+    background-color: $accent-color;
+    border-color: $accent-color;
+    color: black;
+    &.permission-disabled {
+      opacity: 0.5;
+      cursor: unset;
+      pointer-events: none;
     }
+  }
 }

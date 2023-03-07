@@ -41,9 +41,12 @@
     </app-link>
     <app-user-badge *ngIf="authModule.isAuthenticated"></app-user-badge>
     <app-input
+      *ngIf="
+        Object.keys(repoModule.repositories).length > 0 &&
+        authModule.isAuthenticated
+      "
       icon="repository"
       type="dropdown"
-      *ngIf="authModule.isAuthenticated"
       [choices]="repoModule.repositories"
       (valueChange)="repoModule.changeRepository($event)"
       [value]="repoModule.selectedRepository"

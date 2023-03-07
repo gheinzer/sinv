@@ -1,27 +1,27 @@
 @import "src/globals.scss";
 :root {
-    @include default-font();
-    background: $root-bg;
-    color: $root-color;
+  @include default-font();
+  background: $root-bg;
+  color: $root-color;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    &::selection {
-        background-color: $accent-color;
-        color: black;
-    }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  &::selection {
+    background-color: $accent-color;
+    color: black;
+  }
 }
 
 .info-text {
-    font-style: italic;
-    opacity: 0.5;
-    display: block;
-    font-size: 13px;
-    max-width: 25vw;
-    text-align: inherit;
+  font-style: italic;
+  opacity: 0.5;
+  display: block;
+  font-size: 13px;
+  max-width: 25vw;
+  text-align: inherit;
 }
 
 h1.has-icon,
@@ -30,71 +30,79 @@ h3.has-icon,
 h4.has-icon,
 h5.has-icon,
 h6.has-icon {
-    display: flex;
-    gap: 1ch;
-    align-items: center;
-    app-icon {
-        height: 1em;
-        fill: $root-color;
-        display: block;
-    }
+  display: flex;
+  gap: 1ch;
+  align-items: center;
+  app-icon {
+    height: 1em;
+    fill: $root-color;
+    display: block;
+  }
 }
 
 .error-banner {
-    display: flex;
-    flex-direction: row;
-    color: $accent-color;
-    font-weight: 800;
-    font-size: 13px;
-    align-items: center;
-    gap: 0.75ch;
-    translation {
-        width: max-content;
-        display: block;
-    }
-    app-icon {
-        fill: $accent-color;
-        height: 1.2em;
-    }
+  display: flex;
+  flex-direction: row;
+  color: $accent-color;
+  font-weight: 800;
+  font-size: 13px;
+  align-items: center;
+  gap: 0.75ch;
+  width: max-content;
+  translation {
+    width: max-content;
+    display: inline-block;
+  }
+  app-icon {
+    fill: $accent-color;
+    height: 1.2em;
+    width: 1.2em;
+  }
 }
 
 .from-markdown {
-    table {
-        border-collapse: collapse;
-        tr td,
-        tr th {
-            border-left: calc($standard-padding * 2) solid transparent;
-            border-top: calc($standard-padding * 0.75) solid transparent;
-            &:first-of-type {
-                border-left: none;
-            }
-        }
-        tr:first-of-type th {
-            border-top: none;
-        }
-        tr:last-of-type td {
-            border-bottom: calc($standard-padding * 0.75) solid transparent;
-        }
+  table {
+    border-collapse: collapse;
+    tr td,
+    tr th {
+      border-left: calc($standard-padding * 2) solid transparent;
+      border-top: calc($standard-padding * 0.75) solid transparent;
+      &:first-of-type {
+        border-left: none;
+      }
     }
-    .codespan {
-        font-size: 12px;
-        background-color: rgba(255, 255, 255, 0.075);
-        padding: 2px 5px;
+    tr:first-of-type th {
+      border-top: none;
     }
-    .codeblock {
-        font-size: 13px;
-        background-color: rgba(255, 255, 255, 0.05);
-        padding: $standard-padding;
-        display: block;
-        position: relative;
-        code {
-            counter-increment: line;
-            &:before {
-                content: counter(line);
-                opacity: 0.4;
-                padding-right: 1ch;
-            }
-        }
-        counter-reset: line;
+    tr:last-of-type td {
+      border-bottom: calc($standard-padding * 0.75) solid transparent;
     }
+  }
+}
+
+.codespan {
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.075);
+  padding: 2px 5px;
+}
+
+.codeblock {
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: $standard-padding;
+  display: block;
+  position: relative;
+  code {
+    counter-increment: line;
+    &:before {
+      content: counter(line);
+      opacity: 0.4;
+      padding-right: 1ch;
+    }
+  }
+  counter-reset: line;
+}
+
+a {
+  text-decoration: none;
 }

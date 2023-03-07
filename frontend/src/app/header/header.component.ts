@@ -16,15 +16,14 @@ export class HeaderComponent {
   public idSearchValue: string = '';
   public searchValue: string = '';
   public identifierDoesNotExist: boolean = false;
+  public Object = Object;
 
   constructor(
     public authModule: AuthModule,
     public repoModule: RepositoriesModule,
-    private loaderModule: LoaderModule,
     public translationModule: TranslationModule,
     barcodeScannerService: BarcodeScannerService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {
     barcodeScannerService.addHandler(this.searchForID);
   }
