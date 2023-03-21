@@ -148,9 +148,6 @@ export namespace SINVRepositories {
                         },
                     ],
                 },
-                orderBy: {
-                    lastAccessed: 'desc',
-                },
                 select: {
                     name: true,
                     description: true,
@@ -291,7 +288,6 @@ export namespace SINVRepositories {
                     name,
                     objectTypeId: typeID,
                     description,
-                    creatorID: creator.userRow.id,
                     repositoryId: this.repositoryID,
                 },
             });
