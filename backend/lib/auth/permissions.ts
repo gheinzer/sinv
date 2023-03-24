@@ -65,6 +65,7 @@ export namespace SINVPermissions {
     ) {
         if (object.superuser) return true;
         else if (!object.login) return false;
+        else if (object[permission] == undefined) return false;
         else return object[permission];
     }
 }

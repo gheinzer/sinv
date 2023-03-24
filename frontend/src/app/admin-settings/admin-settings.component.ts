@@ -3,7 +3,12 @@ import { LoaderModule } from '../loader/loader.module';
 import { AuthModule } from '../api/auth/auth.module';
 import { RepositoriesModule } from '../api/repositories/repositories.module';
 import { TranslationModule } from '../translation/translation.module';
+import { SINVPermissions } from '../../../../backend/lib/auth/permissions';
 import * as _ from 'lodash';
+import {
+  permissionObject,
+  permission,
+} from '../../../../backend/lib/auth/permissions.types';
 
 @Component({
   selector: 'app-admin-settings',
@@ -11,6 +16,7 @@ import * as _ from 'lodash';
   styleUrls: ['./admin-settings.component.scss'],
 })
 export class AdminSettingsComponent {
+  // Repository administration properties
   public hasRepositoryAdminPermission: boolean = false;
   public hasUserAdminPermission: boolean = false;
   public cachedRepositories: any[] = [];
@@ -29,12 +35,30 @@ export class AdminSettingsComponent {
   public newRepositoryDescription: string = '';
   private creatingRepository: boolean = false;
 
+  // User administratino properties
+  public users: any[] = [];
+  public creatingNewUser: boolean = false;
+  public newUserName: any = '';
+  public showPasswordResetOverlay: boolean = false;
+  public newUsernameValid: boolean = true;
+  public passwordResetLink: string = '';
+  public addingUser: boolean = false;
+  public isNewUser: boolean = false;
+  public changingPermissionUser: typeof this.users[number];
+  public showManagePermissionOverlay: boolean = false;
+  public SINVPermissions = SINVPermissions;
+  public savingPermissions: boolean = false;
+
+  public Object = Object;
+
   constructor(
     private loaderModule: LoaderModule,
     private authModule: AuthModule,
     public repositoriesModule: RepositoriesModule,
     public translationModule: TranslationModule
-  ) {}
+  ) {
+    authModule.redirectIfNotLoggedIn('/login');
+  }
 
   ngOnInit() {
     this.updateData();
@@ -58,6 +82,13 @@ export class AdminSettingsComponent {
     }
 
     this.cachedUsers = await this.authModule.getAllUsers();
+    for (let user of this.cachedUsers) {
+      user.permissions = SINVPermissions.permissionStringToObject(
+        user.permissionString
+      );
+      user.specialPermissions = JSON.parse(user.permissionString);
+    }
+    this.users = this.cachedUsers;
     this.loaderModule.satisfyRequirement();
     if (callback) callback();
   }
@@ -186,5 +217,93 @@ export class AdminSettingsComponent {
   public async deleteRepository(id: number) {
     this.repositoriesModule.deleteRepository(id);
     await this.updateData();
+  }
+
+  public getPermissionDescription(user: any) {
+    // This ensures that only the given permissions are listed and not all the defined ones.
+    if (!user.specialPermissions) return null;
+    let permissions = Object.keys(user.specialPermissions).filter((key) => {
+      return user.specialPermissions[key] == true;
+    });
+    let returnValue = permissions.join(', ');
+    return returnValue || null;
+  }
+
+  public async addUser() {
+    if (!this.newUsernameValid) return;
+    if (this.addingUser) return;
+    this.addingUser = true;
+
+    let resetID = await this.authModule.createUser(this.newUserName);
+    this.newUserName = '';
+    this.creatingNewUser = false;
+    await this.updateData();
+    this.isNewUser = true;
+    this.passwordResetLink = this.authModule.getPasswordResetLink(resetID);
+    this.showPasswordResetOverlay = true;
+
+    this.addingUser = false;
+  }
+
+  public async resetPassword(userID: number) {
+    this.loaderModule.addRequirement();
+    this.passwordResetLink = this.authModule.getPasswordResetLink(
+      await this.authModule.requestPasswordResetForOtherUser(userID)
+    );
+    this.isNewUser = false;
+    this.showPasswordResetOverlay = true;
+    this.loaderModule.satisfyRequirement();
+  }
+
+  public async validateUsername() {
+    this.newUsernameValid = !(await this.authModule.userExists(
+      this.newUserName
+    ));
+  }
+
+  public copyPasswordResetLink() {
+    navigator.clipboard.writeText(this.passwordResetLink);
+  }
+
+  public hasPermission(permissionName: string) {
+    return SINVPermissions.hasPermission(
+      this.changingPermissionUser.permissions,
+      //@ts-ignore
+      permissionName
+    );
+  }
+
+  public permissionOverwritten(permission: any) {
+    let permissionName = permission[0];
+    let permissionValue = permission[1];
+    return (
+      (this.hasPermission('superuser') || !this.hasPermission('login')) &&
+      !(['login', 'superuser'].includes(permissionName) && permissionValue)
+    );
+  }
+
+  public async savePermissions() {
+    if (this.savingPermissions) return;
+    this.savingPermissions = true;
+    let permissionString = SINVPermissions.permissionObjectToString(
+      this.changingPermissionUser.permissions
+    );
+    await this.authModule.updateUserPermissions(
+      this.changingPermissionUser.id,
+      permissionString
+    );
+    await this.updateData();
+    this.savingPermissions = false;
+    this.showManagePermissionOverlay = false;
+    this.changingPermissionUser = null;
+  }
+
+  public async deleteUser(userID: number) {
+    this.loaderModule.addRequirement();
+
+    await this.authModule.deleteUser(userID);
+    await this.updateData();
+
+    this.loaderModule.satisfyRequirement();
   }
 }

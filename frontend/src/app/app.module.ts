@@ -38,6 +38,7 @@ import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 import { TextSearchComponent } from './search/text-search/text-search.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { DocsComponent } from './docs/docs.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { DocsComponent } from './docs/docs.component';
     TextSearchComponent,
     AdminSettingsComponent,
     DocsComponent,
+    PasswordResetComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

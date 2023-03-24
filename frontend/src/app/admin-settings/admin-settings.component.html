@@ -21,11 +21,32 @@
         <h1>
             <translation id="userManagement"></translation>
         </h1>
-        <app-button icon="add-user">
+        <app-button icon="add-user" (click)="creatingNewUser = true">
             <translation id="createUser"></translation>
         </app-button>
+        <div class="user" *ngFor="let user of users">
+            <app-icon [id]="user.permissions.superuser ? 'admin' : 'username'"></app-icon>
+            <div class="info-section">
+                <h2 class="username">
+                    {{ user.username }}
+                </h2>
+                <span class="permissions info-text">
+          {{
+            getPermissionDescription(user) ||
+              translationModule.getTranslation("noSpecialPermissions")
+          }}
+        </span>
+
+            </div>
+            <div class="actions">
+                <app-icon id="password-reset" (click)="resetPassword(user.id)"></app-icon>
+                <app-icon id="tune" (click)="changingPermissionUser = user; showManagePermissionOverlay = true"></app-icon>
+                <app-icon id="delete" (click)="deleteUser(user.id)"></app-icon>
+            </div>
+        </div>
     </div>
 </div>
+<!-- Repository overlays -->
 <app-window-overlay windowIcon="tune" [windowTitle]="translationModule.getTranslation('manageRepository')" *ngIf="editingRepositoryID !== null" (close)="editingRepositoryID = null" [closable]="true">
     <div class="window-overlay-content">
         <div class="two-column-grid">
@@ -92,6 +113,45 @@
             <translation id="nameEmpty" *ngSwitchCase="'name-empty'"></translation>
         </div>
         <app-button icon="save" (click)="createRepository()" [disabled]="repositoryEditingError !== null">
+            <translation id="save"></translation>
+        </app-button>
+    </div>
+</app-window-overlay>
+<app-window-overlay windowIcon="add-user" [windowTitle]="translationModule.getTranslation('createUser')" [closable]="true" *ngIf="creatingNewUser" (close)="creatingNewUser = false">
+    <div class="window-overlay-content">
+        <app-input type="text" [placeholder]="translationModule.getTranslation('username')" [(value)]="newUserName" icon="username" (enter)="addUser()" (valueChange)="validateUsername()" autofocus="" />
+        <span class="error-banner" *ngIf="!newUsernameValid">
+            <app-icon id="warning"></app-icon>
+            <translation id="usernameAlreadyExists"></translation>
+        </span>
+        <app-button icon="add-user" (click)="addUser()" [disabled]="!newUsernameValid || !newUserName || addingUser" [loader]="addingUser">
+            <translation id="createUser"></translation>
+        </app-button>
+    </div>
+</app-window-overlay>
+<app-window-overlay windowIcon="tune" [windowTitle]="translationModule.getTranslation('manageUser')" [closable]="true" *ngIf="showPasswordResetOverlay" (close)="showPasswordResetOverlay = false">
+    <div class="window-overlay-content">
+        <div class="info-text full-width">
+            <translation id="newUserCreatedHint" *ngIf="isNewUser"></translation>
+            <translation id="passwordResetHint" *ngIf="!isNewUser"></translation>
+        </div>
+        <div class="reset-link">
+            <a [href]="passwordResetLink">
+                <app-link>{{passwordResetLink}}</app-link>
+            </a>
+        </div>
+        <app-button icon="copy" (click)="copyPasswordResetLink(); showPasswordResetOverlay = false">
+            <translation id="copyAndClose"></translation>
+        </app-button>
+    </div>
+</app-window-overlay>
+<app-window-overlay windowIcon="tune" [windowTitle]="translationModule.getTranslation('managePermissions')" [closable]="true" (close)="showManagePermissionOverlay = false" *ngIf="showManagePermissionOverlay">
+    <div class="window-overlay-content">
+        <div class="user-permission" *ngFor="let permission of Object.entries(changingPermissionUser.permissions)" (click)="changingPermissionUser.permissions[permission[0]] = !permission[1]" [ngClass]="{'permission-active': permission[1] || hasPermission(permission[0]), 'permission-disabled': permissionOverwritten(permission)}">
+            <div class="permission-name">{{permission[0]}}</div>
+            <div class="info-text">{{translationModule.getTranslation('permissionInfo-' + permission[0])}}</div>
+        </div>
+        <app-button icon="save" (click)="savePermissions()" [loader]="savingPermissions">
             <translation id="save"></translation>
         </app-button>
     </div>

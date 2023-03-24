@@ -32,6 +32,7 @@ export namespace SINVUserSystem {
             await createUser(
                 'admin',
                 'admin',
+                false,
                 SINVPermissions.permissionStringToObject('{"superuser": true}')
             );
         } catch {}
@@ -64,6 +65,7 @@ export namespace SINVUserSystem {
     export async function createUser(
         username: string,
         password: string,
+        deactivated: boolean = false,
         permissions: permissionObject = SINVPermissions.permissionStringToObject(
             '{}'
         )
@@ -71,10 +73,7 @@ export namespace SINVUserSystem {
         if (await prisma.user.findUnique({ where: { username: username } })) {
             throw Error('user_already_exists');
         }
-        let passwordHash = bcrypt.hashSync(
-            password,
-            SINVConfig.config.users.password_hash_rounds
-        );
+        let passwordHash = hashPassword(password);
         let permissionString =
             SINVPermissions.permissionObjectToString(permissions);
         await prisma.user.create({
@@ -82,13 +81,37 @@ export namespace SINVUserSystem {
                 username,
                 passwordHash,
                 permissionString: permissionString,
+                deactivated,
             },
         });
         return new User({ username });
     }
 
-    export async function getAllUsers(): Promise<DBUser[]> {
-        return await prisma.user.findMany();
+    export async function getAllUsers(): Promise<
+        { username: string; permissionString: string }[]
+    > {
+        return await prisma.user.findMany({
+            select: {
+                username: true,
+                permissionString: true,
+                id: true,
+            },
+        });
+    }
+
+    function hashPassword(password: string): string {
+        let passwordHash = bcrypt.hashSync(
+            password,
+            SINVConfig.config.users.password_hash_rounds
+        );
+        return passwordHash;
+    }
+
+    export async function getUserByPasswordResetRequest(requestID: string) {
+        let request = await prisma.passwordResetRequest.findFirst({
+            where: { id: requestID },
+        });
+        return new User({ userID: request?.userId });
     }
 
     export class User extends InitializableClass {
@@ -244,6 +267,44 @@ export namespace SINVUserSystem {
                 }
             }
             return repositories;
+        }
+
+        public async createPasswordResetRequest() {
+            await this.awaitInitialization();
+            while (true) {
+                try {
+                    var request = await prisma.passwordResetRequest.create({
+                        data: {
+                            id: crypto.randomUUID(),
+                            userId: this.userRow.id,
+                        },
+                    });
+                    break;
+                } catch {}
+            }
+            return request.id;
+        }
+
+        public async updatePermissions(permissionString: string) {
+            await this.awaitInitialization();
+            await prisma.user.update({
+                where: { id: this.userRow.id },
+                data: { permissionString },
+            });
+        }
+
+        public async delete() {
+            await this.awaitInitialization();
+            await prisma.user.delete({ where: { id: this.userRow.id } });
+        }
+
+        public async setPassword(newPassword: string) {
+            await this.awaitInitialization();
+            let passwordHash = hashPassword(newPassword);
+            await prisma.user.update({
+                where: { id: this.userRow.id },
+                data: { passwordHash },
+            });
         }
     }
 

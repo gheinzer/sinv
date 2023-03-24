@@ -16,6 +16,7 @@ import { ObjectViewerComponent } from './objects/viewer/viewer.component';
 import { TextSearchComponent } from './search/text-search/text-search.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { DocsComponent } from './docs/docs.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
       }
       return null;
     },
+  },
+  {
+    path: 'passwordreset/:resetID',
+    component: PasswordResetComponent,
   },
   { path: '**', component: NotFoundComponent },
 ];
