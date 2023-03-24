@@ -153,3 +153,18 @@ SINVAPI.addAction('auth/deleteUser', {
         return { success: true };
     },
 });
+
+SINVAPI.addAction('auth/resetPassword', {
+    needsAuthentication: false,
+    needsPermissions: [],
+    requiresDataFields: ['requestID', 'password'],
+    actionHandler: async (data, auth) => {
+        let user = await SINVUserSystem.getUserByPasswordResetRequest(
+            data.requestID
+        );
+        await user.setPassword(data.password);
+        return {
+            success: true,
+        };
+    },
+});

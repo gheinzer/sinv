@@ -164,4 +164,11 @@ export class AuthModule {
       userID,
     });
   }
+
+  public async resetPassword(requestID: string, password: string) {
+    await this.apiModule.call('auth/resetPassword', {
+      requestID,
+      password,
+    });
+  }
 }

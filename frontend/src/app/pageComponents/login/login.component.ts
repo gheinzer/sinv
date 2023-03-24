@@ -39,13 +39,13 @@ export class LoginComponent implements OnInit {
     try {
       await this.authenticationModule.login(this.username, this.password);
       this.passwordWrong = false;
+      window.location.pathname = '/'; // This also reloads the window
     } catch (err: any) {
       if (err.message == 'wrong_password') {
         this.passwordWrong = true;
         this.password = '';
       }
     }
-    window.location.pathname = '/'; // This also reloads the window
     this.loginLoading = false;
   }
 

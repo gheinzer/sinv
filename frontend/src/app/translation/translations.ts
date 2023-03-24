@@ -280,4 +280,28 @@ export var translations: { [key: string]: translation } = {
     en: 'Allows the user to upload files to the server. Revoke this permission if you think someone is filling your storage unnecessarily.',
     de: 'Erlaubt das Hochladen von Dateien auf den Server. Deaktivieren Sie diese Berechtigungen, wenn Sie vermuten, dass jemand Ihren Speicherplatz unnötigerweise füllt.',
   },
+  newPassword: {
+    en: 'New password',
+    de: 'Neues Passwort',
+  },
+  newPasswordRepeat: {
+    en: 'Repeat password',
+    de: 'Passwort wiederholen',
+  },
+  passwordResetTitle: {
+    en: 'Set password',
+    de: 'Passwort setzen',
+  },
+  passwordsNotEqual: {
+    en: 'The two passwords you entered are not the same.',
+    de: 'Die beiden eingegebenen Passwörter stimmen nicht überein.',
+  },
+  forgotPassword: {
+    en: 'Reset password',
+    de: 'Passwort zurücksetzen',
+  },
+  submit: {
+    en: 'Submit',
+    de: 'Senden',
+  },
 };

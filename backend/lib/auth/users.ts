@@ -73,10 +73,7 @@ export namespace SINVUserSystem {
         if (await prisma.user.findUnique({ where: { username: username } })) {
             throw Error('user_already_exists');
         }
-        let passwordHash = bcrypt.hashSync(
-            password,
-            SINVConfig.config.users.password_hash_rounds
-        );
+        let passwordHash = hashPassword(password);
         let permissionString =
             SINVPermissions.permissionObjectToString(permissions);
         await prisma.user.create({
@@ -100,6 +97,21 @@ export namespace SINVUserSystem {
                 id: true,
             },
         });
+    }
+
+    function hashPassword(password: string): string {
+        let passwordHash = bcrypt.hashSync(
+            password,
+            SINVConfig.config.users.password_hash_rounds
+        );
+        return passwordHash;
+    }
+
+    export async function getUserByPasswordResetRequest(requestID: string) {
+        let request = await prisma.passwordResetRequest.findFirst({
+            where: { id: requestID },
+        });
+        return new User({ userID: request?.userId });
     }
 
     export class User extends InitializableClass {
@@ -284,6 +296,15 @@ export namespace SINVUserSystem {
         public async delete() {
             await this.awaitInitialization();
             await prisma.user.delete({ where: { id: this.userRow.id } });
+        }
+
+        public async setPassword(newPassword: string) {
+            await this.awaitInitialization();
+            let passwordHash = hashPassword(newPassword);
+            await prisma.user.update({
+                where: { id: this.userRow.id },
+                data: { passwordHash },
+            });
         }
     }
 
