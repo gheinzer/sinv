@@ -22,3 +22,4 @@
 | Add cookie alert                        | -             | --     | ++         |
 | Add better loader                       | +             | (-)    | -          |
 | Add toast service                       | +             | (-)    | +          |
+| Add documentation navigation            | ++            | +     | ++          |
