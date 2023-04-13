@@ -304,4 +304,8 @@ export var translations: { [key: string]: translation } = {
     en: 'Submit',
     de: 'Senden',
   },
+  changePassword: {
+    en: 'Change password',
+    de: 'Passwort ändern',
+  },
 };

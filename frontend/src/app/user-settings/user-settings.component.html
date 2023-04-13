@@ -1,0 +1,15 @@
+<div class="flex-container">
+    <section class="change-password flex-container">
+        <h1>
+            <translation id="changePassword"></translation>
+        </h1>
+        <app-input icon="password" [placeholder]="translationModule.getTranslation('newPassword')" type="password" [(value)]="newPassword" (valueChange)="validatePasswords()"></app-input>
+        <app-input icon="password" [placeholder]="translationModule.getTranslation('newPasswordRepeat')" type="password" [(value)]="newPasswordRepeat" (valueChange)="validatePasswords()"></app-input>
+        <div class="info-text" *ngIf="newPassword !== newPasswordRepeat">
+            <translation id="passwordsNotEqual"></translation>
+        </div>
+        <app-button icon="save" [disabled]="!allowSavingPassword || savingPassword" [loader]="savingPassword" (click)="savePassword()">
+            <translation id="save"></translation>
+        </app-button>
+    </section>
+</div>

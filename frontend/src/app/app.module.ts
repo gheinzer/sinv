@@ -39,6 +39,7 @@ import { TextSearchComponent } from './search/text-search/text-search.component'
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { DocsComponent } from './docs/docs.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     AdminSettingsComponent,
     DocsComponent,
     PasswordResetComponent,
+    UserSettingsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
