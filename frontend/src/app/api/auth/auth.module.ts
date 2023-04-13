@@ -171,4 +171,10 @@ export class AuthModule {
       password,
     });
   }
+
+  public async changePassword(password: string) {
+    await this.apiModule.call('auth/changePassword', {
+      password,
+    });
+  }
 }

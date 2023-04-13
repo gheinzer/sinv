@@ -168,3 +168,16 @@ SINVAPI.addAction('auth/resetPassword', {
         };
     },
 });
+
+SINVAPI.addAction('auth/changePassword', {
+    needsAuthentication: true,
+    needsPermissions: [],
+    requiresDataFields: ['password'],
+    actionHandler: async (data, auth) => {
+        let user = new SINVUserSystem.User({ sessionID: auth.sessionID });
+        await user.setPassword(data.password);
+        return {
+            success: true,
+        };
+    },
+});

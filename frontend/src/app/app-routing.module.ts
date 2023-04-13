@@ -17,6 +17,7 @@ import { TextSearchComponent } from './search/text-search/text-search.component'
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { DocsComponent } from './docs/docs.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
   {
     path: 'passwordreset/:resetID',
     component: PasswordResetComponent,
+  },
+  {
+    path: 'settings',
+    component: UserSettingsComponent,
   },
   { path: '**', component: NotFoundComponent },
 ];

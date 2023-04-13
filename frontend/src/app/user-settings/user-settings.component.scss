@@ -1,0 +1,13 @@
+@import "src/globals.scss";
+.flex-container {
+    display: flex;
+    gap: $standard-padding;
+    padding: $standard-padding;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    app-input,
+    app-button {
+        min-width: 30vw;
+    }
+}
