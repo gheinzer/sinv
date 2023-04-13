@@ -31,3 +31,13 @@ footer {
 :host {
     @include desktop-only;
 }
+
+.version {
+    display: flex;
+    gap: 1ch;
+    align-items: center;
+    app-icon {
+        fill: white;
+        height: 1em;
+    }
+}
