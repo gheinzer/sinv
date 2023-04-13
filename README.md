@@ -21,3 +21,5 @@
 | Add version display in footer           | -             | --     | --         |
 | Add cookie alert                        | -             | --     | ++         |
 | Add better loader                       | +             | (-)    | -          |
+| Add toast service                       | +             | (-)    | +          |
+| Add documentation navigation            | ++            | +     | ++          |
