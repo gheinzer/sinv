@@ -56,7 +56,7 @@ jobs:
                   git config user.name "$GITHUB_ACTOR"
                   git config user.email "$GITHUB_ACTOR_ID+$GITHUB_ACTOR@users.noreply.github.com"
                   git checkout -b main
-                  git pull
+                  git branch --set-upstream-to=origin/main main
 
             - name: Login to Docker Hub
               uses: docker/login-action@v2
