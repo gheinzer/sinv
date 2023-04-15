@@ -19,4 +19,5 @@
 | Add version display in footer           | -             | --     | --         |
 | Add cookie alert                        | -             | --     | ++         |
 | Add toast service                       | +             | (-)    | +          |
-| Add documentation navigation            | ++            | +     | ++          |
+| Add documentation navigation            | ++            | +      | ++         |
+| Add better error handling               | +             | +      | ++         | 
