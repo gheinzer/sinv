@@ -40,6 +40,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
 import { DocsComponent } from './docs/docs.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { AnimatedLogoComponent } from './animated-logo/animated-logo.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
     DocsComponent,
     PasswordResetComponent,
     UserSettingsComponent,
+    AnimatedLogoComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
