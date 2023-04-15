@@ -16,10 +16,7 @@
 | Task                                    | Time required | Effort | Importance |
 | :-------------------------------------- | :------------ | :----- | :--------- |
 | Add object editing form                 | ++            | +      | ++         |
-| Add self-settings (eg. password change) | +             | (-)    | +          |
-| Add password-forgot feature             | +             | (-)    | ++         |
 | Add version display in footer           | -             | --     | --         |
 | Add cookie alert                        | -             | --     | ++         |
-| Add better loader                       | +             | (-)    | -          |
 | Add toast service                       | +             | (-)    | +          |
 | Add documentation navigation            | ++            | +     | ++          |
