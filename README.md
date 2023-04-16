@@ -16,7 +16,6 @@
 | Task                                    | Time required | Effort | Importance |
 | :-------------------------------------- | :------------ | :----- | :--------- |
 | Add object editing form                 | ++            | +      | ++         |
-| Add version display in footer           | -             | --     | --         |
 | Add cookie alert                        | -             | --     | ++         |
 | Add toast service                       | +             | (-)    | +          |
 | Add documentation navigation            | ++            | +      | ++         |
