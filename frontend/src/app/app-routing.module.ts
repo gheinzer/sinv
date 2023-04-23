@@ -37,6 +37,10 @@ const routes: Routes = [
     component: ObjectViewerComponent,
   },
   {
+    path: 'object/edit/:objectIdentifier',
+    component: ObjectViewerComponent,
+  },
+  {
     path: 'repo-settings',
     component: RepoSettingsComponent,
   },

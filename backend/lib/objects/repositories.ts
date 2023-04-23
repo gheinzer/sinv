@@ -1,9 +1,5 @@
 import { InitializableClass } from '../types';
-import {
-    PrismaClient,
-    User as DBUser,
-    Repository as DBRepository,
-} from '@prisma/client';
+import { User as DBUser, Repository as DBRepository } from '@prisma/client';
 import { SINVUserSystem } from '../auth/users';
 import { SINVConfig } from '../config';
 import {

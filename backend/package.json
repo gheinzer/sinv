@@ -22,7 +22,7 @@
     },
     "homepage": "https://github.com/gheinzer/sinv#readme",
     "dependencies": {
-        "@prisma/client": "^4.9.0",
+        "@prisma/client": "^4.13.0",
         "bcrypt": "^5.1.0",
         "formidable": "^2.1.1",
         "highlight.js": "^11.7.0",
