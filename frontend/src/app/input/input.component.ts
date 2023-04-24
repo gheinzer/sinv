@@ -20,9 +20,11 @@ export class InputComponent {
   @Input() placeholder: string = '';
   @Input() type: 'text' | 'email' | 'password' | 'dropdown' | 'textarea' =
     'text';
-  @Input() autofocus: '' | null = null;
+  @Input() autofocus: '' | null | boolean = null;
   @Input() choices: { [key: string | number]: string } = {};
   @Input() shortcut: string[] = [];
+
+  @Input() readonly: boolean = false;
 
   @Input() value: any = '';
   @Output() valueChange = new EventEmitter<string>();

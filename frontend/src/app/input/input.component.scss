@@ -78,4 +78,8 @@
     &.dropdown {
         cursor: pointer;
     }
+    &.readonly {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }
